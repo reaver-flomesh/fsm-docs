@@ -2,7 +2,7 @@
 
 :book: This section contains the [FSM Docs](https://github.com/flomesh-io/fsm-docs)
 
-:link: Looking for the main FSM website? Visit [FSM](https://github.com/flomesh-io/fsm-docs)
+:link: Looking for the main FSM website? Visit [FSM](https://github.com/flomesh-io/fsm)
 
 
 ## Editing Content
