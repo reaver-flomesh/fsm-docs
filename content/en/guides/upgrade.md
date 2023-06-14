@@ -58,7 +58,7 @@ Please check the `CRD Updates` section of the [release notes](https://github.com
 **Pre-requisites**
 
 - Kubernetes cluster with the FSM control plane installed
-    - Ensure that the Kubernetes cluster has the minimum Kubernetes version required by the new FSM chart. This can be found in the [Installation Pre-requisites](/docs/getting_started/install#Pre-requisites)
+    - Ensure that the Kubernetes cluster has the minimum Kubernetes version required by the new FSM chart. This can be found in the [Installation Pre-requisites](/getting_started/install#Pre-requisites)
 - `fsm` CLI installed
   - By default, the `fsm` CLI will upgrade to the same chart version that it installs. e.g. v0.9.2 of the `fsm` CLI will upgrade to v0.9.2 of the FSM Helm chart. Upgrading to any other version of the Helm chart than the version matching the CLI may work, but those scenarios are not tested and issues that arise may not get fixed even if reported.
 

@@ -60,7 +60,7 @@ Helm は初期インストールを超えて CRD を管理しないため、FSM 
 **前提条件**
 
 - FSM コントロール プレーンがインストールされた Kubernetes クラスター
-     - Kubernetes クラスターに、新しい FSM チャートで必要な最小の Kubernetes バージョンがあることを確認します。 これは、[インストールの前提条件](/docs/getting_started/install#Pre-requisites) にあります。
+     - Kubernetes クラスターに、新しい FSM チャートで必要な最小の Kubernetes バージョンがあることを確認します。 これは、[インストールの前提条件](/getting_started/install#Pre-requisites) にあります。
 - `fsm` CLI をインストール
    - デフォルトでは、`fsm` CLI は、インストールしたものと同じチャート バージョンにアップグレードします。 例えば `fsm` CLI の v0.9.2 は、FSM Helm チャートの v0.9.2 にアップグレードされます。 CLI に一致するバージョン以外のバージョンの Helm チャートにアップグレードしても機能する可能性がありますが、これらのシナリオはテストされておらず、発生した問題が報告されても修正されない場合があります。
 

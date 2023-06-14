@@ -46,7 +46,7 @@ curl -L https://github.com/flomesh-io/FSM /releases/download/${release}/FSM -${r
 ./${system}-${arch}/fsm version
 ```
 
-`fsm` CLI 可以根据 [本指南](/docs/guides/cli) 从源代码编译。
+`fsm` CLI 可以根据 [本指南](/guides/cli) 从源代码编译。
 
 ## 在 Kubernetes 上安装 FSM 
 
@@ -74,8 +74,8 @@ fsm install \
     --set=fsm.tracing.enable=true
 ```
 
-在 [可观察性文档](/docs/guides/observability/) 中阅读有关 FSM 与 Prometheus、Grafana 和 Jaeger 集成的更多信息。
+在 [可观察性文档](/guides/observability/) 中阅读有关 FSM 与 Prometheus、Grafana 和 Jaeger 集成的更多信息。
 
 ## 下一步
 
-现在 FSM 控制平面已启动并运行，[添加应用程序](/docs/getting_started/install_apps/) 到网格。
+现在 FSM 控制平面已启动并运行，[添加应用程序](/getting_started/install_apps/) 到网格。

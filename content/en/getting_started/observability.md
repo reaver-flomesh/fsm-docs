@@ -5,7 +5,7 @@ type: docs
 weight: 5
 ---
 
-The following article shows you how to install FSM with automatic provisioning of the Prometheus and Grafana stack for observability and monitoring. For an example using a bring your own (BYO) Prometheus and Grafana stack on your cluster with FSM, see the [Integrate FSM with Prometheus and Grafana](/docs/demos/prometheus_grafana/) demo.
+The following article shows you how to install FSM with automatic provisioning of the Prometheus and Grafana stack for observability and monitoring. For an example using a bring your own (BYO) Prometheus and Grafana stack on your cluster with FSM, see the [Integrate FSM with Prometheus and Grafana](/demos/prometheus_grafana/) demo.
 
 The configuration created in this article should not be used in production environments. For production-grade deployments, see [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md) and [Deploy Grafana in Kubernetes](https://grafana.com/docs/grafana/latest/installation/kubernetes/).
 
@@ -17,7 +17,7 @@ On `fsm install`, a Prometheus and/or Grafana instance can be automatically prov
  fsm install --set=fsm.deployPrometheus=true \
              --set=fsm.deployGrafana=true
 ```
-More information on observability can be found in the [Observability Guide](/docs/guides/observability).
+More information on observability can be found in the [Observability Guide](/guides/observability).
 
 ## Prometheus
 
@@ -25,7 +25,7 @@ When configured with the `--set=fsm.deployPrometheus=true` flag, FSM installatio
 
 ## Grafana
 
-FSM can be configured to deploy a [Grafana](https://grafana.com/grafana/) instance using the `--set=fsm.deployGrafana=true` flag in `fsm install`. FSM provides pre-configured dashboards that are documented in the [FSM Grafana dashboards](/docs/guides/observability/metrics/#fsm-grafana-dashboards) section of the Observability Guide.
+FSM can be configured to deploy a [Grafana](https://grafana.com/grafana/) instance using the `--set=fsm.deployGrafana=true` flag in `fsm install`. FSM provides pre-configured dashboards that are documented in the [FSM Grafana dashboards](/guides/observability/metrics/#fsm-grafana-dashboards) section of the Observability Guide.
 
 ## Enable Metrics Scraping
 
@@ -49,4 +49,4 @@ Navigate to http://localhost:3000 to access the Grafana dashboards. The default 
 
 ## Next Steps
 
-[Cleanup sample applications and uninstall FSM](/docs/getting_started/cleanup/).
+[Cleanup sample applications and uninstall FSM](/getting_started/cleanup/).

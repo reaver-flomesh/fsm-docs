@@ -154,7 +154,7 @@ spec:
 
 #### 例
 
-FSM で FSM を使用してメッシュ サービスを外部に公開する方法の例については、[Ingress with FSM demo](/docs/demos/ingress_fms) を参照してください。
+FSM で FSM を使用してメッシュ サービスを外部に公開する方法の例については、[Ingress with FSM demo](/demos/ingress_fms) を参照してください。
 
 ### 2. 独自のイングレス コントローラーとゲートウェイを導入する
 

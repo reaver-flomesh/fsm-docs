@@ -44,7 +44,7 @@ curl -L https://github.com/flomesh-io/fsm/releases/download/$release/fsm-$releas
 ./$system-$arch/fsm version
 ```
 
-The `fsm` CLI can be compiled from source according to [this guide](/docs/guides/cli).
+The `fsm` CLI can be compiled from source according to [this guide](/guides/cli).
 
 ## Installing FSM on Kubernetes
 
@@ -74,8 +74,8 @@ fsm install \
     --set=fsm.deployJaeger=true
 ```
 
-Read more on FSM's integrations with Prometheus, Grafana, and Jaeger in the [observability documentation](/docs/guides/observability/).
+Read more on FSM's integrations with Prometheus, Grafana, and Jaeger in the [observability documentation](/guides/observability/).
 
 ## Next Steps
 
-Now that the FSM control plane is up and running, [add applications](/docs/getting_started/install_apps/) to the mesh.
+Now that the FSM control plane is up and running, [add applications](/getting_started/install_apps/) to the mesh.

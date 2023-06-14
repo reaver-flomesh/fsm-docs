@@ -306,7 +306,7 @@ draft: true
        $ fsm uninstall mesh
        ```
 
-    4. 在卸载 FSM 后删除集群范围的资源，执行下面的命令。参阅 [卸载指南](/docs/guides/uninstall/) 获取更多信息。
+    4. 在卸载 FSM 后删除集群范围的资源，执行下面的命令。参阅 [卸载指南](/guides/uninstall/) 获取更多信息。
 
        ```console
        $ fsm uninstall mesh --delete-cluster-wide-resources

@@ -29,7 +29,7 @@ FSM CLI を使用して名前空間の監視を管理する方法については
 fsm namespace add <namespace>
 ```
 
-[こちら](/docs/guides/app_onboarding/sidecar_injection/#explicitly-disabling-automatic-sidecar-injection-on-namespaces) に示すように、`--disable-sidecar-injection` フラグを使用して名前空間を追加する際にサイドカー インジェクションを明示的に無効にします。
+[こちら](/guides/app_onboarding/sidecar_injection/#explicitly-disabling-automatic-sidecar-injection-on-namespaces) に示すように、`--disable-sidecar-injection` フラグを使用して名前空間を追加する際にサイドカー インジェクションを明示的に無効にします。
 
 ## FSM コントロール プレーンから名前空間を削除します
 

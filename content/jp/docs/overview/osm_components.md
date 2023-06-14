@@ -32,7 +32,7 @@ $ helm get manifest fsm --namespace <fsm-namespace>
 
 ### (1) プロキシ コントロール プレーン
 
-プロキシ コントロール プレーンは、[サービス メッシュ](https://www.bing.com/search?q=What%27s+a+service+mesh%3F) の運用において重要な役割を果たします。 すべてのプロキシは [サイドカー](https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar) としてインストールされ、プロキシ コントロール プレーンへの mTLS gRPC 接続を確立します。 プロキシは、構成の更新を継続的に受け取ります。 このコンポーネントは、選択された特定のリバース プロキシに必要なインターフェイスを実装します。 FSM は [Pipy Repo](https://flomesh.io/docs/en/operating/repo/0-intro) を実装しています。
+プロキシ コントロール プレーンは、[サービス メッシュ](https://www.bing.com/search?q=What%27s+a+service+mesh%3F) の運用において重要な役割を果たします。 すべてのプロキシは [サイドカー](https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar) としてインストールされ、プロキシ コントロール プレーンへの mTLS gRPC 接続を確立します。 プロキシは、構成の更新を継続的に受け取ります。 このコンポーネントは、選択された特定のリバース プロキシに必要なインターフェイスを実装します。 FSM は [Pipy Repo](https://flomesh.io/pipy/docs/en/operating/repo/0-intro) を実装しています。
 
 ### (2) 証明書マネージャー
 

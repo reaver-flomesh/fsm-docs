@@ -21,7 +21,7 @@ draft: true
 
 下面的演示展示了适用负载测试客户端 [fortio](https://github.com/fortio/fortio) 发送流量到 `httpbin` 服务。我们将看到，当配置的熔断限制触发时，应用于 `httpbin` 服务流量的断路器如何影响 `fortio` 客户端。
 
-1. 简单起见，为了网格内的应用互访无需使用 SMI 访问控制策略，启用 [宽松流量策略模式](/docs/guides/traffic_management/permissive_mode)
+1. 简单起见，为了网格内的应用互访无需使用 SMI 访问控制策略，启用 [宽松流量策略模式](/guides/traffic_management/permissive_mode)
     ```bash
     export fsm_namespace=fsm-system # Replace fsm-system with the namespace where FSM is installed
     kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge

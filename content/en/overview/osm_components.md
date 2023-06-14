@@ -32,7 +32,7 @@ Let's take a look at each component:
 
 ### (1) Proxy Control Plane
 
-The Proxy Control Plane plays a key part in operating the [service mesh](https://www.bing.com/search?q=What%27s+a+service+mesh%3F). All proxies are installed as [sidecars](https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar) and establish an mTLS gRPC connection to the Proxy Control Plane. The proxies continuously receive configuration updates. This component implements the interfaces required by the specific reverse proxy chosen. FSM implements [Pipy Repo](https://flomesh.io/docs/en/operating/repo/0-intro).
+The Proxy Control Plane plays a key part in operating the [service mesh](https://www.bing.com/search?q=What%27s+a+service+mesh%3F). All proxies are installed as [sidecars](https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar) and establish an mTLS gRPC connection to the Proxy Control Plane. The proxies continuously receive configuration updates. This component implements the interfaces required by the specific reverse proxy chosen. FSM implements [Pipy Repo](https://flomesh.io/pipy/docs/en/operating/repo/0-intro).
 
 ### (2) Certificate Manager
 

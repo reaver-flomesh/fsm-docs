@@ -299,7 +299,7 @@ FSM 控制平面提供 Vault 安装详实的操作 log。
 kubectl create secret -n fsm-system generic fsm-ca-bundle --from-file ca.crt
 ```
 
-参考 [cert-manager 演示](/docs/demos/cert-manager_integration) 来了解更多。
+参考 [cert-manager 演示](/demos/cert-manager_integration) 来了解更多。
 
 #### 用 cert-manager 来配置 FSM 
 

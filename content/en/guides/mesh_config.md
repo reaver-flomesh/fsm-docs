@@ -31,7 +31,7 @@ Changes to `fsm-mesh-config` can be made using the `kubectl patch` command.
 ```bash
 kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enableEgress":true}}}'  --type=merge
 ```
-Refer to the [Config API reference](/docs/api_reference/config/v1alpha1) for more information.
+Refer to the [Config API reference](/api_reference/config/v1alpha1) for more information.
 
 If an incorrect value is used, validations on the [MeshConfig CRD](https://github.com/flomesh-io/fsm/blob/{{< param fsm_branch >}}/charts/fsm/crds/meshconfig.yaml) will prevent the change with an error message explaining why the value is invalid.
 For example, the below command shows what happens if we patch `enableEgress` to a non-boolean value.

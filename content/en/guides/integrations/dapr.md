@@ -302,7 +302,7 @@ This document walks you through the steps of getting Dapr working with FSM on a 
        $ fsm uninstall mesh
        ```
 
-    4. To remove FSM's cluster wide resources after uninstallation, run the following command. See the [uninstall guide](/docs/guides/uninstall/) for more context and information.
+    4. To remove FSM's cluster wide resources after uninstallation, run the following command. See the [uninstall guide](/guides/uninstall/) for more context and information.
 
        ```console
        $ fsm uninstall mesh --delete-cluster-wide-resources

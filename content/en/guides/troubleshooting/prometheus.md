@@ -91,7 +91,7 @@ If Prometheus is found not to be scraping metrics for any Pods, perform the foll
     Metrics successfully enabled in namespace [<namespace>]
     ```
 
-2. If [custom metrics](/docs/guides/observability/metrics/#custom-metrics) are not being scraped, verify they have been enabled.
+2. If [custom metrics](/guides/observability/metrics/#custom-metrics) are not being scraped, verify they have been enabled.
 
     Custom metrics are currently disable by default and enabled when the `fsm.featureFlags.enableWASMStats` parameter is set to `true`. Verify the current FSM instance has this parameter set for a mesh named `<fsm-mesh-name>` in the `<fsm-namespace>` namespace:
 

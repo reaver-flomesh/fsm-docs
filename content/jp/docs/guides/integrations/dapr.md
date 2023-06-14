@@ -304,7 +304,7 @@ Weight: 2
        $ fsm uninstall mesh
        ```
 
-    4. アンインストール後に FSM のクラスター全体のリソースを削除するには、次のコマンドを実行します。 詳細なコンテキストと情報については、[uninstall guide](/docs/guides/uninstall/) を参照してください。
+    4. アンインストール後に FSM のクラスター全体のリソースを削除するには、次のコマンドを実行します。 詳細なコンテキストと情報については、[uninstall guide](/guides/uninstall/) を参照してください。
 
        ```console
        $ fsm uninstall mesh --delete-cluster-wide-resources

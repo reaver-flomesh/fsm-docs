@@ -44,7 +44,7 @@ curl -L https://github.com/flomesh-io/FSM /releases/download/${release}/FSM -${r
 . /${system}-${arch}/fsm version
 ```
 
-fsm CLI は、 [this guide](/docs/guides/cli)に従ってソースからコンパイルできる。
+fsm CLI は、 [this guide](/guides/cli)に従ってソースからコンパイルできる。
 
 ## Kubernetes に FSM をインストールする
 
@@ -67,8 +67,8 @@ fsm install \
     --set=fsm.deployJaeger=true
 ```
 
-FSM の Prometheus、Grafana、および Jaeger との統合の詳細については、[observability documentation](/docs/guides/observability/)を参照してください。
+FSM の Prometheus、Grafana、および Jaeger との統合の詳細については、[observability documentation](/guides/observability/)を参照してください。
 
 ## 次のステップ
 
-FSM コントロールプレーンが起動して実行されるようになったので、 [add applications](/docs/getting_started/install_apps/)をメッシュに追加する。
+FSM コントロールプレーンが起動して実行されるようになったので、 [add applications](/getting_started/install_apps/)をメッシュに追加する。

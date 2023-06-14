@@ -305,7 +305,7 @@ FSM 名前空間 (デフォルトでは「fsm-system」) の Kubernetes シー�
 kubectl create secret -n fsm-system generic fsm-ca-bundle --from-file ca.crt
 ```
 
-詳細については、[cert-manager デモ](/docs/demos/cert-manager_integration) を参照してください。
+詳細については、[cert-manager デモ](/demos/cert-manager_integration) を参照してください。
 
 #### FSM が構成された発行者で cert-manager を使用するには、
 `fsm install` コマンドの次の CLI 引数:

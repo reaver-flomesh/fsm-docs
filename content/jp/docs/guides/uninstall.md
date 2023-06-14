@@ -13,7 +13,7 @@ weight: 4
 
 - FSM がインストールされた Kubernetes クラスター
 - `kubectl` CLI
-- [`fsm` CLI](/docs/install/#set-up-the-fsm-cli) または Helm 3 CLI
+- [`fsm` CLI](/install/#set-up-the-fsm-cli) または Helm 3 CLI
 
 ## アプリケーション ポッドと Pipy シークレットから Pipy サイドカーを削除する
 
@@ -108,7 +108,7 @@ $ helm uninstall <mesh name> --namespace <fsm namespace>
 
 インストール時に FSM 用にリソースが提供または作成された場合は、この時点で削除できます。
 
-たとえば、[Hashicorp Vault](/docs/guides/certificates/#installing-hashi-vault) が FSM の証明書を管理するためだけにデプロイされた場合、関連するすべてのリソースを削除できます。
+たとえば、[Hashicorp Vault](/guides/certificates/#installing-hashi-vault) が FSM の証明書を管理するためだけにデプロイされた場合、関連するすべてのリソースを削除できます。
 
 ### FSM 名前空間を削除
 
@@ -146,4 +146,4 @@ fsm uninstall mesh --delete-cluster-wide-resources
 
 > 警告: CRD を削除すると、その CRD に対応するすべてのカスタム リソースも削除されます。
 
-FSM アンインストールのトラブルシューティングについては、[uninstall troubleshooting section](/docs/guides/troubleshooting/uninstall/) を参照してください。
+FSM アンインストールのトラブルシューティングについては、[uninstall troubleshooting section](/guides/troubleshooting/uninstall/) を参照してください。

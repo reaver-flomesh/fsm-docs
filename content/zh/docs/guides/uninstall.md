@@ -13,7 +13,7 @@ weight: 4
 
 - 已安装 FSM 的 Kubernetes 集群
 - `kubectl` CLI
-- [`fsm` CLI](/docs/install/#set-up-the-fsm-cli) 或者 Helm 3 CLI
+- [`fsm` CLI](/install/#set-up-the-fsm-cli) 或者 Helm 3 CLI
 
 ## 从应用 Pod 和 Pipy Secret 上移除 Pipy Sidecar
 
@@ -110,7 +110,7 @@ $ helm uninstall <mesh name> --namespace <fsm namespace>
 
 如果任何资源在安装时为 FSM 做提供或者创建，那么它们能够在此处被删除。
 
-例如，如果 [Hashicorp Vault](/docs/guides/certificates/#installing-hashi-vault) 为了对 FSM 管理证书的单独目的而被部署，那么全部相关的资源都能被删除。
+例如，如果 [Hashicorp Vault](/guides/certificates/#installing-hashi-vault) 为了对 FSM 管理证书的单独目的而被部署，那么全部相关的资源都能被删除。
 
 ### 删除 FSM 命名空间
 
@@ -147,4 +147,4 @@ fsm uninstall mesh --cluster-wide-resources
 
 > 警告：一个 CRD 的删除将造成和该 CRD 对应的全部定制资源也被删除。
 
-对于 FSM 卸载的问题解决，请参阅[卸载问题解决章节](/docs/guides/troubleshooting/uninstall/)
+对于 FSM 卸载的问题解决，请参阅[卸载问题解决章节](/guides/troubleshooting/uninstall/)

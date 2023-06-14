@@ -120,7 +120,7 @@ To familiarize yourself on how FSM works with Prometheus, try installing a new m
    FSM [mesh name: fsm] uninstalled
    ```
 
-   To remove FSM's cluster wide resources after uninstallation, run the following command. See the [uninstall guide](/docs/guides/uninstall/) for more context and information.
+   To remove FSM's cluster wide resources after uninstallation, run the following command. See the [uninstall guide](/guides/uninstall/) for more context and information.
 
    ```console
    $ fsm uninstall mesh --delete-cluster-wide-resources

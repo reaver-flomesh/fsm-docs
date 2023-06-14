@@ -32,7 +32,7 @@ kubectl get meshconfig fsm-mesh-config -n "$fsm_namespace" -o yaml
 ```bash
 kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enableEgress":true}}}'  --type=merge
 ```
-参考 [Config API reference](/docs/api_reference/config/v1alpha1) 以获取更多信息。
+参考 [Config API reference](/api_reference/config/v1alpha1) 以获取更多信息。
 
 如果一个不正确的值被使用了，在 [MeshConfig CRD](https://github.com/flomesh-io/FSM /blob/{{< param fsm_branch >}}/charts/fsm/crds/meshconfig.yaml) 上的验证将阻止修改并给出一个错误信息来解释为什么这个值是无效的。
 例如，下面的命令显示了如果我们用 `enableEgress` 给一个非布尔值打补丁会发生什么。

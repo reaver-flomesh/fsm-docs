@@ -11,7 +11,7 @@ This guide describes how to uninstall FSM from a Kubernetes cluster. This guide 
 
 - Kubernetes cluster with FSM installed
 - The `kubectl` CLI
-- The [`fsm` CLI](/docs/install/#set-up-the-fsm-cli) or the Helm 3 CLI
+- The [`fsm` CLI](/install/#set-up-the-fsm-cli) or the Helm 3 CLI
 
 ## Remove Pipy Sidecars from Application Pods and Pipy Secrets
 
@@ -111,7 +111,7 @@ Run `helm uninstall --help` for more options.
 
 If any resources were provided or created for FSM at install time, they can be deleted at this point.
 
-For example, if [Hashicorp Vault](/docs/guides/certificates/#installing-hashi-vault) was deployed for the sole purpose of managing certificates for FSM, all related resources can be deleted.
+For example, if [Hashicorp Vault](/guides/certificates/#installing-hashi-vault) was deployed for the sole purpose of managing certificates for FSM, all related resources can be deleted.
 
 ### Delete FSM Namespace
 
@@ -149,4 +149,4 @@ fsm uninstall mesh --delete-cluster-wide-resources
 
 > Warning: Deletion of a CRD will cause all custom resources corresponding to that CRD to also be deleted.
 
-To troubleshoot FSM uninstallation, refer to the [uninstall troubleshooting section](/docs/guides/troubleshooting/uninstall/)
+To troubleshoot FSM uninstallation, refer to the [uninstall troubleshooting section](/guides/troubleshooting/uninstall/)

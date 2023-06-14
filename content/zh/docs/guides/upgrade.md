@@ -66,7 +66,7 @@ FSM 的控制平面生命周期被 Helm 来管理，并且通过 [Helm 升级功
 **先决条件**
 
 - Kubernetes 集群并已安装 FSM 控制平面
-    - 确保 Kubernetes 集群有被新的 FSM chart所需要的最小 Kubernetes 版本。这点能够在[安装先决条件](/docs/getting_started/install#Pre-requisites)里被找到。
+    - 确保 Kubernetes 集群有被新的 FSM chart所需要的最小 Kubernetes 版本。这点能够在[安装先决条件](/getting_started/install#Pre-requisites)里被找到。
 - 已经安装 `fsm` CLI
   - 默认的，`fsm` CLI 将升级到同它安装相同的 chart 版本。例如，v1.1.0 的 `fsm` CLI 将升级 FSM Helm chart 到 v1.1.0。升级到任何其他版本的 Helm chart，而不是匹配于 CLI 的，或许可以工作，但是这些场景没有被测试过，而且即便被报告了问题，也不会被修复。
 

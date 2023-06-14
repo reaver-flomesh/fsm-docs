@@ -32,4 +32,4 @@ FSM クラスター全体のリソースをアンインストールするには�
 fsm uninstall mesh --delete-cluster-wide-resources
 ```
 
-FSM のアンインストールの詳細については、[uninstallation guide](/docs/guides/uninstall/)を参照してください。
+FSM のアンインストールの詳細については、[uninstallation guide](/guides/uninstall/)を参照してください。

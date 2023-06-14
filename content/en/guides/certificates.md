@@ -318,7 +318,7 @@ as a Kubernetes secret in the FSM namespace (`fsm-system` by default) at the
 kubectl create secret -n fsm-system generic fsm-ca-bundle --from-file ca.crt
 ```
 
-Refer to the [cert-manager demo](/docs/demos/cert-manager_integration) to learn more.
+Refer to the [cert-manager demo](/demos/cert-manager_integration) to learn more.
 
 #### Configure FSM with cert-manager
 

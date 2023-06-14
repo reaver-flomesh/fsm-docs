@@ -27,7 +27,7 @@ Add a namespace for monitoring and sidecar injection to the mesh with the follow
 fsm namespace add <namespace>
 ```
 
-Explicitly disable sidecar injection while adding the namespace using `--disable-sidecar-injection` flag as shown [here](/docs/guides/app_onboarding/sidecar_injection/#explicitly-disabling-automatic-sidecar-injection-on-namespaces).
+Explicitly disable sidecar injection while adding the namespace using `--disable-sidecar-injection` flag as shown [here](/guides/app_onboarding/sidecar_injection/#explicitly-disabling-automatic-sidecar-injection-on-namespaces).
 
 ## Remove a Namespace from the FSM control plane
 

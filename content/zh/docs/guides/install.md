@@ -8,7 +8,7 @@ weight: 2
 ## 先决条件
 
 - Kubernetes 集群，运行 Kubernetes {{< param min_k8s_version >}} 或者更高版本
-- [FSM CLI](/docs/guides/cli)，或者 [helm 3 CLI](https://helm.sh/docs/intro/install/)，或者 OpenShift `oc` CLI。
+- [FSM CLI](/guides/cli)，或者 [helm 3 CLI](https://helm.sh/docs/intro/install/)，或者 OpenShift `oc` CLI。
 
 ### Kubernetes 支持
 
@@ -50,7 +50,7 @@ _Note: 通过 CLI 安装的 FSM 强制部署唯一一个网格在集群里。FSM
 1. 创建一个 [values.yaml 文件](https://github.com/openservicemesh/fsm/blob/{{< param fsm_branch >}}/charts/fsm/values.yaml)的副本（确保使用的针对flomesh-io/FSM 的版本是要安装的）。关于 values.yaml 中的参数说明，可以参考 [FSM Helm Chart 说明文档](https://github.com/flomesh-io/FSM /blob/{{< param fsm_branch >}}/charts/fsm/README.md)。
 2. 修改任何想要定制的值。可以忽略所有其他的值。
 
-   - 要查阅哪些值对应到 MeshConfig 设定，请参阅 [FSM MeshConfig 文档](/docs/guides/mesh_config)
+   - 要查阅哪些值对应到 MeshConfig 设定，请参阅 [FSM MeshConfig 文档](/guides/mesh_config)
 
    - 例如，要设置 MeshConfig 里面的 `logLevel` 域的值为 `info`，保存如下的内容作为 `override.yaml`：
      ```
@@ -78,7 +78,7 @@ $ helm install <mesh name> fsm --repo https://flomesh-io.github.io/FSM --version
    ```shell
    fsm install --set="fsm.enablePrivilegedInitContainer=true"
    ```
-   - 如果已经安装了 FSM ，但是没有启用特权初始化容器，那么在 [FSM MeshConfig](/docs/guides/mesh_config)里设置 `enablePrivilegedInitContainer` 为 `true`，然后重启网格中的任意的 Pod。
+   - 如果已经安装了 FSM ，但是没有启用特权初始化容器，那么在 [FSM MeshConfig](/guides/mesh_config)里设置 `enablePrivilegedInitContainer` 为 `true`，然后重启网格中的任意的 Pod。
 2. 添加 `privileged` [安全上下文限制](https://docs.openshift.com/container-platform/4.7/authentication/managing-security-context-constraints.html)到网格中的每个服务账号。
    - 安装 [oc CLI](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html)。
    - 添加安全上下文限制到 service account
@@ -96,7 +96,7 @@ $ helm install <mesh name> fsm --repo https://flomesh-io.github.io/FSM --version
 
 ### 在 FSM 中启用 Reconciler
 
-如果打算在 FSM 中启用 Reconciler，传递 `--set fsm.enableReconciler=true` 给 `fsm install` 或者 `helm install` CLI 命令。关于 Reconciler 的更多信息，请参阅 [Reconciler 指南](/docs/guides/reconciler)。
+如果打算在 FSM 中启用 Reconciler，传递 `--set fsm.enableReconciler=true` 给 `fsm install` 或者 `helm install` CLI 命令。关于 Reconciler 的更多信息，请参阅 [Reconciler 指南](/guides/reconciler)。
 
 ## 检查 FSM 组件
 
@@ -122,4 +122,4 @@ $ helm get manifest fsm --namespace fsm-system
 
 ## 下一步
 
-现在，FSM 控制平面启动并运行了，[添加服务](/docs/guides/app_onboarding/)到网格吧。
+现在，FSM 控制平面启动并运行了，[添加服务](/guides/app_onboarding/)到网格吧。

@@ -8,7 +8,7 @@ weight: 2
 ## 前提条件
 
 - Kubernetes {{< param min_k8s_version >}} 以上を実行している Kubernetes クラスター
-- [FSM CLI](/docs/guides/cli) または [helm 3 CLI](https://helm.sh/docs/intro/install/) または OpenShift `oc` CLI。
+- [FSM CLI](/guides/cli) または [helm 3 CLI](https://helm.sh/docs/intro/install/) または OpenShift `oc` CLI。
 
 ### Kubernetes のサポート
 
@@ -50,7 +50,7 @@ _注: CLI を使用して FSM をインストールすると、クラスター�
 1. [values file](https://github.com/flomesh-io/FSM /blob/{{< param fsm_branch >}}/charts/fsm/values.yaml) のコピーを作成します (必ず使用してください インストールするチャートのバージョン)。
 1. カスタマイズしたい値を変更します。 その他の値はすべて省略できます。
 
-    - MeshConfig 設定に対応する値を確認するには、[FSM MeshConfig documentation](/docs/guides/mesh_config) を参照してください。
+    - MeshConfig 設定に対応する値を確認するには、[FSM MeshConfig documentation](/guides/mesh_config) を参照してください。
 
     - たとえば、MeshConfig の「logLevel」フィールドを「info」に設定するには、以下を「override.yaml」として保存します。
      ```console
@@ -78,7 +78,7 @@ OpenShift に FSM をインストールするには:
    ```bash
    fsm install --set="fsm.enablePrivilegedInitContainer=true"
    ```
-   - 特権 init コンテナーを有効にせずに FSM を既にインストールしている場合は、[FSM MeshConfig](/docs/guides/mesh_config) で「enablePrivilegedInitContainer」を「true」に設定し、メッシュ内のすべてのポッドを再起動します。
+   - 特権 init コンテナーを有効にせずに FSM を既にインストールしている場合は、[FSM MeshConfig](/guides/mesh_config) で「enablePrivilegedInitContainer」を「true」に設定し、メッシュ内のすべてのポッドを再起動します。
 1. `privileged` [security context constraint](https://docs.openshift.com/container-platform/4.7/authentication/managing-security-context-constraints.html) をメッシュ内の各サービス アカウントに追加します。
     - [oc CLI](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html) をインストールします。
     - セキュリティ コンテキストの制約をサービス アカウントに追加する
@@ -96,7 +96,7 @@ PSP が有効なクラスターで FSM を実行している場合は、`--set f
 
 ### FSM で Reconciler を有効にする
 
-FSM でリコンサイラーを有効にしたい場合は、`--set fsm.enableReconciler=true` を `fsm install` または `helm install` CLI コマンドに渡します。 Reconciler の詳細については、[Reconciler Guide](/docs/guides/reconciler) を参照してください。
+FSM でリコンサイラーを有効にしたい場合は、`--set fsm.enableReconciler=true` を `fsm install` または `helm install` CLI コマンドに渡します。 Reconciler の詳細については、[Reconciler Guide](/guides/reconciler) を参照してください。
 
 ## FSM コンポーネントの検査
 
@@ -122,4 +122,4 @@ $ helm get manifest fsm --namespace fsm-system
 
 ## 次のステップ
 
-FSM コントロール プレーンが起動して実行されるようになったので、メッシュに [add services](/docs/guides/app_onboarding/) します。
+FSM コントロール プレーンが起動して実行されるようになったので、メッシュに [add services](/guides/app_onboarding/) します。

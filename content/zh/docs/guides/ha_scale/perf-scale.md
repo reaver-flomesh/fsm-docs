@@ -7,7 +7,7 @@ weight: 2
 
 开放边缘服务网格致力于在提供基本的服务网格功能的同时创建高性能的服务网格。本篇描述了如何对 FSM 进行性能基准测试和可扩展性测试。
 
-此外，我们还进行了 FSM 与 fsm 的基准测试，详细内容见 [FSM 数据平面基准测试](/docs/guides/ha_scale/benchmark)。
+此外，我们还进行了 FSM 与 fsm 的基准测试，详细内容见 [FSM 数据平面基准测试](/guides/ha_scale/benchmark)。
 
 ## 测试环境
 

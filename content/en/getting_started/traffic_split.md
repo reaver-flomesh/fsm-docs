@@ -5,7 +5,7 @@ type: docs
 weight: 4
 ---
 
-We will now demonstrate how to balance traffic between two Kubernetes services, commonly known as a traffic split. We will be splitting the traffic directed to the *root* `bookstore` service between the backends `bookstore-v1` service and `bookstore-v2` service.  The `bookstore-v1` and `bookstore-v2` services are also known as leaf services.  Learn more on how to configure services for Traffic Splitting in the [traffic Splitting how-to guide](/docs/guides/traffic_management/traffic_split)
+We will now demonstrate how to balance traffic between two Kubernetes services, commonly known as a traffic split. We will be splitting the traffic directed to the *root* `bookstore` service between the backends `bookstore-v1` service and `bookstore-v2` service.  The `bookstore-v1` and `bookstore-v2` services are also known as leaf services.  Learn more on how to configure services for Traffic Splitting in the [traffic Splitting how-to guide](/guides/traffic_management/traffic_split)
 
 ### Deploy bookstore v2 application
 
@@ -83,5 +83,5 @@ Now, all traffic directed to the `bookstore` service is flowing to `bookstore-v2
 
 ## Next Steps
 
-- [Configure observability with Prometheus and Grafana](/docs/getting_started/observability/)
-- [Cleanup sample applications and uninstall FSM](/docs/getting_started/cleanup/)
+- [Configure observability with Prometheus and Grafana](/getting_started/observability/)
+- [Cleanup sample applications and uninstall FSM](/getting_started/cleanup/)

@@ -6,7 +6,7 @@ type: docs
 weight: 20
 ---
 
-If for any reason, `fsm uninstall mesh` (as documented in the [uninstall guide](/docs/guides/uninstall/)) fails, you may manually delete FSM resources as detailed below.
+If for any reason, `fsm uninstall mesh` (as documented in the [uninstall guide](/guides/uninstall/)) fails, you may manually delete FSM resources as detailed below.
 
 Set environment variables for your mesh:
 ```console
