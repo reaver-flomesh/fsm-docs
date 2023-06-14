@@ -1,0 +1,4 @@
+# ref: https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
+# CODEOWNERS include members of the fsm-approvers team - https://github.com/orgs/flomesh-io/teams/fsm-approvers/members
+# CODEOWNERS include members of the fsm-www team - https://github.com/orgs/flomesh-io/teams/fsm-www/members
+* @flomesh-io/fsm-approvers @flomesh-io/fsm-docs-approvers @flomesh-io/fsm-www

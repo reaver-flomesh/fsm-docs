@@ -1,0 +1,28 @@
+---
+title: 服务网格接口 (SMI) 支持
+description: "FSM 的 SMI 实现"
+type: docs
+weight: 4
+---
+
+## 概览
+
+开放边缘服务网格（FSM ）实现了[服务网格接口（SMI）](https://smi-spec.io/)资源。这样就允许 FSM 用户拥有通用服务网格场景的灵活实现。
+
+## 支持的版本
+
+要找到什么样的 SMI 资源版本在网格中被支持，可以运行 `fsm mesh list`。这里是一段摘录，来自于示例输出：
+
+```
+MESH NAME   MESH NAMESPACE   SMI SUPPORTED
+fsm         fsm-system       HTTPRouteGroup:v1alpha4,TCPRoute:v1alpha4,TrafficSplit:v1alpha2,TrafficTarget:v1alpha3
+```
+
+下面是当前支持的 SMI 资源和它们的版本：
+
+| SMI 资源 | 版本 |
+|--------------|---------|
+| TrafficTarget | access.smi-spec.io/v1alpha3 |
+| TrafficSplit | split.smi-spec.io/v1alpha2 |
+| HTTPRouteGroup | specs.smi-spec.io/v1alpha4 |
+| TCPRoute | specs.smi-spec.io/v1alpha4 |
