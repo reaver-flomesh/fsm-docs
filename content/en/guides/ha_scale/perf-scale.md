@@ -16,7 +16,7 @@ This test is performed on a Kubernetes cluster provisioned and managed by [Micro
 The testing mesh contains two types of services. One is a load generator (modified from [wrk2](https://github.com/giltene/wrk2)), which can send requests at specified rate, load balanced among all other services in the mesh. Currently we test HTTP 1 requests only. The load generator serves as the client side of a request. Throughout our test, there will be at most one load generator service. The other type of service is a simple echo application that replies with whatever it receives from an inbound request. It serves as the server side of a request. We can deploy multiple copies of the echo application in the mesh. In short, the mesh topology is a typical 1-to-N service architecture.
 
 <p align="center">
-  <img src="/docs/images/perf/mesh-topo.png" width="650"/>
+  <img src="/images/perf/mesh-topo.png" width="650"/>
 </p>
 
 
@@ -29,11 +29,11 @@ In this test, we focus on the latency overhead and resource consumption added by
 Below is the request latency at different RPS levels with and without FSM installed. The added latency comes from both the client and server sidecars.
 
 <p align="center">
-  <img src="/docs/images/perf/latency-wo-fsm.png" width="650"/>
+  <img src="/images/perf/latency-wo-fsm.png" width="650"/>
 </p>
 
 <p align="center">
-  <img src="/docs/images/perf/latency-w-fsm.png" width="650"/>
+  <img src="/images/perf/latency-w-fsm.png" width="650"/>
 </p>
 
 <table style="width: 100%; display: table"">
@@ -76,7 +76,7 @@ Control plane resource consumption is stable as it is not relevant to the data p
 For the sidecars on the data plane, the memory usage is relatively consistent across different RPS levels, which is around 140MB. The CPU usage has a clear increasing trend and it is nearly proportional to the RPS level. <b>In our case, use a baseline CPU of 60 millicores, the sidecar CPU consumption increases linearly around 0.1 cores for every 100 RPS.</b>
 
 <p align="center">
-  <img src="/docs/images/perf/avg-cpu.png" width="650"/>
+  <img src="/images/perf/avg-cpu.png" width="650"/>
 </p>
 
 ## Scalability
@@ -90,7 +90,7 @@ In the scalability test, we explore how resource consumption changes for both th
 Below shows the CPU usage of control plane at both pod-rollout time and stable time:
 
 <p align="center">
-  <img src="/docs/images/perf/ctrl-cpu.png" width="650"/>
+  <img src="/images/perf/ctrl-cpu.png" width="650"/>
 </p>
 
 The pod-rollout time CPU usage has a clear increasing trend. This is understandable as the control plane serves all workloads at the same moment, such as issuing certificates and generating xDS configuration. The CPU usage is roughly proportional to the number of workloads. While during the stable time when no new workload is added, CPU usage drops to nearly zero.
@@ -100,7 +100,7 @@ The pod-rollout time CPU usage has a clear increasing trend. This is understanda
 Below shows the memory usage at both pod-rollout time and stable time:
 
 <p align="center">
-  <img src="/docs/images/perf/ctrl-memory.png" width="650"/>
+  <img src="/images/perf/ctrl-memory.png" width="650"/>
 </p>
 
 There is not much difference between pod-rollout time and stable time in terms of memory usage. Memory is primarily used to store xDS configurations, which is highly relevant to the mesh scale. The memory usage is also roughly proportionally increasing along with the mesh scale. In our scenario, <b>it takes around 1MB of memory for every one pod added to the mesh.</b>
@@ -112,5 +112,5 @@ By looking at the collected metrics, in our testing scenarios, resource consumpt
 It is also worth mentioning that enabling permissive mode will cause data plane to use much more memory, as each sidecar needs to keep the connection configuration between all other services. The chart below shows the sidecar memory usage when 200 and 400 pods are added in a permissive-mode enabled mesh. Compared to the non-permissive mode, the memory usage is more than doubled. Similar things happen on the control plane.
 
 <p align="center">
-  <img src="/docs/images/perf/perm-memory.png" width="650"/>
+  <img src="/images/perf/perm-memory.png" width="650"/>
 </p>

@@ -18,7 +18,7 @@ weight: 2
 测试网格包含两种类型的服务。一种是负载生成器（修改自 [wrk2](https://github.com/giltene/wrk2)），它可以以指定的速率发送请求，在网格中的所有其他服务之间进行负载平衡。目前我们只测试 HTTP 1 请求。负载生成器充当请求的客户端。在我们的整个测试过程中，最多会有一个负载生成器服务。另一种类型的服务是一个简单的回显应用，它会回复从入站请求中接收到的任何内容。它充当请求的服务器端。我们可以在网格中部署回显应用的多个副本。简而言之，网状拓扑是典型的 1 对 N 服务架构。
 
 <p align="center">
-  <img src="/docs/images/perf/mesh-topo.png" width="650"/>
+  <img src="/images/perf/mesh-topo.png" width="650"/>
 </p>
 
 
@@ -31,11 +31,11 @@ weight: 2
 以下是安装和未安装 fsm 的不同 RPS 级别的请求延迟。增加的延迟来自客户端和服务器 sidecar。
 
 <p align="center">
-  <img src="/docs/images/perf/latency-wo-fsm.png" width="650"/>
+  <img src="/images/perf/latency-wo-fsm.png" width="650"/>
 </p>
 
 <p align="center">
-  <img src="/docs/images/perf/latency-w-fsm.png" width="650"/>
+  <img src="/images/perf/latency-w-fsm.png" width="650"/>
 </p>
 
 <table style="width: 100%; display: table"">
@@ -78,7 +78,7 @@ weight: 2
 对于数据平面上的 sidecar，不同 RPS 级别的内存使用量相对一致，约为 140MB。CPU 使用率有明显的上升趋势，几乎与 RPS 水平成正比。<b>在我们的例子中，使用 60 millicores 的基准 CPU，每 100 RPS 的 sidecar CPU 消耗线性增加约 0.1 个 core。</b>
 
 <p align="center">
-  <img src="/docs/images/perf/avg-cpu.png" width="650"/>
+  <img src="/images/perf/avg-cpu.png" width="650"/>
 </p>
 
 ## 可伸缩性
@@ -92,7 +92,7 @@ weight: 2
 下面显示了控制平面在 Pod 上线时和稳定时的 CPU 使用情况：
 
 <p align="center">
-  <img src="/docs/images/perf/ctrl-cpu.png" width="650"/>
+  <img src="/images/perf/ctrl-cpu.png" width="650"/>
 </p>
 
 Pod 上线时 CPU 使用率有明显的上升趋势。这是可以理解的，因为控制平面同时服务于所有工作负载，例如颁发证书和生成 Pipy 配置。CPU 使用率大致与工作负载的数量成正比。而在没有添加新工作负载的稳定时间内，CPU 使用率下降到几乎为零。
@@ -102,7 +102,7 @@ Pod 上线时 CPU 使用率有明显的上升趋势。这是可以理解的，�
 下面显示了 Pod 上线时和稳定时的内存使用情况：
 
 <p align="center">
-  <img src="/docs/images/perf/ctrl-memory.png" width="650"/>
+  <img src="/images/perf/ctrl-memory.png" width="650"/>
 </p>
 
 就内存使用而言，pod 上线时和稳定时没有太大区别。内存主要用于存储 Pipy 配置，这与网格规模高度相关。内存使用量也随着网格规模大致成比例地增加。在我们的场景中，<b>每个添加到网格的 pod 都需要大约 1MB 的内存。</b>
@@ -114,5 +114,5 @@ Pod 上线时 CPU 使用率有明显的上升趋势。这是可以理解的，�
 还值得一提的是，启用宽松模式将导致数据平面使用更多内存，因为每个 sidecar 需要保持所有其他服务之间的连接配置。下图显示了在启用宽松模式的网格中添加 200 和 400 个 Pod 时的 sidecar 内存使用情况。与非宽松模式相比，内存使用量增加了一倍以上。类似的事情发生在控制平面上。
 
 <p align="center">
-  <img src="/docs/images/perf/perm-memory.png" width="650"/>
+  <img src="/images/perf/perm-memory.png" width="650"/>
 </p>

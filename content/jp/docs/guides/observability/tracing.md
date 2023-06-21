@@ -162,7 +162,7 @@ Web ブラウザーで「http://localhost:16686/」 に移動して、UIを表�
 
     a) サービスを選択して、そこからすべてのスパンを表示します。 たとえば、1 時間の「Lookback」で「bookbuyer」を選択すると、「bookstore-v1」および「bookstore-v2」とのやり取りを時間順に並べて表示できます。
     <p align="center">
-        <img src="/docs/images/jaeger-search-traces.png" width="100%"/>
+        <img src="/images/jaeger-search-traces.png" width="100%"/>
     </p>
     <center><i>Jaeger UI search for bookbuyer traces</i></center><br>
 
@@ -170,13 +170,13 @@ Web ブラウザーで「http://localhost:16686/」 に移動して、UIを表�
 
     c) 複数の項目を選択してトレースを比較します。 たとえば、特定の時点での「bookbuyer」と「bookstore-v1」および「bookstore-v2」とのやり取りを比較できます。
     <p align="center">
-        <img src="/docs/images/jaeger-compare-traces.png" width="100%"/>
+        <img src="/images/jaeger-compare-traces.png" width="100%"/>
     </p>
     <center><i>bookbuyer interactions with bookstore-v1 and bookestore-v2</i></center><br>
 
     d) [システム アーキテクチャ] タブをクリックして、さまざまなアプリケーションがどのように相互作用/通信しているかを示すグラフを表示します。 これにより、アプリケーション間でトラフィックがどのように流れているかがわかります。
     <p align="center">
-        <img src="/docs/images/jaeger-system-architecture.png" width="40%"/>
+        <img src="/images/jaeger-system-architecture.png" width="40%"/>
     </p>
     <center><i>Directed acyclic graph of bookstore demo application interactions</i></center><br>
 

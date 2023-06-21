@@ -5,9 +5,9 @@ type: docs
 weight: 25
 ---
 
-The following article shows you how to create an example bring your own (BYO) Prometheus and Grafana stack on your cluster and configure that stack for observability and monitoring of FSM. For an example using an automatic provisioning of a Prometheus and Grafana stack with FSM, see the [Observability](https://docs.openservicemesh.io/docs/getting_started/observability/) getting started guide.
+The following article shows you how to create an example bring your own (BYO) Prometheus and Grafana stack on your cluster and configure that stack for observability and monitoring of FSM. For an example using an automatic provisioning of a Prometheus and Grafana stack with FSM, see the [Observability](https://docs.openservicemesh.io/getting_started/observability/) getting started guide.
 
-> IMPORTANT: The configuration created in this article should not be used in production environments. For production-grade deployments, see [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md) and [Deploy Grafana in Kubernetes](https://grafana.com/docs/grafana/latest/installation/kubernetes/).
+> IMPORTANT: The configuration created in this article should not be used in production environments. For production-grade deployments, see [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md) and [Deploy Grafana in Kubernetes](https://grafana.com/grafana/latest/installation/kubernetes/).
 
 ## Prerequisites
 
@@ -302,7 +302,7 @@ kubectl port-forward $POD_NAME 9090
 Open a web browser to `http://localhost:9090/targets` to access the Prometheus management application and verify the endpoints are connected, up, and scrapping is running.
 
 <p align="center">
-  <img src="/docs/images/byo_guide/prom_targets.png" width="100%"/>
+  <img src="/images/byo_guide/prom_targets.png" width="100%"/>
 </p>
 <center><i>Targets with specific relabeling config established by FSM should be "up"</i></center><br>
 

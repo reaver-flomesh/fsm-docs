@@ -1,7 +1,7 @@
 ---
 title: "Integrate Flagger with FSM"
 description: "A simple demo showing how FSM integrates with Flagger"
-aliases: "/docs/guides/integrations/demo_flagger"
+aliases: "/guides/integrations/demo_flagger"
 type: docs
 weight: 4
 ---

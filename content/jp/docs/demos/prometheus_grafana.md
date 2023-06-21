@@ -303,7 +303,7 @@ kubectl port-forward $POD_NAME 9090
 ウェブブラウザで http://localhost:9090/targets にアクセスし、Prometheus 管理アプリケーションにアクセスして、エンドポイントが接続され、起動しており、スクラップが実行されていることを確認する。
 
 <p align="center">
-  <img src="/docs/images/byo_guide/prom_targets.png" width="100%"/>
+  <img src="/images/byo_guide/prom_targets.png" width="100%"/>
 </p>
 <center><i>FSM で設定された特定のリラベル設定を持つターゲットは "up "になるはずだ。</i></center><br>
 

@@ -60,7 +60,7 @@ kubectl port-forward service/prof-pyroscope 4040 -n "$fsm_NAMESPACE"
 This command will keep the forwarded port open. Open [http://localhost:4040](http://localhost:4040) in your web browser to use Pyroscope. You should be able to see `fsm-controller` from the Application dropdown list like what is shown below:
 
 <p align="center">
-  <img src="/docs/images/pyroscope-install.png" />
+  <img src="/images/pyroscope-install.png" />
 </p>
 
 ## Uninstall Pyroscope

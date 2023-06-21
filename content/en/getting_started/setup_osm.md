@@ -6,6 +6,7 @@ weight: 1
 ---
 
 ## Prerequisites
+
 This demo of FSM {{< param fsm_version >}} requires:
   - a cluster running Kubernetes {{< param min_k8s_version >}} or greater (using a cloud provider of choice, [minikube](https://minikube.sigs.k8s.io/docs/start/), or similar)
   - a workstation capable of executing [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) scripts
@@ -27,8 +28,9 @@ Download the 64-bit GNU/Linux or macOS binary of FSM {{< param fsm_version >}}:
 
 ```bash
 system=$(uname -s | tr '[:upper:]' '[:lower:]')
+arch=$(uname -m | sed -E 's/x86_/amd/' | sed -E 's/aarch/arm/')
 release={{< param fsm_version >}}
-curl -L https://github.com/flomesh-io/fsm/releases/download/${release}/fsm-${release}-${system}-amd64.tar.gz | tar -vxzf -
+curl -L https://github.com/flomesh-io/fsm/releases/download/${release}/fsm-${release}-${system}-${arch}.tar.gz | tar -vxzf -
 ./${system}-amd64/fsm version
 ```
 

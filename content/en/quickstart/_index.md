@@ -26,7 +26,7 @@ Download the 64-bit GNU/Linux or macOS binary of FSM {{< param fsm_version >}}:
 
 ```bash
 system=$(uname -s | tr '[:upper:]' '[:lower:]')
-arch=$(uname -m)
+arch=$(uname -m | sed -E 's/x86_/amd/' | sed -E 's/aarch/arm/')
 release={{< param fsm_version >}}
 curl -L https://github.com/flomesh-io/fsm/releases/download/${release}/fsm-${release}-${system}-${arch}.tar.gz | tar -vxzf -
 ./${system}-${arch}/fsm version
@@ -48,7 +48,9 @@ cp ./$system-$arch/fsm /usr/local/bin/
 
 ## Install FSM on Kubernetes cluster
 
-> Below command installs and enable [Prometheus](https://github.com/prometheus/prometheus),[Grafana](https://github.com/grafana/grafana), and [Jaeger](https://github.com/jaegertracing/jaeger)
+> Below command also installs and enable [Prometheus](https://github.com/prometheus/prometheus),[Grafana](https://github.com/grafana/grafana), and [Jaeger](https://github.com/jaegertracing/jaeger). 
+>
+> Read more on FSM's integrations with Prometheus, Grafana, and Jaeger in the [observability documentation](/guides/observability/).
 
 ```bash
 export fsm_namespace=fsm-system 
@@ -91,10 +93,10 @@ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param
 Expose the GUI ports of each service, so that with a browser we can access these ports of demo application.
 
 ```bash
-git clone https://github.com/flomesh-io/FSM.git -b {{< param fsm_branch >}}
-cd FSM
+git clone https://github.com/flomesh-io/fsm.git -b {{< param fsm_branch >}}
+cd fsm
 cp .env.example .env
-./scripts/port-forward-all.sh #可以忽略错误信息
+./scripts/port-forward-all.sh
 ```
 
 In a browser, open the following URL.

@@ -28,7 +28,7 @@ FSM 的控制平面组件不拥有或没有任何需要在运行时保存的状�
 多个 `fsm-controller` 的运行将订阅同一组对象并为服务网格生成相同的配置。由于 Kubernetes client-go 通知器的最终一致性特点，`fsm-controller` 保证了策略执行的最终一致性。
 
 <p align="center">
-  <img src="/docs/images/ha/ha1.png" width="400" height="350"/>
+  <img src="/images/ha/ha1.png" width="400" height="350"/>
 </p>
 
 ### 可重启性
@@ -48,7 +48,7 @@ FSM 的控制平面组件不拥有或没有任何需要在运行时保存的状�
   多个 `fsm-controller` 实例可能会为单个服务创建不同但有效的服务证书。这些不同的证书将 (1) 由同一个根签名，因为多个 FSM 实例必须加载相同的根 CA，并且 (2) 将具有相同的通用名称 (CN)，当流量在服务之间进行代理时其被用于匹配和验证。
 
 <p align="center">
-  <img src="/docs/images/ha/ha2.png" width="450" height="400"/>
+  <img src="/images/ha/ha2.png" width="450" height="400"/>
 </p>
 
 简而言之，无论代理连接到哪个控制平面，都会将具有正确/适当的 CN 并由共享控制平面根 CA 签名的有效证书推送给它。
@@ -57,7 +57,7 @@ FSM 的控制平面组件不拥有或没有任何需要在运行时保存的状�
 - 水平缩减将使断开连接的代理连接到未由向下缩放终止的实例。应在重新建立连接时计算并推送新版本的配置。
 
 <p align="center">
-  <img src="/docs/images/ha/ha3.png" width="450" height="400"/>
+  <img src="/images/ha/ha3.png" width="450" height="400"/>
 </p>
 
 - 如果控制平面全部挂掉，运行中的代理将进入无头模式<sup>[1]</sup>，直到可以重连到运行的控制平面。
