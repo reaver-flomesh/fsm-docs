@@ -7,7 +7,7 @@ weight: 10
 
 ## mTLS and Certificate Issuance
 
-FSM uses mTLS for encryption of data between pods as well as Pipy and service identity. Certificates are created and distributed to each Pipy proxy via the SDS protocol by the FSM control plane.
+FSM uses mTLS for encryption of data between pods as well as Pipy and service identity. Certificates are created and distributed to each Pipy proxy by the FSM control plane.
 
 ## Types of Certificates
 
