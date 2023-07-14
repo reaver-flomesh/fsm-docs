@@ -1,7 +1,6 @@
 ---
 title: "Grafana"
 description: "Troubleshooting Grafana integration"
-aliases: "/docs/troubleshooting/observability/grafana"
 type: docs
 weight: 16
 ---
@@ -48,9 +47,9 @@ If data appears to be missing from the Grafana dashboards, perform the following
 
 1. Verify Prometheus is installed and healthy.
 
-    Because Grafana queries Prometheus for data, ensure Prometheus is working as expected. See the [Prometheus troubleshooting guide](/troubleshooting/observability/prometheus/) for more details.
+    Because Grafana queries Prometheus for data, ensure Prometheus is working as expected. See the [Prometheus troubleshooting guide](/guides/troubleshooting/prometheus/) for more details.
 
-1. Verify Grafana can communicate with Prometheus.
+2. Verify Grafana can communicate with Prometheus.
 
     Start by opening the Grafana UI in a browser:
 

@@ -9,7 +9,7 @@ Retry is a resiliency pattern that enables an application to shield transient is
 
 ## Configuring Retry
 
-FSM uses its [Retry policy API][1] to allow retries on traffic from a specified source (ServiceAccount) to one or more destinations (Service). Retry is only applicable to HTTP traffic. FSM can implement retry for applications participating in the mesh.
+FSM uses its [Retry policy API](/api_reference/policy/v1alpha1/#policy.flomesh.io/v1alpha1.RetrySpec) to allow retries on traffic from a specified source (ServiceAccount) to one or more destinations (Service). Retry is only applicable to HTTP traffic. FSM can implement retry for applications participating in the mesh.
 
 The following retry configurations are supported:
 
@@ -21,13 +21,13 @@ The following retry configurations are supported:
 
 - `Retry On`: Specifies the policy for when a failed request will be retried. Multiple policies can be specified by using a `,` delimited list.
 
-To learn more about configuring retry, refer to the [Retry policy demo](/demos/retry_policy) and [API documentation][1].
+To learn more about configuring retry, refer to the [Retry policy demo](/demos/traffic_management/retry_policy) and [API documentation][1].
 
 ### Examples
 If requests from the bookbuyer service to bookstore-v1 service or bookstore-v2 service receive responses with a status code 5xx, then bookbuyer will retry the request 3 times. If an attempted retry takes longer than 3s it's considered a failed attempt. Each retry has a delay period (backoff) before it is attempted [calculated above](#configuring-retry). The backoff for all retries is capped at 10s.
 ```yaml
 kind: Retry
-apiVersion: policy.openservicemesh.io/v1alpha1
+apiVersion: policy.flomesh.io/v1alpha1
 metadata:
   name: retry
 spec:
@@ -52,7 +52,7 @@ spec:
 If requests from the bookbuyer service to bookstore-v2 service receive responses with a status code 5xx or retriable-4xx (409), then bookbuyer will retry the request 5 times. If an attempted retry takes longer than 4s it's considered a failed attempt. Each retry has a delay period (backoff) before it is attempted [calculated above](#configuring-retry). The backoff for all retries is capped at 20ms.
 ```yaml
 kind: Retry
-apiVersion: policy.openservicemesh.io/v1alpha1
+apiVersion: policy.flomesh.io/v1alpha1
 metadata:
   name: retry
 spec:
@@ -70,5 +70,3 @@ spec:
     numRetries: 5
     retryBackoffBaseInterval: 2ms
 ```
-
-[1]: /docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.RetrySpec

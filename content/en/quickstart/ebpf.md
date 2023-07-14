@@ -5,11 +5,9 @@ type: docs
 weight: 2
 ---
 
-# Using eBPF with FSM
-
 This quick start guide demonstrates how to setup environment and configure FSM to use eBPF as its interception method.
 
-For more details refer to [Learn how to use eBPF with FSM](/getting_started/ebpf)
+For more details refer to [Learn how to use eBPF with FSM](/guides/traffic_management/traffic_redirection/ebpf_redirection/)
 
 ## Prerequisites
 

@@ -127,7 +127,7 @@ The following section assumes a Prometheus instance has already been configured 
 
 ##### Importing FSM Dashboards
 
-FSM Dashboards are available through [our repository](https://github.com/flomesh-io/fsm/tree/{{< param fsm_branch >}}/charts/fsm/grafana/dashboards), which can be imported as json blobs on the web admin portal.
+FSM Dashboards are available through [our repository](https://github.com/flomesh-io/fsm/tree/{{< param fsm_branch >}}/charts/fsm/grafana/pipy/dashboards), which can be imported as json blobs on the web admin portal.
 
 Detailed instructions for importing FSM dashboards can be found in the [Prometheus and Grafana](/demos/prometheus_grafana) demo. Refer to [FSM Grafana dashboard](#fsm-grafana-dashboards) for an overview of the pre-configured dashboards.
 
@@ -137,7 +137,7 @@ Metrics scraping can be configured using the `fsm metrics` command. By default, 
 
 For metrics to be scraped, the following prerequisites must be met:
 
-- The namespace must be a part of the mesh, ie. it must be labeled with the `openservicemesh.io/monitored-by` label with an appropriate mesh name. This can be done using the `fsm namespace add` command.
+- The namespace must be a part of the mesh, ie. it must be labeled with the `flomesh.io/monitored-by` label with an appropriate mesh name. This can be done using the `fsm namespace add` command.
 - A running service able to scrape Prometheus endpoints. FSM provides configuration for an [automatic bringup of Prometheus](#automatic-provisioning); alternatively users can [bring their own Prometheus](#prometheus).
 
 To enable one or more namespaces for metrics scraping:

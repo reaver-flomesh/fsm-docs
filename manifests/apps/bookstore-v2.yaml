@@ -47,7 +47,7 @@ spec:
       serviceAccountName: bookstore-v2
       containers:
         - name: bookstore
-          image: openservicemesh/bookstore:latest-main
+          image: flomesh/bookstore:latest-main
           imagePullPolicy: Always
           ports:
             - containerPort: 14001

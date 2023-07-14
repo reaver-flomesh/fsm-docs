@@ -16,5 +16,5 @@ There are some use cases, where it is desired to use different TLS certificates 
 
 ## Demos
 
-- [Bi-directional MTLS with FSM Ingress Controller](/demos/bidirection_tls_fsm)
-- [Bi-directional MTLS with Nginx Ingress Controller](/demos/bidirection_tls_nginx)
+- [Bi-directional MTLS with FSM Ingress Controller](/demos/security/bidirection_tls_fsm)
+- [Bi-directional MTLS with Nginx Ingress Controller](/demos/security/bidirection_tls_nginx)

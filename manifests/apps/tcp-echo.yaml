@@ -43,7 +43,7 @@ spec:
       serviceAccountName: tcp-echo
       containers:
       - name: tcp-echo-server
-        image: "openservicemesh/tcp-echo-server:latest"
+        image: "flomesh/tcp-echo-server:latest-main"
         imagePullPolicy: Always
         command: ["/tcp-echo-server"]
         args: [ "--port", "9000" ]

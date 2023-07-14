@@ -5,11 +5,11 @@ type: docs
 weight: 10
 ---
 
-The [SMI Traffic Split API](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md) can be used to split outgoing traffic to multiple service backends. This can be used to orchestrate canary releases for multiple versions of the software.
+The [SMI Traffic Split API](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha4/traffic-split.md) can be used to split outgoing traffic to multiple service backends. This can be used to orchestrate canary releases for multiple versions of the software.
 
 ## What is supported
 
-FSM implements the [SMI traffic split v1alpha2 version](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md).
+FSM implements the [SMI traffic split v1alpha4 version](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha4/traffic-split.md).
 
 It supports the following:
 
@@ -22,7 +22,7 @@ It supports the following:
 Outbound traffic destined to a Kubernetes service can be split to multiple service backends using the SMI Traffic Split API. Consider the following example where traffic to the `bookstore.default.svc.cluster.local` FQDN corresponding to the `default/bookstore` service is split to services `default/bookstore-v1` and `default/bookstore-v2`, with a weight of 90 and 10 respectively.
 
 ```yaml
-apiVersion: split.smi-spec.io/v1alpha2
+apiVersion: split.smi-spec.io/v1alpha4
 kind: TrafficSplit
 metadata:
   name: bookstore-split
@@ -50,4 +50,4 @@ When a `TrafficSplit` resource is created, FSM applies the configuration on clie
 
 It is important to note that a `TrafficSplit` resource only configures traffic splitting to a service, and does not give applications permission to communicate with each other. Thus, a valid [TrafficTarget](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-access/v1alpha3/traffic-access.md#traffictarget) resource must be configured in conjunction with a `TrafficSplit` configuration to achieve traffic flow between applications as desired.
 
-Refer to a demo on [Canary rollouts using SMI Traffic Split](/demos/canary_rollout) to learn more.
+Refer to a demo on [Canary rollouts using SMI Traffic Split](/demos/traffic_management/canary_rollout) to learn more.

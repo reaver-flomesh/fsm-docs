@@ -117,6 +117,6 @@ In terms of TPS, FSM drops 12% and fsm's TPS drops a staggering 65%.
 
 ## Summary
 
-This time, we benchmarked FSM and fsm data planes with limited sidecar resources. From the results, FSM can still maintain high performance with low resource usage and more efficient use of resources. For resource-constrained edge scenarios, service grid features that are only available in the cloud can be enjoyed at a lower resource overhead. These are made possible by [Pipy](https://flomesh.io)'s low-resource, high-performance features.
+This time, we benchmarked FSM and fsm data planes with limited sidecar resources. From the results, FSM can still maintain high performance with low resource usage and more efficient use of resources. For resource-constrained edge scenarios, service grid features that are only available in the cloud can be enjoyed at a lower resource overhead. These are made possible by [Pipy](https://flomesh.io/pipy)'s low-resource, high-performance features.
 
 Of course, FSM is suitable for edge computing scenarios, but it can be applied to the cloud as well. In particular, cloud environments with large-scale services meet the requirements for cost control.

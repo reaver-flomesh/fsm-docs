@@ -132,7 +132,7 @@ The following configuration parameters will be required for FSM to integrate wit
 - `--set fsm.certificateProvider.kind=vault` - set this to `vault`
 - `--set fsm.vault.host` - host name of the Vault server (example: `vault.contoso.com`)
 - `--set fsm.vault.protocol` - protocol for Vault connection (`http` or `https`)
-- `--set fsm.vault.role` - role created on Vault server and dedicated to Open Service Mesh (example: `openservicemesh`)
+- `--set fsm.vault.role` - role created on Vault server and dedicated to Flomesh Service Mesh (example: `fsm`)
 - `--set fsm.certificateProvider.serviceCertValidityDuration` - period for which each new certificate issued for service-to-service communication will be valid. It is represented as a sequence of decimal numbers each with optional fraction and a unit suffix, ex: 1h to represent 1 hour, 30m to represent 30 minutes, 1.5h or 1h30m to represent 1 hour and 30 minutes.
 
 The Vault token must be provided to FSM so it can connect to Vault. The token can be configured as a set option or stored in a Kubernetes secret in the namespace of the FSM installation. If the `fsm.vault.token` option is not set, the `fsm.vault.secret.name` and `fsm.vault.secret.key` options must be configured.
@@ -210,7 +210,7 @@ CERT_MANAGER=vault
 VAULT_HOST="vault.${K8S_NAMESPACE}.svc.cluster.local"
 VAULT_PROTOCOL=http
 VAULT_TOKEN=xyz
-VAULT_ROLE=openservicemesh
+VAULT_ROLE=fsm
 ```
 
 When running FSM on your local workstation, use the following `fsm install` set options:
@@ -220,7 +220,7 @@ When running FSM on your local workstation, use the following `fsm install` set 
 --set fsm.vault.host="localhost"  # or the host where Vault is installed
 --set fsm.vault.protocol="http"
 --set fsm.vault.token="xyz"
---set fsm.vault.role="openservicemesh'
+--set fsm.vault.role="fsm'
 --set fsm.serviceCertValidityDuration=24h
 ```
 
@@ -240,7 +240,7 @@ interface. It provides the following methods:
 ```
 
 FSM assumes that a CA has already been created on the Vault server.
-FSM also requires a dedicated Vault role (for instance `pki/roles/openservicemesh`).
+FSM also requires a dedicated Vault role (for instance `pki/roles/fsm`).
 The Vault role created by the `./demo/deploy-vault.sh` script applies the following configuration, which is only appropriate for development purposes:
 
 - `allow_any_name`: `true`
@@ -255,7 +255,7 @@ following commands to setup the dev environment:
 
     export VAULT_TOKEN="xyz"
     export VAULT_ADDR="http://localhost:8200"
-    export VAULT_ROLE="openservicemesh
+    export VAULT_ROLE="fsm"
 
     # Launch the Vault server in dev mode
     vault server -dev -dev-listen-address=0.0.0.0:8200 -dev-root-token-id=${VAULT_TOKEN}
@@ -272,7 +272,7 @@ following commands to setup the dev environment:
     # Set URL configuration (See: https://www.vaultproject.io/docs/secrets/pki#set-url-configuration)
     vault write pki/config/urls issuing_certificates='http://127.0.0.1:8200/v1/pki/ca' crl_distribution_points='http://127.0.0.1:8200/v1/pki/crl';
 
-    # Configure a role named "openservicemesh" (See: https://www.vaultproject.io/docs/secrets/pki#configure-a-role)
+    # Configure a role named "fsm" (See: https://www.vaultproject.io/docs/secrets/pki#configure-a-role)
     vault write pki/roles/${VAULT_ROLE} allow_any_name=true allow_subdomains=true;
 
     # Create a root certificate named "fsm.root" (See: https://www.vaultproject.io/docs/secrets/pki#setup)

@@ -44,6 +44,6 @@ spec:
       serviceAccountName: bookwarehouse
       containers:
         - name: bookwarehouse
-          image: openservicemesh/bookwarehouse:latest-main
+          image: flomesh/bookwarehouse:latest-main
           imagePullPolicy: Always
           command: ["/bookwarehouse"]

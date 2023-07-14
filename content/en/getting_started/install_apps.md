@@ -49,8 +49,8 @@ kubectl create namespace bookwarehouse
 fsm namespace add bookstore bookbuyer bookthief bookwarehouse
 ```
 
-Now each one of the four namespaces is labelled with `openservicemesh.io/monitored-by: fsm` and also
-annotated with `openservicemesh.io/sidecar-injection: enabled`. The FSM Controller, noticing the label and annotation
+Now each one of the four namespaces is labelled with `flomesh.io/monitored-by: fsm` and also
+annotated with `flomesh.io/sidecar-injection: enabled`. The FSM Controller, noticing the label and annotation
 on these namespaces, will start injecting all **new** pods with Pipy sidecars.
 
 ### Create Pods, Services, ServiceAccounts
@@ -105,7 +105,7 @@ In addition, a [Kubernetes Service Account](https://kubernetes.io/docs/tasks/con
 
 Set up client port forwarding with the following steps to access the applications in the Kubernetes cluster. It is best to start a new terminal session for running the port forwarding scripts to maintain the port forwarding session, while using the original terminal to continue to issue commands. The port-forward-all.sh scripts will look for a `.env` file for environment variables needed to run the script. The `.env` creates the necessary variables that target the previously created namespaces. We will use the reference `.env.example` file and then run the port forwarding scripts.
 
-In a new terminal session, run the following commands to enable port forwarding into the Kubernetes cluster from the root of the project directory (your local clone of [upstream FSM](https://github.com/flomesh-io/FSM)).
+In a new terminal session, run the following commands to enable port forwarding into the Kubernetes cluster from the root of the project directory (your local clone of [upstream FSM](https://github.com/flomesh-io/fsm)).
 
 ```bash
 cp .env.example .env

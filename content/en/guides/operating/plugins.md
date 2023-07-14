@@ -23,7 +23,7 @@ FSM provides three new CRDs for extensibility:
 - `PluginChain`: The plugin chain is the execution of plugins in sequence. The system provides four plugin chains: `inbound-tcp`, `inbound-http`, `outbound-tcp`, `outbound-http`. They correspond to the OSI layer-4 and layer-7 processing stages of inbound and outbound traffic, respectively.
 - `PluginConfig`: The plugin configuration provides the configuration required for the plugin logic to run, which will be sent to the FSM sidecar proxy in JSON format.
 
-For detailed information on plugin CRDs, refer to the [Plugin API document](/docs/api_reference/plugin/).
+For detailed information on plugin CRDs, refer to the [Plugin API document](/api_reference/plugin/).
 
 ### Built-in variables
 
@@ -55,4 +55,4 @@ Below is a list of `built-in` PipyJS variables which can be imported into your c
 
 For a simple demonstration of how to extend FSM via `Plugins`, refer to below demo:
 
-* [Adding Identity and Access Management functionality](/demos/plugin_iam_demo)
+* [Adding Identity and Access Management functionality](/demos/plugins/plugin_iam_demo)

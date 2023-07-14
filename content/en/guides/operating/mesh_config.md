@@ -33,7 +33,7 @@ kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traff
 ```
 Refer to the [Config API reference](/api_reference/config/v1alpha1) for more information.
 
-If an incorrect value is used, validations on the [MeshConfig CRD](https://github.com/flomesh-io/fsm/blob/{{< param fsm_branch >}}/charts/fsm/crds/meshconfig.yaml) will prevent the change with an error message explaining why the value is invalid.
+If an incorrect value is used, validations on the [MeshConfig CRD](https://github.com/flomesh-io/fsm/blob/{{< param fsm_branch >}}/cmd/fsm-bootstrap/crds/config_meshconfig.yaml) will prevent the change with an error message explaining why the value is invalid.
 For example, the below command shows what happens if we patch `enableEgress` to a non-boolean value.
 ```bash
 kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enableEgress":"no"}}}'  --type=merge

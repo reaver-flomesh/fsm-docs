@@ -2,7 +2,7 @@
 title: "Multi-cluster services"
 description: "Multi-cluster services communication using Flomesh Service Mesh (FSM)"
 type: docs
-weight: 13
+weight: 18
 ---
 
 # Multi-cluster communication with Flomesh Service Mesh
@@ -27,7 +27,7 @@ Kubernetes has been quite successful in popularizing the idea of ​​container
 
 There is currently no standard way to connect or even think about Kubernetes services beyond the single cluster boundary, and Kubernetes Multicluster SIG has put together a proposal [KEP-1645](https://github.com/kubernetes/enhancements/tree/master/keps/sig-multicluster/1645-multi-cluster-services-api) to extend Kubernetes Service concepts across multiple clusters.
 
-[Flomesh](https://flomesh.io) team has been spending time tackling the challenge of multicluster communication, integrating north-south traffic management capabilities into [fsm](https://flomesh.io/fsm) SMI compatible service mesh, and contributing back to the Open Source community.
+[Flomesh](https://flomesh.io) team has been spending time tackling the challenge of multicluster communication, integrating north-south traffic management capabilities into [FSM](https://flomesh.io/fsm) SMI compatible service mesh, and contributing back to the Open Source community.
 
 In this part of the series, we will be looking into motivation, goals, architecture of [FSM](https://github.com/flomesh-io/fsm) multi-cluster support, its components.
 
@@ -46,7 +46,7 @@ Flomesh team aims to help the community by providing solutions to these problems
 * When a service is consumed from another cluster its behavior should be predictable and consistent with how it would be consumed within its cluster.
 * Allow gradual rollout of changes in a multi-cluster environment.
 * Provide a stand-alone implementation that can be used without any coupling to any product and/or solution.
-* Transparent integration with [fsm](https://flomesh.io/fsm) service mesh, for users who want to have multi-cluster support with service mesh functionality.
+* Transparent integration with [FSM](https://flomesh.io/fsm) service mesh, for users who want to have multi-cluster support with service mesh functionality.
 * Fully open source and welcomes the community to participate and contribute.
 
 ### Architecture
@@ -141,5 +141,5 @@ For detailed CRD reference, refer to [Multicluster API Reference](/api_reference
 
 ## Demo
 
-- [Multi-cluster services discovery & communication](/demos/multicluster_services_communication)
-- [Multi-cluster services access control](/demos/multicluster_services_access_control)
+- [Multi-cluster services discovery & communication](/demos/multi_cluster/multicluster_services_communication)
+- [Multi-cluster services access control](/demos/multi_cluster/multicluster_services_access_control)

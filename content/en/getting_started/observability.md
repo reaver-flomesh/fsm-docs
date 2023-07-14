@@ -5,7 +5,7 @@ type: docs
 weight: 5
 ---
 
-The following article shows you how to install FSM with automatic provisioning of the Prometheus and Grafana stack for observability and monitoring. For an example using a bring your own (BYO) Prometheus and Grafana stack on your cluster with FSM, see the [Integrate FSM with Prometheus and Grafana](/demos/prometheus_grafana/) demo.
+The following article shows you how to install FSM with automatic provisioning of the Prometheus and Grafana stack for observability and monitoring. For an example using a bring your own (BYO) Prometheus and Grafana stack on your cluster with FSM, see the [Integrate FSM with Prometheus and Grafana](/demos/observability/prometheus_grafana/) demo.
 
 The configuration created in this article should not be used in production environments. For production-grade deployments, see [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md) and [Deploy Grafana in Kubernetes](https://grafana.com/docs/grafana/latest/installation/kubernetes/).
 

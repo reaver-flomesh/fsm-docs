@@ -11,7 +11,7 @@ This guide describes how to uninstall FSM from a Kubernetes cluster. This guide 
 
 - Kubernetes cluster with FSM installed
 - The `kubectl` CLI
-- The [`fsm` CLI](/install/#set-up-the-fsm-cli) or the Helm 3 CLI
+- The [`FSM` CLI](/guides/operating/cli/#set-up-the-fsm-cli) or the Helm 3 CLI
 
 ## Remove Pipy Sidecars from Application Pods and Pipy Secrets
 
@@ -43,7 +43,7 @@ $ fsm namespace remove <namespace> --mesh-name=<mesh-name>
 Namespace [<namespace>] successfully removed from mesh [<mesh-name>]
 ```
 
-This will remove the `openservicemesh.io/sidecar-injection: enabled` annotation and `openservicemesh.io/monitored-by: <mesh name>` label from the namespace. 
+This will remove the `flomesh.io/sidecar-injection: enabled` annotation and `flomesh.io/monitored-by: <mesh name>` label from the namespace. 
 
 Alternatively, if sidecar injection is enabled via annotations on pods instead of per namespace, please modify the pod or deployment spec to remove the sidecar injection annotation.
 
@@ -69,15 +69,15 @@ as all the Pods are restarting.
 
 The FSM control plane and related components will be uninstalled in the following steps:
 
-- [Prerequisites](#prerequisites)
-- [Remove Pipy Sidecars from Application Pods and Pipy Secrets](#remove-pipy-sidecars-from-application-pods-and-pipy-secrets)
-  - [Disable Automatic Sidecar Injection](#disable-automatic-sidecar-injection)
-  - [Restart Pods](#restart-pods)
-- [Uninstall FSM Control Plane and Remove User Provided Resources](#uninstall-fsm-control-plane-and-remove-user-provided-resources)
-  - [Uninstall the FSM control plane](#uninstall-the-fsm-control-plane)
-  - [Remove User Provided Resources](#remove-user-provided-resources)
-  - [Delete FSM Namespace](#delete-fsm-namespace)
-  - [Removal of FSM Cluster Wide Resources](#removal-of-fsm-cluster-wide-resources)
+* [Prerequisites](#prerequisites)
+* [Remove Pipy Sidecars from Application Pods and Pipy Secrets](#remove-pipy-sidecars-from-application-pods-and-pipy-secrets)
+  * [Disable Automatic Sidecar Injection](#disable-automatic-sidecar-injection)
+  * [Restart Pods](#restart-pods)
+* [Uninstall FSM Control Plane and Remove User Provided Resources](#uninstall-fsm-control-plane-and-remove-user-provided-resources)
+  * [Uninstall the FSM control plane](#uninstall-the-fsm-control-plane)
+  * [Remove User Provided Resources](#remove-user-provided-resources)
+  * [Delete FSM Namespace](#delete-fsm-namespace)
+  * [Removal of FSM Cluster Wide Resources](#removal-of-fsm-cluster-wide-resources)
 
 ### Uninstall the FSM control plane
 
@@ -111,7 +111,7 @@ Run `helm uninstall --help` for more options.
 
 If any resources were provided or created for FSM at install time, they can be deleted at this point.
 
-For example, if [Hashicorp Vault](/guides/certificates/#installing-hashi-vault) was deployed for the sole purpose of managing certificates for FSM, all related resources can be deleted.
+For example, if [Hashicorp Vault](/guides/security/certificates/#installing-hashi-vault) was deployed for the sole purpose of managing certificates for FSM, all related resources can be deleted.
 
 ### Delete FSM Namespace
 

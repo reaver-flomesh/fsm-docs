@@ -5,7 +5,7 @@ type: docs
 weight: 1
 ---
 
-The Flomesh Service Mesh (FSM) inherits a portion of the archived [OSM](https://github.com/openservicemesh/fsm) code and introduces the following enhancements while maintaining compatibility with FSM:
+The Flomesh Service Mesh (FSM) inherits a portion of the archived [FSM](https://github.com/flomesh-io/fsm) code and introduces the following enhancements while maintaining compatibility with FSM:
 
 * FSM utilizes [Flomesh Pipy](https://github.com/flomesh-io/pipy) proxy as a replacement for FSM's Envoy proxy. This enables FSM to achieve lightweight control and data planes, optimizing CPU and memory resources effectively.
 * Implemented traffic interception using eBPF-based technology instead of iptables-based traffic interception. To keep conformance with existing users, `iptables` is the default, while new users during installation can select `ebpf` option.
@@ -67,4 +67,4 @@ The evolution of Kubernetes to the edge side solves the difficulties of edge com
 
 ![Architecture diagram](https://user-images.githubusercontent.com/2224492/176060685-8504c433-c91b-4f9e-9754-f9ccb6c28a87.png)
 
-To break the tight coupling on Pipy and open doors for 3rd parties to develop or make use of their data plane or sidecar proxies, we have refactored the `FSM v1.2.0` codebase to make it generic and provide extension points. We strongly believe in and support open source and our [proposal](https://github.com/openservicemesh/fsm/issues/4874) for this refactoring have been submitted to upstream for their review, discussion, and/or utilization.
+To break the tight coupling on Pipy and open doors for 3rd parties to develop or make use of their data plane or sidecar proxies, we have refactored the `FSM v1.2.0` codebase to make it generic and provide extension points. We strongly believe in and support open source and our [proposal](https://github.com/flomesh-io/fsm/issues/4874) for this refactoring have been submitted to upstream for their review, discussion, and/or utilization.

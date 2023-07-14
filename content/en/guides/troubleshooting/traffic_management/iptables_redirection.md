@@ -32,8 +32,8 @@ Namespace:    test
 Init Containers:
   fsm-init:
     Container ID:  containerd://98840f655f2310b2f441e11efe9dfcf894e4c57e4e26b928542ee698159100c0
-    Image:         openservicemesh/init:2c18593efc7a31986a6ae7f412e73b6067e11a57
-    Image ID:      docker.io/openservicemesh/init@sha256:24456a8391bce5d254d5a1d557d0c5e50feee96a48a9fe4c622036f4ab2eaf8e
+    Image:         flomesh/init:2c18593efc7a31986a6ae7f412e73b6067e11a57
+    Image ID:      docker.io/flomesh/init@sha256:24456a8391bce5d254d5a1d557d0c5e50feee96a48a9fe4c622036f4ab2eaf8e
     Port:          <none>
     Host Port:     <none>
     Command:
@@ -86,8 +86,8 @@ Namespace:    test
 Init Containers:
   fsm-init:
     Container ID:  containerd://98840f655f2310b2f441e11efe9dfcf894e4c57e4e26b928542ee698159100c0
-    Image:         openservicemesh/init:2c18593efc7a31986a6ae7f412e73b6067e11a57
-    Image ID:      docker.io/openservicemesh/init@sha256:24456a8391bce5d254d5a1d557d0c5e50feee96a48a9fe4c622036f4ab2eaf8e
+    Image:         flomesh/init:2c18593efc7a31986a6ae7f412e73b6067e11a57
+    Image ID:      docker.io/flomesh/init@sha256:24456a8391bce5d254d5a1d557d0c5e50feee96a48a9fe4c622036f4ab2eaf8e
     Port:          <none>
     Host Port:     <none>
     Command:
@@ -137,7 +137,7 @@ Confirm the outbound ports to be excluded on a pod are set correctly:
 
 ```console
 $ kubectl get pod POD_NAME -o jsonpath='{.metadata.annotations}' -n POD_NAMESPACE'
-map[openservicemesh.io/outbound-port-exclusion-list:8080]
+map[flomesh.io/outbound-port-exclusion-list:8080]
 ```
 
 The output shows the ports that are excluded from outbound traffic redirection on the pod, `8080` in the example above.
@@ -157,8 +157,8 @@ Namespace:    test
 Init Containers:
   fsm-init:
     Container ID:  containerd://98840f655f2310b2f441e11efe9dfcf894e4c57e4e26b928542ee698159100c0
-    Image:         openservicemesh/init:2c18593efc7a31986a6ae7f412e73b6067e11a57
-    Image ID:      docker.io/openservicemesh/init@sha256:24456a8391bce5d254d5a1d557d0c5e50feee96a48a9fe4c622036f4ab2eaf8e
+    Image:         flomesh/init:2c18593efc7a31986a6ae7f412e73b6067e11a57
+    Image ID:      docker.io/flomesh/init@sha256:24456a8391bce5d254d5a1d557d0c5e50feee96a48a9fe4c622036f4ab2eaf8e
     Port:          <none>
     Host Port:     <none>
     Command:

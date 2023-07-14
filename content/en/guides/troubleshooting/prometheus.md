@@ -1,7 +1,6 @@
 ---
 title: "Prometheus"
 description: "Troubleshooting Prometheus integration"
-aliases: "/docs/troubleshooting/observability/prometheus"
 type: docs
 weight: 15
 ---
@@ -76,11 +75,11 @@ If Prometheus is found not to be scraping metrics for any Pods, perform the foll
 
     For each namespace that contains Pods which should have metrics scraped, ensure the namespace is monitored by the intended FSM instance with `fsm mesh list`.
 
-    Next, check to make sure the namespace is annotated with `openservicemesh.io/metrics: enabled`:
+    Next, check to make sure the namespace is annotated with `flomesh.io/metrics: enabled`:
 
     ```console
     $ # Assuming FSM is installed in the fsm-system namespace:
-    $ kubectl get namespace <namespace> -o jsonpath='{.metadata.annotations.openservicemesh\.io/metrics}'
+    $ kubectl get namespace <namespace> -o jsonpath='{.metadata.annotations.flomesh\.io/metrics}'
     enabled
     ```
 

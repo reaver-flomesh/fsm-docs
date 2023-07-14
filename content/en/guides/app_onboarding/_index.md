@@ -32,7 +32,7 @@ The following guide describes how to onboard a Kubernetes microservice to an FSM
     Add this IP to the MeshConfig so that outbound traffic to it is excluded from interception by FSM's sidecar:
     ```console
     $ kubectl patch meshconfig fsm-mesh-config -n <fsm-namespace> -p '{"spec":{"traffic":{"outboundIPRangeExclusionList":["10.0.0.1/32"]}}}'  --type=merge
-    meshconfig.config.openservicemesh.io/fsm-mesh-config patched
+    meshconfig.config.flomesh.io/fsm-mesh-config patched
     ```
     
     Restart the relevant pods in monitored namespaces for this change to take effect.
@@ -51,7 +51,7 @@ The following guide describes how to onboard a Kubernetes microservice to an FSM
     ```console
     kubectl apply -f - <<EOF
     kind: Egress
-    apiVersion: policy.openservicemesh.io/v1alpha1
+    apiVersion: policy.flomesh.io/v1alpha1
     metadata:
         name: k8s-server-egress
         namespace: test

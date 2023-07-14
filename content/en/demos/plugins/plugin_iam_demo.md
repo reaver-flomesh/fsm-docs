@@ -175,8 +175,8 @@ kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"featu
 Plugin `token-injector`:
 
 - `metadata.name`: the name of the plugin, which is also the name of the plugin script. For example, this plugin will be saved as `token-injector.js` stored in the plugins directory of the code repository.
-- `spec.pipyscript`: the [PipyJS](https://flomesh.io/pipy/en/reference/pjs) script content, which is the functional logic code, stored in the script file `plugins/token-injector.js`. Context metadata that is built-in to the system can be used within the script.
-- `spec.priority`: the priority of the plugin, with optional values of 0-65535. The higher the value, the higher the priority, and the earlier the plugin is positioned in the plugin chain. The value here is `115`, which, based on the built-in plugin list in Helm [values.yaml](https://github.com/flomesh-io/fsm/blob/45b05bd39dc0e8d1c28460622a4be2f92abdf28f/charts/fsm/values.yaml#L84), will be positioned between `modules/outbound-circuit-breaker.js` and `modules/outbound-http-load-balancing.js`, executed after the circuit breaker logic is processed and before the load balancer forwards to the upstream.
+- `spec.pipyscript`: the [PipyJS](https://flomesh.io/pipy/docs/en/reference/pjs) script content, which is the functional logic code, stored in the script file `plugins/token-injector.js`. Context metadata that is built-in to the system can be used within the script.
+- `spec.priority`: the priority of the plugin, with optional values of 0-65535. The higher the value, the higher the priority, and the earlier the plugin is positioned in the plugin chain. The value here is `115`, which, based on the built-in plugin list in Helm [values.yaml](https://github.com/flomesh-io/fsm/blob/main/charts/fsm/values.yaml#L129), will be positioned between `modules/outbound-circuit-breaker.js` and `modules/outbound-http-load-balancing.js`, executed after the circuit breaker logic is processed and before the load balancer forwards to the upstream.
 
 ```shell
 kubectl apply -f - <<EOF
@@ -281,7 +281,7 @@ plugin chain `token-injector-chain`:
     - `plugins`: list of plugins to be inserted into the plugin chain, here `token-injector` is inserted into the plugin chain.
 - `spec.selectors`: target of the plugin chain, using [Kubernetes label selector scheme](https://kubernetes.io/concepts/overview/working-with-objects/labels/).
   - `podSelector`: pod selector, selects pods with label `app=curl`.
-  - `namespaceSelector`: namespace selector, selects namespaces managed by the mesh, i.e., `openservicemesh.io/monitored-by=fsm`.
+  - `namespaceSelector`: namespace selector, selects namespaces managed by the mesh, i.e., `flomesh.io/monitored-by=fsm`.
 
 ```shell
 kubectl apply -n curl -f - <<EOF
@@ -304,7 +304,7 @@ spec:
           values: ["curl"]
     namespaceSelector:
       matchExpressions:
-        - key: openservicemesh.io/monitored-by
+        - key: flomesh.io/monitored-by
           operator: In
           values: ["fsm"]
 EOF
@@ -328,7 +328,7 @@ spec:
         app: httpbin
     namespaceSelector:
       matchExpressions:
-        - key: openservicemesh.io/monitored-by
+        - key: flomesh.io/monitored-by
           operator: In
           values: ["fsm"]
 EOF

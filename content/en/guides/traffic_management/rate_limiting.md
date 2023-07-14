@@ -13,7 +13,7 @@ FSM supports server-side rate limiting per target host, also referred to as `loc
 
 ## Configuring local per-instance rate limiting
 
-FSM leverages its [UpstreamTrafficSetting API][1] to configure rate limiting attributes for traffic directed to an upstream service. We use the term `upstream service` to refer to a service that receives connections and requests from clients and return responses. The specification enables configuring local rate limiting attributes for an upstream service at the connection and request level. 
+FSM leverages its [UpstreamTrafficSetting API](/api_reference/policy/v1alpha1/#policy.flomesh.io/v1alpha1.UpstreamTrafficSettingSpec) to configure rate limiting attributes for traffic directed to an upstream service. We use the term `upstream service` to refer to a service that receives connections and requests from clients and return responses. The specification enables configuring local rate limiting attributes for an upstream service at the connection and request level. 
 
 Each `UpstreamTrafficSetting` configuration targets an upstream host defined by the `spec.host` field. For a Kubernetes service `my-svc` in the namespace `my-namespace`, the `UpstreamTrafficSetting` resource must be created in the namespace `my-namespace`, and `spec.host` must be an FQDN of the form `my-svc.my-namespace.svc.cluster.local`.
 
@@ -31,7 +31,7 @@ The following attributes nested under `spec.rateLimit.local.tcp` define the rate
 
 - `burst`: The number of connections above the baseline rate that are allowed in a short period of time.
 
-Refer to the [TCP local rate limiting API](/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.TCPLocalRateLimitSpec) for additional information regarding API usage.
+Refer to the [TCP local rate limiting API](/api_reference/policy/v1alpha1/#policy.flomesh.io/v1alpha1.TCPLocalRateLimitSpec) for additional information regarding API usage.
 
 ### Rate limiting HTTP requests
 
@@ -54,7 +54,5 @@ The following rate limiting attributes can be configured for HTTP traffic:
 ## Demos
 
 To learn more about configuring rate limting, refer to the following demo guides:
-- [Local rate limiting of TCP connections](/demos/local_rate_limit_connections)
-- [Local rate limiting of HTTP requests](/demos/local_rate_limit_http)
-
-[1]: /docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.UpstreamTrafficSettingSpec
+- [Local rate limiting of TCP connections](/demos/traffic_management/local_rate_limit_connections)
+- [Local rate limiting of HTTP requests](/demos/traffic_management/local_rate_limit_http)

@@ -29,12 +29,12 @@ Automatic Sidecar injection can be enabled in the following ways:
 
   ```console
   # Enable sidecar injection on a namespace
-  $ kubectl annotate namespace <namespace> openservicemesh.io/sidecar-injection=enabled
+  $ kubectl annotate namespace <namespace> flomesh.io/sidecar-injection=enabled
   ```
 
   ```console
   # Enable sidecar injection on a pod
-  $ kubectl annotate pod <pod> openservicemesh.io/sidecar-injection=enabled
+  $ kubectl annotate pod <pod> flomesh.io/sidecar-injection=enabled
   ```
 
 - Setting the sidecar injection annotation to `enabled` in the Kubernetes resource spec for a namespace or pod:
@@ -42,7 +42,7 @@ Automatic Sidecar injection can be enabled in the following ways:
   metadata:
     name: test
     annotations:
-      'openservicemesh.io/sidecar-injection': 'enabled'
+      'flomesh.io/sidecar-injection': 'enabled'
   ```
 
   Pods will be injected with a sidecar only if the following conditions are met:
@@ -60,7 +60,7 @@ Namespaces can be disabled for automatic sidecar injection in the following ways
 
   ```console
   # Disable sidecar injection on a namespace
-  $ kubectl annotate namespace <namespace> openservicemesh.io/sidecar-injection=disabled
+  $ kubectl annotate namespace <namespace> flomesh.io/sidecar-injection=disabled
   ```
 
 ### Explicitly Disabling Automatic Sidecar Injection on Pods
@@ -70,7 +70,7 @@ Individual pods can be explicitly disabled for sidecar injection. This is useful
 - Using `kubectl` to annotate individual pods to disable sidecar injection:
   ```console
   # Disable sidecar injection on a pod
-  $ kubectl annotate pod <pod> openservicemesh.io/sidecar-injection=disabled
+  $ kubectl annotate pod <pod> flomesh.io/sidecar-injection=disabled
   ```
 
 - Setting the sidecar injection annotation to `disabled` in the Kubernetes resource spec for the pod:
@@ -78,7 +78,7 @@ Individual pods can be explicitly disabled for sidecar injection. This is useful
   metadata:
     name: test
     annotations:
-      'openservicemesh.io/sidecar-injection': 'disabled'
+      'flomesh.io/sidecar-injection': 'disabled'
   ```
 
 Automatic sidecar injection is implicitly disabled for a namespace when it is removed from the mesh using the `fsm namespace remove` command.

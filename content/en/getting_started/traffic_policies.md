@@ -43,9 +43,9 @@ In permissive traffic policy mode, application connectivity within the mesh is a
 
 ### Verify FSM is in permissive traffic policy mode
 
-Before proceeding, [verify the traffic policy mode](#verify-the-traffic-policy-mode) and ensure the `enablePermissiveTrafficPolicyMode` key is set to `true` in the `fsm-mesh-config` `MeshConfig` resource. Refer to the section above to enable permissive traffic policy mode.
+Before proceeding, [verify the traffic policy mode](#how-to-check-traffic-policy-mode) and ensure the `enablePermissiveTrafficPolicyMode` key is set to `true` in the `fsm-mesh-config` `MeshConfig` resource. Refer to the section above to enable permissive traffic policy mode.
 
-In step [Deploy the Bookstore Application](#deploy-the-bookstore-application), we have already deployed the applications needed to verify traffic flow in permissive traffic policy mode. The `bookstore` service we previously deployed is encoded with an identity of `bookstore-v1` for demo purpose, as can be seen in the [Deployment's manifest](https://raw.githubusercontent.com/openservicemesh/fsm-docs/{{< param fsm_branch >}}/manifests/apps/bookstore.yaml). The identity reflects which counter increments in the `bookbuyer` and `bookthief` UI, and the identity displayed in the `bookstore` UI.
+In step [Deploy the Bookstore Application](/getting_started/install_apps/), we have already deployed the applications needed to verify traffic flow in permissive traffic policy mode. The `bookstore` service we previously deployed is encoded with an identity of `bookstore-v1` for demo purpose, as can be seen in the [Deployment's manifest](https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/apps/bookstore.yaml). The identity reflects which counter increments in the `bookbuyer` and `bookthief` UI, and the identity displayed in the `bookstore` UI.
 
 The counter in the `bookbuyer`, `bookthief` UI for the books bought and stolen respectively from `bookstore v1` should now be incrementing:
 
@@ -74,7 +74,7 @@ SMI traffic policies can be used for the following:
 1. SMI traffic specs policies to define routing rules to associate with access control policies
 1. SMI traffic split policies to direct client traffic to multiple backends based on weights
 
-The following sections describe how to leverage each of these policies to enforce fine grained control over traffic flowing within the service mesh. Before proceeding, [verify the traffic policy mode](#verify-the-traffic-policy-mode) and ensure the `enablePermissiveTrafficPolicyMode` key is set to `false` in the `fsm-mesh-config` `MeshConfig` resource.
+The following sections describe how to leverage each of these policies to enforce fine grained control over traffic flowing within the service mesh. Before proceeding, [verify the traffic policy mode](#how-to-check-traffic-policy-mode) and ensure the `enablePermissiveTrafficPolicyMode` key is set to `false` in the `fsm-mesh-config` `MeshConfig` resource.
 
 SMI traffic policy mode can be enabled by disabling permissive traffic policy mode:
 
@@ -91,7 +91,7 @@ Apply the [SMI Traffic Target](https://github.com/servicemeshinterface/smi-spec/
  Deploy SMI TrafficTarget and HTTPRouteGroup policy:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/openservicemesh/fsm-docs/{{< param fsm_branch >}}/manifests/access/traffic-access-v1.yaml
+kubectl apply -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/access/traffic-access-v1.yaml
 ```
 
 The counters should now be incrementing for the `bookbuyer`, and `bookstore` applications:
@@ -165,7 +165,7 @@ spec:
 Apply the updated TrafficTarget:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/openservicemesh/fsm-docs/{{< param fsm_branch >}}/manifests/access/traffic-access-v1-allow-bookthief.yaml
+kubectl apply -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/access/traffic-access-v1-allow-bookthief.yaml
 ```
 
 The counter in the `bookthief` window will start incrementing.
@@ -175,7 +175,7 @@ The counter in the `bookthief` window will start incrementing.
 Apply the original Traffic Target object without the bookthief listed as an allowed source:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/openservicemesh/fsm-docs/{{< param fsm_branch >}}/manifests/access/traffic-access-v1.yaml
+kubectl apply -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/access/traffic-access-v1.yaml
 ```
 
 The counter in the `bookthief` window will stop incrementing.

@@ -41,10 +41,10 @@ To familiarize yourself on how FSM works with Prometheus, try installing a new m
 1. Install sample applications:
 
    ```console
-   $ kubectl apply -f https://raw.githubusercontent.com/openservicemesh/fsm-docs/{{< param fsm_branch >}}/manifests/samples/curl/curl.yaml -n metrics-demo
+   $ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/curl/curl.yaml -n metrics-demo
    serviceaccount/curl created
    deployment.apps/curl created
-   $ kubectl apply -f https://raw.githubusercontent.com/openservicemesh/fsm-docs/{{< param fsm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n metrics-demo
+   $ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n metrics-demo
    serviceaccount/httpbin created
    service/httpbin created
    deployment.apps/httpbin created
@@ -120,7 +120,7 @@ To familiarize yourself on how FSM works with Prometheus, try installing a new m
    FSM [mesh name: fsm] uninstalled
    ```
 
-   To remove FSM's cluster wide resources after uninstallation, run the following command. See the [uninstall guide](/guides/uninstall/) for more context and information.
+   To remove FSM's cluster wide resources after uninstallation, run the following command. See the [uninstall guide](/guides/operating/uninstall/) for more context and information.
 
    ```console
    $ fsm uninstall mesh --delete-cluster-wide-resources

@@ -37,6 +37,5 @@ trap 'nc 127.0.0.1 15000 -e echo -ne "POST /quitquitquit HTTP/1.1\nHost: 127.0.0
 
 ### Related issues (work in progress)
 
-- [FSM issue 2316](https://github.com/flomesh-io/fsm/issues/2316): Defer startup of application containers till the Pipy proxy sidecar is ready
 - [Kubernetes issue 65502](https://github.com/kubernetes/kubernetes/issues/65502): Support startup dependencies between containers on the same pod
 

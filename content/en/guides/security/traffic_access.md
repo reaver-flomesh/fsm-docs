@@ -210,4 +210,4 @@ spec:
 
 > Above configuration will allow TCP and UDP traffic to both `8301` and `8302` ports, but will block UDP traffic to `8300`.
 
-Refer to a guide on [configure traffic policies](/docs/getting_started/traffic_policies/) to learn more.
+Refer to a guide on [configure traffic policies](/getting_started/traffic_policies/) to learn more.

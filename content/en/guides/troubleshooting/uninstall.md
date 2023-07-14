@@ -1,12 +1,11 @@
 ---
 title: "Uninstall"
 description: "Troubleshooting FSM uninstall"
-aliases: ["/docs/troubleshooting/uninstall"]
 type: docs
 weight: 20
 ---
 
-If for any reason, `fsm uninstall mesh` (as documented in the [uninstall guide](/guides/uninstall/)) fails, you may manually delete FSM resources as detailed below.
+If for any reason, `fsm uninstall mesh` (as documented in the [uninstall guide](/guides/operating/uninstall/)) fails, you may manually delete FSM resources as detailed below.
 
 Set environment variables for your mesh:
 ```console
@@ -40,17 +39,17 @@ Delete FSM secrets, the meshconfig, and webhook configurations:
 ```console
 kubectl delete secret -n $fsm_namespace $fsm_ca_bundle mutating-webhook-cert-secret validating-webhook-cert-secret crd-converter-cert-secret
 kubectl delete meshconfig -n $fsm_namespace fsm-mesh-config
-kubectl delete mutatingwebhookconfiguration -l app.kubernetes.io/name=openservicemesh.io,app.kubernetes.io/instance=$mesh_name,app.kubernetes.io/version=$fsm_version,app=fsm-injector
-kubectl delete validatingwebhookconfiguration -l app.kubernetes.io/name=openservicemesh.io,app.kubernetes.io/instance=mesh_name,app.kubernetes.io/version=$fsm_version,app=fsm-controller
+kubectl delete mutatingwebhookconfiguration -l app.kubernetes.io/name=flomesh.io,app.kubernetes.io/instance=$mesh_name,app.kubernetes.io/version=$fsm_version,app=fsm-injector
+kubectl delete validatingwebhookconfiguration -l app.kubernetes.io/name=flomesh.io,app.kubernetes.io/instance=mesh_name,app.kubernetes.io/version=$fsm_version,app=fsm-controller
 ```
 
 To delete FSM and SMI CRDs from the cluster, run the following.
 > Warning: Deletion of a CRD will cause all custom resources corresponding to that CRD to also be deleted.
 ```console
-kubectl delete crd meshconfigs.config.openservicemesh.io
-kubectl delete crd multiclusterservices.config.openservicemesh.io
-kubectl delete crd egresses.policy.openservicemesh.io
-kubectl delete crd ingressbackends.policy.openservicemesh.io
+kubectl delete crd meshconfigs.config.flomesh.io
+kubectl delete crd multiclusterservices.config.flomesh.io
+kubectl delete crd egresses.policy.flomesh.io
+kubectl delete crd ingressbackends.policy.flomesh.io
 kubectl delete crd httproutegroups.specs.smi-spec.io
 kubectl delete crd tcproutes.specs.smi-spec.io
 kubectl delete crd traffictargets.access.smi-spec.io

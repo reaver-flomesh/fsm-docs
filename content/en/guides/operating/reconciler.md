@@ -10,9 +10,9 @@ This guide describes how to enable the reconciler in FSM.
 
 ## How the reconciler works
 
-The goal of building a reconciler in FSM is to ensure resources required for the correct operation of FSM's control plane are in their desired state at all times. Resources that are installed as a part of FSM install and have the labels `openservicemesh.io/reconcile: true` and `app.kubernetes.io/name: openservicemesh.io` will be reconciled by the reconciler.
+The goal of building a reconciler in FSM is to ensure resources required for the correct operation of FSM's control plane are in their desired state at all times. Resources that are installed as a part of FSM install and have the labels `flomesh.io/reconcile: true` and `app.kubernetes.io/name: flomesh.io` will be reconciled by the reconciler.
 
-**Note**: The reconciler will not operate as desired if the lables `openservicemesh.io/reconcile: true` and `app.kubernetes.io/name: openservicemesh.io` are modified or deleted on the reconcilable resources.
+**Note**: The reconciler will not operate as desired if the lables `flomesh.io/reconcile: true` and `app.kubernetes.io/name: flomesh.io` are modified or deleted on the reconcilable resources.
 
 An update or delete event on the reconcilable resources will trigger the reconciler and it will reconcile the resource back to its desired state. Only metadata changes (excluding a name change) will be permitted on the reconcilable resources.
 

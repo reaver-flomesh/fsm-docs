@@ -1,6 +1,7 @@
 ---
 title: "External Authorization"
 description: "Configure external authorization through MeshConfig."
+draft: true
 type: docs
 weight: 1
 ---
@@ -32,11 +33,11 @@ cd <PATH_TO_fsm_REPO>
 demo/run-fsm-demo.sh  # wait for all services to come up
 ```
 
-- When FSM's demo is up and running, proceed to deploy `opa-envoy-plugin`. FSM provides a [curated standalone opa-envoy-plugin deployment chart](https://raw.githubusercontent.com/openservicemesh/fsm-docs/{{< param fsm_branch >}}/manifests/opa/deploy-opa-envoy.yaml) which exposes `opa-envoy-plugin`'s gRPC port (default `9191`) through a service, over the network. This is the endpoint that FSM will configure the proxies with when enabling external authorization. The following snippet creates an `opa` namespace and deploys `opa-envoy-plugin` in it with minimal deny-all configuration:
+- When FSM's demo is up and running, proceed to deploy `opa-envoy-plugin`. FSM provides a [curated standalone opa-envoy-plugin deployment chart](https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/opa/deploy-opa-envoy.yaml) which exposes `opa-envoy-plugin`'s gRPC port (default `9191`) through a service, over the network. This is the endpoint that FSM will configure the proxies with when enabling external authorization. The following snippet creates an `opa` namespace and deploys `opa-envoy-plugin` in it with minimal deny-all configuration:
 
 ```bash
 kubectl create namespace opa
-kubectl apply -f https://raw.githubusercontent.com/openservicemesh/fsm-docs/{{< param fsm_branch >}}/manifests/opa/deploy-opa-envoy.yaml
+kubectl apply -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/opa/deploy-opa-envoy.yaml
 ```
 
 - Once FSM's demo is up and running, proceed to edit FSM's MeshConfig to add external authorization to the mesh. For that, configure the `inboundExternalAuthorization` to point to the remote external authorization endpoint as follows:

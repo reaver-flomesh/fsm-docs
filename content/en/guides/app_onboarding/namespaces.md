@@ -14,8 +14,8 @@ Only one mesh can monitor a namespace, so this is something to watch out for whe
 Enrolling a namespace also optionally allows for metrics to be collected for resources in the given namespace and for Pods in the namespace to be automatically injected with sidecar proxy containers. These are all features that help FSM provide functionality for traffic management and observability. Scoping this functionality at the namespace level allows teams to organize which segments of
 their cluster should be part of which mesh.
 
-Namespace monitoring, automatic sidecar injection, and metrics collection is controlled by adding certain labels and annotations to a Kubernetes namespace. This can be done manually or using the `fsm` CLI although using the `fsm` CLI is the recommended approach. The presence of the label `openservicemesh.io/monitored-by=<mesh-name>` allows an FSM control plane with the given `mesh-name` to monitor
-all resources within that namespace. The annotation `openservicemesh.io/sidecar-injection=enabled` enables FSM to automatically inject sidecar proxy containers in all Pods created within that namespace. The metrics annotation `openservicemesh.io/metrics=enabled` allows FSM to collect metrics on resources within a Namespace.
+Namespace monitoring, automatic sidecar injection, and metrics collection is controlled by adding certain labels and annotations to a Kubernetes namespace. This can be done manually or using the `fsm` CLI although using the `fsm` CLI is the recommended approach. The presence of the label `flomesh.io/monitored-by=<mesh-name>` allows an FSM control plane with the given `mesh-name` to monitor
+all resources within that namespace. The annotation `flomesh.io/sidecar-injection=enabled` enables FSM to automatically inject sidecar proxy containers in all Pods created within that namespace. The metrics annotation `flomesh.io/metrics=enabled` allows FSM to collect metrics on resources within a Namespace.
 
 See how to use the FSM CLI to manage namespace monitoring below.
 
@@ -80,7 +80,7 @@ If the namespace does not show up, check the labels on the namespace using `kube
 kubectl get namespace <namespace> --show-labels
 
 NAME          STATUS   AGE   LABELS
-<namespace>   Active   36s   openservicemesh.io/monitored-by=<mesh-name>
+<namespace>   Active   36s   flomesh.io/monitored-by=<mesh-name>
 ```
 
 If the label value is not the expected `mesh-name`, remove the namespace from the mesh and add it back using the correct `mesh-name`.
@@ -98,7 +98,7 @@ fsm namespace add <namespace> --mesh-name=<mesh-name>
 ```
 
 ```bash
-kubectl label namespace <namespace> openservicemesh.io/monitored-by=<mesh-name>
+kubectl label namespace <namespace> flomesh.io/monitored-by=<mesh-name>
 ```
 
 ### Issues with Automatic Sidecar Injection
@@ -115,7 +115,7 @@ NAMESPACE         MESH   SIDECAR-INJECTION
 If the namespace does not show up, check the annotations on the namespace using `kubectl`:
 
 ```bash
-kubectl get namespace <namespace> -o=jsonpath='{.metadata.annotations.openservicemesh\.io\/sidecar-injection}'
+kubectl get namespace <namespace> -o=jsonpath='{.metadata.annotations.flomesh\.io\/sidecar-injection}'
 ```
 
 If the output is anything other than `enabled`, either add namespace using the `fsm` CLI or add the annotation with `kubectl`:
@@ -125,7 +125,7 @@ fsm namespace add <namespace> --mesh-name=<mesh-name> --disable-sidecar-injectio
 ```
 
 ```bash
-kubectl annotate namespace <namespace> openservicemesh.io/sidecar-injection=enabled --overwrite
+kubectl annotate namespace <namespace> flomesh.io/sidecar-injection=enabled --overwrite
 ```
 
 ### Issues with Metrics Collection
@@ -133,7 +133,7 @@ kubectl annotate namespace <namespace> openservicemesh.io/sidecar-injection=enab
 If you're not seeing metrics for resources in a particular namespace, ensure metrics are enabled:
 
 ```bash
-kubectl get namespace <namespace> -o=jsonpath='{.metadata.annotations.openservicemesh\.io\/metrics}'
+kubectl get namespace <namespace> -o=jsonpath='{.metadata.annotations.flomesh\.io\/metrics}'
 ```
 
 If the output is anything other than `enabled`, enable the namespace usng the `fsm` CLI or add the annotation with `kubectl`:
@@ -143,7 +143,7 @@ fsm metrics enable --namespace <namespace>
 ```
 
 ```bash
-kubectl annotate namespace <namespace> openservicemesh.io/metrics=enabled --overwrite
+kubectl annotate namespace <namespace> flomesh.io/metrics=enabled --overwrite
 ```
 
 ### Other Issues

@@ -25,7 +25,7 @@ FSM offers two ways to allow accessing services within the service mesh:
 
 The first method to access the services in the service mesh is via Ingress controller, and treat the services outside the mesh as the services inside the cluster. The advantage of this approach is that the setup is simple and straightforward and the disadvantages are also apparent, as you cannot achieve fine-grained access control, and all services outside the mesh can access services within the mesh.
 
-This guide will focus on the second approach, which allows support for fine-grained access control on who can access services within the service mesh. This feature was added and to release 1.2.0 [FSM v1.2.0](https://github.com/flomesh-io/FSM/releases/tag/v1.2.0).
+This guide will focus on the second approach, which allows support for fine-grained access control on who can access services within the service mesh. This feature was added and to release [FSM v1.0.0](https://github.com/flomesh-io/FSM/releases/tag/v1.0.0).
 
 Access Control can be configured via two resource types: Service and IP range. In terms of data transmission, it supports plaintext transmission and mTLS-encrypted traffic.
 
@@ -34,5 +34,5 @@ Access Control can be configured via two resource types: Service and IP range. I
 
 To learn more about access control, refer to following demo guides:
 
-- [Service-based access control](/demos/service_based_access_control)
-- [IP range-based access control](/demos/ip_range_based_access_control)
+- [Service-based access control](/demos/security/service_based_access_control)
+- [IP range-based access control](/demos/security/ip_range_based_access_control)

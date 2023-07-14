@@ -48,7 +48,7 @@ cp ./$system-$arch/fsm /usr/local/bin/
 
 ## Install FSM on Kubernetes cluster
 
-> Below command also installs and enable [Prometheus](https://github.com/prometheus/prometheus),[Grafana](https://github.com/grafana/grafana), and [Jaeger](https://github.com/jaegertracing/jaeger). 
+> Below command also installs and enable [Prometheus](https://github.com/prometheus/prometheus), [Grafana](https://github.com/grafana/grafana) and [Jaeger](https://github.com/jaegertracing/jaeger). 
 >
 > Read more on FSM's integrations with Prometheus, Grafana, and Jaeger in the [observability documentation](/guides/observability/).
 
