@@ -58,7 +58,7 @@ $ git push upstream release-<version> # ex: git push upstream release-v1.4
 Proceed with the following steps once the release branch has been created in the FSM repo.
 
 1. Create a new branch off of the release branch to maintain updates specific to the new version. Let's call it the patch branch. The patch branch should not be created in the upstream repo.
-2. On the patch branch, update the `fsm_branch`, `fsm_version`, and `envoy_version` in [config.toml](https://github.com/flomesh-io/fsm-docs/blob/main/config.toml) to the new release versions.
+2. On the patch branch, update the `fsm_branch`, `fsm_version`, and `pipy_version` in [config.toml](https://github.com/flomesh-io/fsm-docs/blob/main/config.toml) to the new release versions.
 
     ```toml
     fsm_branch = "release-v0.8"

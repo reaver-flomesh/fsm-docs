@@ -59,7 +59,7 @@ This command enables
 [Jaeger](https://github.com/jaegertracing/jaeger) integrations.
 The `fsm.enablePermissiveTrafficPolicy` chart parameter in the `values.yaml` file instructs FSM to ignore any policies and
 let traffic flow freely between the pods. With Permissive Traffic Policy mode enabled, new pods
-will be injected with Envoy, but traffic will flow through the proxy and will not be blocked by access control policies.
+will be injected with Pipy, but traffic will flow through the proxy and will not be blocked by access control policies.
 
 > Note: Permissive Traffic Policy mode is an important feature for brownfield deployments, where it may take some time to craft SMI policies. While operators design the SMI policies, existing services will continue to operate as they have been before FSM was installed.
 

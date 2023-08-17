@@ -63,7 +63,7 @@ You can configure the FSM installation by overriding the values file.
 Then run the following `helm install` command. The chart version can be found in the Helm chart you wish to install [here](https://github.com/flomesh-io/fsm/blob/{{< param fsm_branch >}}/charts/fsm/Chart.yaml#L17).
 
 ```console
-$ helm install <mesh name> fsm --repo https://flomesh-io.github.io/FSM --version <chart version> --namespace <fsm namespace> --values override.yaml
+$ helm install <mesh name> fsm --repo https://flomesh-io.github.io/fsm --version <chart version> --namespace <fsm namespace> --values override.yaml
 ```
 
 Omit the `--values` flag if you prefer to use the default settings.

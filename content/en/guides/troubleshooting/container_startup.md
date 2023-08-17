@@ -19,9 +19,9 @@ It is recommended that application containers be resilient enough to the initial
 
 It is important to note that the [container's restart policy](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy) also influences the startup of application containers. If an application container's startup policy is set to `Never` and it depends on network connectivity to be ready at startup time, it is possible the container fails to access the network until the Pipy proxy sidecar is ready to allow the application container access to the network, thereby resulting in the application container to exit and never recover from a failed startup. For this reason, it is recommended not to use a container restart policy of `Never` if your application container depends on network connectivity at startup.
 
-## When the application container is designed to run to completion
+<!--## When the application container is designed to run to completion
 
-Application containers, like those running in [Kubernetes Jobs](https://kubernetes.io/docs/concepts/workloads/controllers/job/), that are meant to perform a certain set of tasks and then exit may not appear to have finished based on the Job's status. This status is  expected and is due to the Envoy sidecar container running indefinitely. Update your pods controlled by Jobs to use the Envoy sidecar's `/quitquitquit` HTTP endpoint to signal for Envoy to exit when your pod has completed its tasks.
+Application containers, like those running in [Kubernetes Jobs](https://kubernetes.io/docs/concepts/workloads/controllers/job/), that are meant to perform a certain set of tasks and then exit may not appear to have finished based on the Job's status. This status is expected and is due to the Pipy sidecar container running indefinitely. Update your pods controlled by Jobs to use the Pipy sidecar's `/quitquitquit` HTTP endpoint to signal for Pipy to exit when your pod has completed its tasks.
 
  For Jobs driven by shell scripts, this may look something like
 
@@ -34,7 +34,7 @@ Or if `curl` isn't available but `busybox` is,
 ```
 trap 'nc 127.0.0.1 15000 -e echo -ne "POST /quitquitquit HTTP/1.1\nHost: 127.0.0.1:15000\n\n"' EXIT
 ```
-
+-->
 ### Related issues (work in progress)
 
 - [Kubernetes issue 65502](https://github.com/kubernetes/kubernetes/issues/65502): Support startup dependencies between containers on the same pod

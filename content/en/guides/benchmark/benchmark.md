@@ -3,13 +3,14 @@ title: "Data plane benchmarking"
 description: "benchmarking FSM and fsm data planes"
 type: docs
 weight: 1
+draft: false
 ---
 
 FSM aims to provide service esh functionality along with high performance resources, so that resource-constrained edge environments can also use the service mesh functionality used in the cloud.
 
 In this test, benchmarks were conducted for FSM (v1.1.0) and fsm (v1.1.0). The main focus is on service TPS, latency distribution when using two different meshes, and monitoring the resource overhead of the data plane.
 
-FSM uses Pipy as the data plane; fsm uses Envoy as the data plane.
+FSM uses Pipy as the data plane.
 
 ## Testing Environment
 
