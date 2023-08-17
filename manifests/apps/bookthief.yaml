@@ -27,7 +27,7 @@ spec:
       serviceAccountName: bookthief
       containers:
         - name: bookthief
-          image: flomesh/bookthief:latest-main
+          image: flomesh/bookthief:latest
           imagePullPolicy: Always
           command: ["/bookthief"]
           env:
