@@ -66,17 +66,11 @@ id = "UA-00000000-0"
 		languageName ="English"
 		weight = 1
 	# [languages.zh]
-	# 	title = "开放边缘服务网格"
+	# 	title = "Flomesh 服务网格"
 	# 	contentDir = 'content/zh'
 	# 	description = "Documentation for FSM "
 	# 	languageName ="中文"
 	# 	weight = 2
-	# [languages.jp]
-	# 	title = "シンプルで整ったスタンドアロンサービスメッシュ"
-	# 	contentDir = 'content/jp'
-	# 	description = "FSM ドキュメント"
-	# 	languageName ="日本語"
-	# 	weight = 3
 
 [markup]
   [markup.goldmark]
@@ -143,27 +137,27 @@ prism_syntax_highlighting = true
 # Version params
 # Version params
 fsm_branch = "main"
-fsm_version = "v1.0.0"
+fsm_version = "v1.1.0"
 #fsm_version = "0.1.8"
 min_k8s_version = "v1.19.0"
-pipy_version = "0.90.1-87"
+pipy_version = "0.90.2-41"
 
 [[params.versions]]
   version = "v1.0.0 (latest)"
   url = "https://release-v1-0.fsm-docs.flomesh.io/"
 # [[params.versions]]
 #   version = "v1.2"
-#   url = "https://release-v1-2.FSM -docs.flomesh.io/"
+#   url = "https://release-v1-2.fsm-docs.flomesh.io/"
 # [[params.versions]]
 #   version = "v1.1"
-#   url = "https://release-v1-1.FSM -docs.flomesh.io/"
+#   url = "https://release-v1-1.fsm-docs.flomesh.io/"
 # [[params.versions]]
 #   version = "All Releases"
 #   url = "/docs/releases/docs"
 # [params.versionbanner]
 # 	show = false
 # 	archive = "v1.2"
-# 	latest = "https://FSM -docs.flomesh.io/docs/releases/docs"
+# 	latest = "https://fsm-docs.flomesh.io/docs/releases/docs"
 
 # User interface configuration
 [params.ui]
