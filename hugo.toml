@@ -138,7 +138,6 @@ prism_syntax_highlighting = true
 # Version params
 fsm_branch = "main"
 fsm_version = "v1.1.0"
-#fsm_version = "0.1.8"
 min_k8s_version = "v1.19.0"
 pipy_version = "0.90.2-41"
 

@@ -66,7 +66,7 @@ The `fsm mesh upgrade` command performs a `helm upgrade` of the existing Helm re
 
 Basic usage requires no additional arguments or flags:
 ```console
-$ fsm mesh upgrade
+fsm mesh upgrade
 FSM successfully upgraded mesh fsm
 ```
 
@@ -95,7 +95,7 @@ For example, if the `logLevel` field in the MeshConfig was set to `info` prior t
 #### Helm Upgrade
 Then run the following `helm upgrade` command.
 ```console
-$ helm upgrade <mesh name> fsm --repo https://flomesh-io.github.io/fsm --version <chart version> --namespace <fsm namespace> --values override.yaml
+helm upgrade <mesh name> fsm --repo https://flomesh-io.github.io/fsm --version <chart version> --namespace <fsm namespace> --values override.yaml
 ```
 Omit the `--values` flag if you prefer to use the default settings.
 

@@ -22,13 +22,13 @@ OpenShift starting with version 4.8 comes with Helm Chart Repository installed, 
 
 # chmod +x /usr/local/bin/helm
 
-$ helm repo add openshift-helm-charts https://charts.openshift.io/
+helm repo add openshift-helm-charts https://charts.openshift.io/
 ```
 
 To install the repo to be used from the OpenShift console run the following command as and OpenShift admin:
 
 ```
-$ oc apply -f https://charts.openshift.io/openshift-charts-repo.yaml
+oc apply -f https://charts.openshift.io/openshift-charts-repo.yaml
 ```
 
 ### The Permissions
@@ -100,7 +100,7 @@ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param
 Expose the GUI ports of each service, so that with a browser we can access these ports of demo application.
 
 ```bash
-git clone https://github.com/flomesh-io/FSM.git -b {{< param fsm_branch >}}
+git clone https://github.com/flomesh-io/fsm.git -b {{< param fsm_branch >}}
 cd FSM
 cp .env.example .env
 ./scripts/port-forward-all.sh #可以忽略错误信息

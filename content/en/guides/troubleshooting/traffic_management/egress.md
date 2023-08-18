@@ -12,7 +12,7 @@ Confirm egress is enabled by verifying the value for the `enableEgress` key in t
 
 ```console
 # Returns true if egress is enabled
-$ kubectl get meshconfig fsm-mesh-config -n fsm-system -o jsonpath='{.spec.traffic.enableEgress}{"\n"}'
+kubectl get meshconfig fsm-mesh-config -n fsm-system -o jsonpath='{.spec.traffic.enableEgress}{"\n"}'
 true
 ```
 

@@ -14,6 +14,7 @@ weight: 1
 ### From the Binary Releases
 
 Download platform specific compressed package from the [Releases page](https://github.com/flomesh-io/fsm/releases).
+
 Unpack the `fsm` binary and add it to `$PATH` to get started.
 
 #### Linux and macOS
@@ -48,6 +49,7 @@ You can verify the `fsm` client library has been correctly added to your path an
 ```console
 fsm version
 ```
+
 ### From Source (Linux, MacOS)
 
 Building FSM from source requires more steps but is the best way to test the latest changes and useful in a development environment.
@@ -55,9 +57,9 @@ Building FSM from source requires more steps but is the best way to test the lat
 You must have a working [Go](https://golang.org/doc/install) environment.
 
 ```console
-$ git clone git@github.com:flomesh-io/FSM.git
-$ cd fsm
-$ make build-fsm
+git clone https://github.com/flomesh-io/fsm.git
+cd fsm
+make build-fsm
 ```
 
 `make build-fsm` will fetch any required dependencies, compile `fsm` and place it in `bin/fsm`. Add `bin/fsm` to `$PATH` so you can easily use `fsm`.
@@ -67,6 +69,7 @@ $ make build-fsm
 ### FSM Configuration
 
 By default, the control plane components are installed into a Kubernetes Namespace called `fsm-system` and the control plane is given a unique identifier attribute `mesh-name` defaulted to `fsm`.
+
 During installation, the Namespace and mesh-name can be configured through flags when using the `fsm` CLI or by editing the values file when using the `helm` CLI.
 
 The `mesh-name` is a unique identifier assigned to an fsm-controller instance during install to identify and manage a mesh instance.
@@ -86,7 +89,11 @@ Run `fsm install`.
 
 ```console
 # Install fsm control plane components
-$ fsm install
+fsm install                                                                    
+fsm-preinstall[fsm-preinstall-4vb8n] Done
+fsm-bootstrap[fsm-bootstrap-cdbccf694-nwm74] Done
+fsm-injector[fsm-injector-7c9f5f9cdf-tw99v] Done
+fsm-controller[fsm-controller-6d5984fb9f-2nj7s] Done
 FSM installed successfully in namespace [fsm-system] with mesh name [fsm]
 ```
 

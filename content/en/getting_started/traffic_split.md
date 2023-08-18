@@ -22,7 +22,7 @@ Wait for the `bookstore-v2` pod to be running in the `bookstore` namespace. Next
 ```bash
 bash <<EOF
 ./scripts/port-forward-bookbuyer-ui.sh &
-./scripts/port-forward-bookstore-ui.sh &
+./scripts/port-forward-bookstore-ui.sh app=bookstore,version=v1 &
 ./scripts/port-forward-bookstore-ui-v2.sh &
 ./scripts/port-forward-bookthief-ui.sh &
 wait
@@ -35,7 +35,7 @@ The `bookstore-v2` counter should be incrementing because traffic to the root `b
 
 ### Create SMI Traffic Split
 
-Deploy the SMI traffic split policy to direct 100 percent of the traffic sent to the root `bookstore` service to the `bookstore-v1` service backend. This is necessary to ensure traffic directed to the `bookstore` service is only directed to `version v1` of the bookstore app, which includes the pods backing the `bookstore-v1` service. The `TrafficSplit` configuration will be subsequently updated to direct a percentage of traffic to `version v2` of the bookstore service using the `bookstore-v2` leaf service. 
+Deploy the SMI traffic split policy to direct 100 percent of the traffic sent to the root `bookstore` service to the `bookstore-v1` service backend. This is necessary to ensure traffic directed to the `bookstore` service is only directed to `version v1` of the bookstore app, which includes the pods backing the `bookstore-v1` service. The `TrafficSplit` configuration will be subsequently updated to direct a percentage of traffic to `version v2` of the bookstore service using the `bookstore-v2` leaf service.
 
 For this reason, it is important to ensure client applications always communicate with the root service if a traffic split is desired. Otherwise the client application will need to be updated to communicate with the *root* service when a traffic split is desired.
 
@@ -60,6 +60,7 @@ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param
 ```
 
 Wait for the changes to propagate and observe the counters increment for `bookstore` and `bookstore-v2` in your browser windows. Both
+
 counters should be incrementing:
 
 - [http://localhost:8084](http://localhost:8084) - **bookstore**
@@ -74,6 +75,7 @@ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param
 ```
 
 Wait for the changes to propagate and observe the counters increment for `bookstore-v2` and freeze for `bookstore` in your
+
 browser windows:
 
 - [http://localhost:8082](http://localhost:8082) - **bookstore-v2**

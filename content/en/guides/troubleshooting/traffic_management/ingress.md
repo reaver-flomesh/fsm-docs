@@ -11,7 +11,7 @@ weight: 3
 
 ```console
 # Returns true if HTTPS ingress is enabled
-$ kubectl get meshconfig fsm-mesh-config -n fsm-system -o jsonpath='{.spec.traffic.useHTTPSIngress}{"\n"}'
+kubectl get meshconfig fsm-mesh-config -n fsm-system -o jsonpath='{.spec.traffic.useHTTPSIngress}{"\n"}'
 false
 ```
 

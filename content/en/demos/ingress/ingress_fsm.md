@@ -69,11 +69,11 @@ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param
 Ensure that the `httpbin` service and pod are up and running properly by
 
 ```console
-$ kubectl get pods -n httpbin
+kubectl get pods -n httpbin
 NAME READY STATUS RESTARTS AGE
 httpbin-74677b7df7-zzlm2 2/2 Running 0 11h
 
-$ kubectl get svc -n httpbin
+kubectl get svc -n httpbin
 NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE
 httpbin ClusterIP 10.0.22.196 <none> 14001/TCP 11h
 ```
@@ -124,7 +124,7 @@ EOF
 Now we expect external clients to have access to the `httpbin` service, with the `HOST` request header of the HTTP request being `httpbin.org`.
 
 ```console
-$ curl -sI http://"$ingress_host":"$ingress_port"/get -H "Host: httpbin.org"
+curl -sI http://"$ingress_host":"$ingress_port"/get -H "Host: httpbin.org"
 HTTP/1.1 200 OK
 server: gunicorn/19.9.0
 date: Tue, 05 Jul 2022 07:34:11 GMT

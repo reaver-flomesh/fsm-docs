@@ -48,7 +48,7 @@ Creating a standalone Ingress Controller
 The next step is to create a separate Ingress Controller for the namespace `httpbin`.
 
 ```yaml
-$ kubectl apply -f - <<EOF
+kubectl apply -f - <<EOF
 apiVersion: flomesh.io/v1alpha1
 kind: NamespacedIngress
 metadata:
@@ -82,7 +82,7 @@ erie-canal-ingress-pipy-httpbin-5594ffcfcc-zl5gl   1/1     Running   0          
 At this point, there should be a corresponding Service under this namespace.
 
 ```sh
-$ kubectl get svc -n httpbin -l app.kubernetes.io/component=controller
+kubectl get svc -n httpbin -l app.kubernetes.io/component=controller
 NAME                              TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)        AGE
 erie-canal-ingress-pipy-httpbin   LoadBalancer   10.43.62.120   192.168.1.11   81:30081/TCP   2m49s
 ```

@@ -11,7 +11,7 @@ Some FSM components will be installed by default in the chosen namespace, which 
 
 ```console
 # Replace fsm-system with the namespace where FSM is installed
-$ kubectl get pods,svc,secrets,meshconfigs,serviceaccount --namespace fsm-system
+kubectl get pods,svc,secrets,meshconfigs,serviceaccount --namespace fsm-system
 ```
 
 Some cluster-wide (non-namespaced) FSM components will also be installed. Inspect them using the following `kubectl` command:
@@ -23,7 +23,7 @@ kubectl get clusterrolebinding,clusterrole,mutatingwebhookconfiguration
 Under the hood, `fsm` is using [Helm](https://helm.sh) libraries to create a Helm `release` object in the control plane Namespace. The Helm `release` name is the mesh-name. The `helm` CLI can also be used to inspect Kubernetes manifests installed in more detail. See the Helm docs for how to [install Helm](https://helm.sh/docs/intro/install/).
 
 ```console
-$ helm get manifest fsm --namespace <fsm-namespace>
+helm get manifest fsm --namespace <fsm-namespace>
 ```
 
 ## Components

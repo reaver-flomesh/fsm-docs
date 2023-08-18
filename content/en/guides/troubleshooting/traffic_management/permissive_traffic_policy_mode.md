@@ -13,7 +13,7 @@ Confirm permissive traffic policy mode is enabled by verifying the value for the
 
 ```console
 # Returns true if permissive traffic policy mode is enabled
-$ kubectl get meshconfig fsm-mesh-config -n fsm-system -o jsonpath='{.spec.traffic.enablePermissiveTrafficPolicyMode}{"\n"}'
+kubectl get meshconfig fsm-mesh-config -n fsm-system -o jsonpath='{.spec.traffic.enablePermissiveTrafficPolicyMode}{"\n"}'
 true
 ```
 
@@ -38,7 +38,7 @@ Use the `fsm verify connectivity` command to validate that the pods can communic
 For example, to verify if the pod `curl-7bb5845476-zwxbt` in the namespace `curl` can direct traffic to the pod `httpbin-69dc7d545c-n7pjb` in the `httpbin` namespace using the `httpbin` Kubernetes service:
 
 ```console
-$ fsm verify connectivity --from-pod curl/curl-7bb5845476-zwxbt --to-pod httpbin/httpbin-69dc7d545c-n7pjb --to-service httpbin
+fsm verify connectivity --from-pod curl/curl-7bb5845476-zwxbt --to-pod httpbin/httpbin-69dc7d545c-n7pjb --to-service httpbin
 ---------------------------------------------
 [+] Context: Verify if pod "curl/curl-7bb5845476-zwxbt" can access pod "httpbin/httpbin-69dc7d545c-n7pjb" for service "httpbin/httpbin"
 Status: Success

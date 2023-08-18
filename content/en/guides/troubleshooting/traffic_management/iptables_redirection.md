@@ -12,7 +12,7 @@ weight: 1
 The application pod should be injected with the Pipy proxy sidecar for traffic redirection to work as expected. Confirm this by ensuring the application pod is running and has the Pipy proxy sidecar container in ready state.
 
 ```console
-$ kubectl get pod test-58d4f8ff58-wtz4f -n test
+kubectl get pod test-58d4f8ff58-wtz4f -n test
 NAME                                READY   STATUS    RESTARTS   AGE
 test-58d4f8ff58-wtz4f               2/2     Running   0          32s
 ```
@@ -24,7 +24,7 @@ FSM's init container `fsm-init` is responsible for initializing individual appli
 Confirm FSM's init container has finished running successfully by running `kubectl describe` on the application pod, and verifying the `fsm-init` container has terminated with an exit code of 0. The container's `State` property provides this information.
 
 ```console
-$ kubectl describe pod test-58d4f8ff58-wtz4f -n test
+kubectl describe pod test-58d4f8ff58-wtz4f -n test
 Name:         test-58d4f8ff58-wtz4f
 Namespace:    test
 ...
@@ -65,7 +65,7 @@ Confirm the outbound IP ranges to be excluded are set correctly:
 
 ```console
 # Assumes FSM is installed in the fsm-system namespace
-$ kubectl get meshconfig fsm-mesh-config -n fsm-system -o jsonpath='{.spec.traffic.outboundIPRangeExclusionList}{"\n"}'
+kubectl get meshconfig fsm-mesh-config -n fsm-system -o jsonpath='{.spec.traffic.outboundIPRangeExclusionList}{"\n"}'
 ["1.1.1.1/32","2.2.2.2/24"]
 ```
 
@@ -78,7 +78,7 @@ When outbound IP range exclusions are configured, FSM's `fsm-injector` service r
 Confirm FSM's `fsm-init` init container spec has rules corresponding to the configured outbound IP ranges to exclude.
 
 ```console
-$ kubectl describe pod test-58d4f8ff58-wtz4f -n test
+kubectl describe pod test-58d4f8ff58-wtz4f -n test
 Name:         test-58d4f8ff58-wtz4f
 Namespace:    test
 ...
@@ -125,7 +125,7 @@ Confirm the outbound ports to be excluded are set correctly:
 
 ```console
 # Assumes FSM is installed in the fsm-system namespace
-$ kubectl get meshconfig fsm-mesh-config -n fsm-system -o jsonpath='{.spec.traffic.outboundPortExclusionList}{"\n"}'
+kubectl get meshconfig fsm-mesh-config -n fsm-system -o jsonpath='{.spec.traffic.outboundPortExclusionList}{"\n"}'
 [6379,7070]
 ```
 
@@ -136,7 +136,7 @@ The output shows the ports that are excluded from outbound traffic redirection, 
 Confirm the outbound ports to be excluded on a pod are set correctly:
 
 ```console
-$ kubectl get pod POD_NAME -o jsonpath='{.metadata.annotations}' -n POD_NAMESPACE'
+kubectl get pod POD_NAME -o jsonpath='{.metadata.annotations}' -n POD_NAMESPACE'
 map[flomesh.io/outbound-port-exclusion-list:8080]
 ```
 
@@ -149,7 +149,7 @@ When outbound port exclusions are configured, FSM's `fsm-injector` service reads
 Confirm FSM's `fsm-init` init container spec has rules corresponding to the configured outbound ports to exclude.
 
 ```console
-$ kubectl describe pod test-58d4f8ff58-wtz4f -n test
+kubectl describe pod test-58d4f8ff58-wtz4f -n test
 Name:         test-58d4f8ff58-wtz4f
 Namespace:    test
 ...

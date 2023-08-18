@@ -31,7 +31,7 @@ Each version of the FSM CLI is designed to work only with the matching version o
 Run `fsm install` to install the FSM control plane.
 
 ```console
-$ fsm install
+fsm install
 FSM installed successfully in namespace [fsm-system] with mesh name [fsm]
 ```
 
@@ -63,7 +63,7 @@ You can configure the FSM installation by overriding the values file.
 Then run the following `helm install` command. The chart version can be found in the Helm chart you wish to install [here](https://github.com/flomesh-io/fsm/blob/{{< param fsm_branch >}}/charts/fsm/Chart.yaml#L17).
 
 ```console
-$ helm install <mesh name> fsm --repo https://flomesh-io.github.io/fsm --version <chart version> --namespace <fsm namespace> --values override.yaml
+helm install <mesh name> fsm --repo https://flomesh-io.github.io/fsm --version <chart version> --namespace <fsm namespace> --values override.yaml
 ```
 
 Omit the `--values` flag if you prefer to use the default settings.
@@ -104,7 +104,7 @@ A few components will be installed by default. Inspect them by using the followi
 
 ```console
 # Replace fsm-system with the namespace where FSM is installed
-$ kubectl get pods,svc,secrets,meshconfigs,serviceaccount --namespace fsm-system
+kubectl get pods,svc,secrets,meshconfigs,serviceaccount --namespace fsm-system
 ```
 
 A few cluster wide (non Namespaced components) will also be installed. Inspect them using the following `kubectl` command:
@@ -117,7 +117,7 @@ Under the hood, `fsm` is using [Helm](https://helm.sh) libraries to create a Hel
 
 ```console
 # Replace fsm-system with the namespace where FSM is installed
-$ helm get manifest fsm --namespace fsm-system
+helm get manifest fsm --namespace fsm-system
 ```
 
 ## Next Steps

@@ -45,7 +45,7 @@ Prometheus needs to be configured to scape the FSM endpoints and properly handle
 Use `kubectl get configmap` to verify the `stable-prometheus-sever` configmap has been created. For example:
 
 ```bash
-$ kubectl get configmap
+kubectl get configmap
 
 NAME                             DATA   AGE
 ...

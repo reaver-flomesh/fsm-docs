@@ -32,7 +32,7 @@ The resources that FSM reconciles are:
 To install FSM with the reconciler, use the below command:
 
 ```console
-$ fsm install --set fsm.enableReconciler=true
+fsm install --set fsm.enableReconciler=true
 FSM installed successfully in namespace [fsm-system] with mesh name [fsm]
 ```
 

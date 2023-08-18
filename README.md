@@ -43,13 +43,13 @@ Identify the base commit in the main branch for the release and cut a release br
 > Note: Care must be taken to ensure the release branch is created from a commit meant for the release. If unsure about the commit to use to create the release branch, please open an issue in the fsm repo and a maintainer will assist you with this.
 
 ```console
-$ git checkout -b release-<version> <commit-id> # ex: git checkout -b release-v1.1 0d05587
+git checkout -b release-<version> <commit-id> # ex: git checkout -b release-v1.1 0d05587
 ```
 
 Push the release branch to the upstream repo (NOT forked), identified here by the upstream remote.
 
 ```console
-$ git push upstream release-<version> # ex: git push upstream release-v1.4
+git push upstream release-<version> # ex: git push upstream release-v1.4
 ```
 
 

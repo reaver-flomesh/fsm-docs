@@ -17,7 +17,7 @@ For more details refer to [Learn how to use eBPF with FSM](/guides/traffic_manag
 
 ### Install CNI Plugin
 
-Execute the following command on all nodes to download the CNI plugin.
+Execute the following command on **all nodes** to download the CNI plugin.
 
 ```shell
 sudo mkdir -p /opt/cni/bin
@@ -35,6 +35,7 @@ export MASTER_IP=10.0.2.6
 Kubernetes cluster uses the k3s distribution, but when installing the cluster, you need to disable the flannel integrated by k3s and use independently installed flannel for validation. This is because k3s's doesn't follow Flannel directory structure `/opt/cni/bin` and store its CNI bin directory at `/var/lib/rancher/k3s/data/xxx/bin` where `xxx` is some randomly generated text.
 
 ```shell
+export INSTALL_K3S_VERSION=v1.23.8+k3s2
 curl -sfL https://get.k3s.io | sh -s - --disable traefik --disable servicelb --flannel-backend=none --advertise-address $MASTER_IP --write-kubeconfig-mode 644 --write-kubeconfig ~/.kube/config
 ```
 
@@ -51,6 +52,7 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 ```
 
 ### Worker Node
+
 Use the IP address of the master node and the token obtained earlier to initialize the node.
 
 ```shell
@@ -80,11 +82,12 @@ fsm install \
     --mesh-name "$fsm_mesh_name" \
     --fsm-namespace "$fsm_namespace" \
     --set=fsm.trafficInterceptionMode=ebpf \
-    --set=fsm.fsmInterceptor.debug=true \
     --timeout=900s
 ```
 
 ### Deploy Sample Application
+
+Before execute commands bellow, please update the node name "node1", "node2" with the real node names in `kubectl patch` commands.
 
 ```bash
 #Sample services

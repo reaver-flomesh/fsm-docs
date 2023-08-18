@@ -79,7 +79,7 @@ kubectl port-forward -n fsm-system $(kubectl get pods -n fsm-system -l app=fsm-c
 Then, in a separate terminal instance, `curl` may be used to check the endpoint. The following example shows a healthy fsm-controller:
 
 ```console
-$ curl -i localhost:9091/health/alive
+curl -i localhost:9091/health/alive
 HTTP/1.1 200 OK
 Date: Thu, 18 Mar 2021 20:15:29 GMT
 Content-Length: 16

@@ -51,11 +51,11 @@ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param
 Confirm the `httpbin` service and pod is up and running:
 
 ```console
-$ kubectl get pods -n httpbin
+kubectl get pods -n httpbin
 NAME                       READY   STATUS    RESTARTS   AGE
 httpbin-74677b7df7-zzlm2   2/2     Running   0          11h
 
-$ kubectl get svc -n httpbin
+kubectl get svc -n httpbin
 NAME      TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)     AGE
 httpbin   ClusterIP   10.0.22.196   <none>        14001/TCP   11h
 ```
@@ -105,7 +105,7 @@ EOF
 Now, we expect external clients to be able to access the `httpbin` service for HTTP requests:
 
 ```console
-$ curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
+curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
 HTTP/1.1 200 OK
 Date: Mon, 04 Jul 2022 06:55:26 GMT
 Content-Type: application/json
@@ -195,7 +195,7 @@ EOF
 Now, we expect external clients to be able to access the `httpbin` service for requests with HTTPS proxying over mTLS between the ingress gateway and service backend:
 
 ```console
-$ curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
+curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
 HTTP/1.1 200 OK
 Date: Mon, 04 Jul 2022 06:55:26 GMT
 Content-Type: application/json
@@ -234,7 +234,7 @@ EOF
 Confirm the requests are rejected with an `HTTP 403 Forbidden` response:
 
 ```console
-$ curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
+curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
 HTTP/1.1 403 Forbidden
 Date: Wed, 18 Aug 2021 18:36:09 GMT
 Content-Type: text/plain
@@ -271,7 +271,7 @@ EOF
 Confirm the requests succeed again since untrusted authenticated principals are allowed to connect to the backend:
 
 ```console
-$ curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
+curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
 HTTP/1.1 200 OK
 Date: Mon, 04 Jul 2022 06:55:26 GMT
 Content-Type: application/json

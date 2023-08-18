@@ -92,7 +92,7 @@ The following guide describes how to onboard a Kubernetes microservice to an FSM
 Namespaces can be removed from the FSM mesh with the `fsm namespace remove` command:
 
 ```console
-$ fsm namespace remove <namespace>
+fsm namespace remove <namespace>
 ```
 
 > **Please Note:**

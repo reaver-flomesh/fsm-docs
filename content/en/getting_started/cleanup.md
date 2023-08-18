@@ -31,4 +31,6 @@ To uninstall FSM cluster-wide resources, use `fsm uninstall mesh --delete-cluste
 fsm uninstall mesh --delete-cluster-wide-resources
 ```
 
+It's recommended to delete all resources with command `fsm uninstall mesh -a -f --delete-namespace` during learning.
+
 For more details about uninstalling FSM, see the [uninstallation guide](/guides/operating/uninstall/).
