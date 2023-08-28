@@ -28,6 +28,7 @@ Following are the port numbers that are reserved for use by FSM:
 7. `15903`: used by Pipy to serve rewritten HTTP startup probes
 
 The following are the port numbers that are reserved for use by FSM and allow traffic to bypass Pipy:
+
 1. `15904`: used by `fsm-healthcheck` to serve `tcpSocket` health probes rewritten to `httpGet` health probes
 
 ### Application User ID (UID) reserved for traffic redirection
@@ -64,12 +65,14 @@ Outbound IP ranges can be excluded at a global mesh scope or per pod scope.
 FSM provides the means to specify a global list of IP ranges to exclude from outbound traffic interception applicable to all pods in the mesh, as follows:
 
 1. During FSM install using the `--set` option:
+
     ```bash
     # To exclude the IP ranges 1.1.1.1/32 and 2.2.2.2/24 from outbound interception
     fsm install --set="fsm.outboundIPRangeExclusionList={1.1.1.1/32,2.2.2.2/24}
     ```
 
 1. By setting the `outboundIPRangeExclusionList` field in the `fsm-mesh-config` resource:
+
     ```bash
     ## Assumes FSM is installed in the fsm-system namespace
     kubectl patch meshconfig fsm-mesh-config -n fsm-system -p '{"spec":{"traffic":{"outboundIPRangeExclusionList":["1.1.1.1/32", "2.2.2.2/24"]}}}'  --type=merge
@@ -101,12 +104,14 @@ Outbound inclusion IP ranges can be specified at a global mesh scope or per pod 
 FSM provides the means to specify a global list of IP ranges to include for outbound traffic interception applicable to all pods in the mesh, as follows:
 
 1. During FSM install using the `--set` option:
+
     ```bash
     # To include the IP ranges 1.1.1.1/32 and 2.2.2.2/24 for outbound interception
-    fsm install --set="fsm.outboundIPRangeInclusionList={1.1.1.1/32,2.2.2.2/24}
+    fsm install --set="fsm.outboundIPRangeInclusionList=[1.1.1.1/32,2.2.2.2/24]
     ```
 
 1. By setting the `outboundIPRangeInclusionList` field in the `fsm-mesh-config` resource:
+
     ```bash
     ## Assumes FSM is installed in the fsm-system namespace
     kubectl patch meshconfig fsm-mesh-config -n fsm-system -p '{"spec":{"traffic":{"outboundIPRangeInclusionList":["1.1.1.1/32", "2.2.2.2/24"]}}}'  --type=merge
@@ -138,12 +143,14 @@ Outbound ports can be excluded at a global mesh scope or per pod scope.
 FSM provides the means to specify a global list of ports to exclude from outbound traffic interception applicable to all pods in the mesh, as follows:
 
 1. During FSM install using the `--set` option:
+
     ```bash
     # To exclude the ports 6379 and 7070 from outbound sidecar interception
     fsm install --set="fsm.outboundPortExclusionList={6379,7070}
     ```
 
 1. By setting the `outboundPortExclusionList` field in the `fsm-mesh-config` resource:
+
     ```bash
     ## Assumes FSM is installed in the fsm-system namespace
     kubectl patch meshconfig fsm-mesh-config -n fsm-system -p '{"spec":{"traffic":{"outboundPortExclusionList":[6379, 7070]}}}'  --type=merge
@@ -173,12 +180,14 @@ Similar to outbound port exclusions described above, inbound traffic on pods can
 FSM provides the means to specify a global list of ports to exclude from inbound traffic interception applicable to all pods in the mesh, as follows:
 
 1. During FSM install using the `--set` option:
+
     ```bash
     # To exclude the ports 6379 and 7070 from inbound sidecar interception
-    fsm install --set="fsm.inboundPortExclusionList={6379,7070}
+    fsm install --set="fsm.inboundPortExclusionList=[6379,7070]
     ```
 
 1. By setting the `inboundPortExclusionList` field in the `fsm-mesh-config` resource:
+
     ```bash
     ## Assumes FSM is installed in the fsm-system namespace
     kubectl patch meshconfig fsm-mesh-config -n fsm-system -p '{"spec":{"traffic":{"inboundPortExclusionList":[6379, 7070]}}}'  --type=merge

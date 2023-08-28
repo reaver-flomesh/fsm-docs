@@ -32,6 +32,10 @@ Run `fsm install` to install the FSM control plane.
 
 ```console
 fsm install
+fsm-preinstall[fsm-preinstall-xsmz4] Done
+fsm-bootstrap[fsm-bootstrap-7f59b7bf7-rs55z] Done
+fsm-injector[fsm-injector-787bc867db-54gl6] Done
+fsm-controller[fsm-controller-58d758b7fb-2zrr8] Done
 FSM installed successfully in namespace [fsm-system] with mesh name [fsm]
 ```
 
@@ -51,8 +55,8 @@ You can configure the FSM installation by overriding the values file.
 1. Change any values you wish to customize. You can omit all other values.
 
    - To see which values correspond to the MeshConfig settings, see the [FSM MeshConfig documentation](/guides/operating/mesh_config)
-
    - For example, to set the `logLevel` field in the MeshConfig to `info`, save the following as `override.yaml`:
+
      ```console
      fsm:
        sidecarLogLevel: info
@@ -63,7 +67,7 @@ You can configure the FSM installation by overriding the values file.
 Then run the following `helm install` command. The chart version can be found in the Helm chart you wish to install [here](https://github.com/flomesh-io/fsm/blob/{{< param fsm_branch >}}/charts/fsm/Chart.yaml#L17).
 
 ```console
-helm install <mesh name> fsm --repo https://flomesh-io.github.io/fsm --version <chart version> --namespace <fsm namespace> --values override.yaml
+helm install <mesh name> fsm --repo https://flomesh-io.github.io/fsm --version <chart version> --namespace <fsm namespace> --create-namespace --values override.yaml
 ```
 
 Omit the `--values` flag if you prefer to use the default settings.
@@ -75,13 +79,16 @@ Run `helm install --help` for more options.
 To install FSM on OpenShift:
 
 1. Enable privileged init containers so that they can properly program iptables. The NET_ADMIN capability is not sufficient on OpenShift.
+
    ```bash
    fsm install --set="fsm.enablePrivilegedInitContainer=true"
    ```
+
    - If you have already installed FSM without enabling privileged init containers, set `enablePrivilegedInitContainer` to `true` in the [FSM MeshConfig](/guides/operating/mesh_config) and restart any pods in the mesh.
 1. Add the `privileged` [security context constraint](https://docs.openshift.com/container-platform/4.7/authentication/managing-security-context-constraints.html) to each service account in the mesh.
    - Install the [oc CLI](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html).
    - Add the security context constraint to the service account
+
      ```bash
       oc adm policy add-scc-to-user privileged -z <service account name> -n <service account namespace>
      ```

@@ -21,11 +21,8 @@ An update or delete event on the reconcilable resources will trigger the reconci
 The resources that FSM reconciles are:
 
 - CRDs : The CRDs installed/required by FSM [CRDs for FSM](https://github.com/flomesh-io/fsm/tree/{{< param fsm_branch >}}/cmd/fsm-bootstrap/crds) will be reconciled. Since FSM manages the installation and upgrade of the CRDs it needs, FSM will also reconcile them to ensure that their spec, stored and served verions are always in the state that is required by FSM.
-
 - MutatingWebhookConfiguration : A MutatingWebhookConfiguration is deployed as a part of FSM's control plane to enable automatic sidecar injection. As this is a very critical component for pods joining the mesh, FSM reconciles this resource.
-
 - ValidatingWebhookConfiguration : A ValidatingWebhookConfiguration is deployed as a part of FSM's control plane to validate various mesh configurations. This resources validates configurations being applied to the mesh, hence FSM will reconcile this resource.
-
 
 ## How to install FSM with the reconciler
 
@@ -33,6 +30,9 @@ To install FSM with the reconciler, use the below command:
 
 ```console
 fsm install --set fsm.enableReconciler=true
+fsm-preinstall[fsm-preinstall-zqmxm] Done
+fsm-bootstrap[fsm-bootstrap-7f59b7bf7-vf96p] Done
+fsm-injector[fsm-injector-787bc867db-m5wxk] Done
+fsm-controller[fsm-controller-58d758b7fb-46v4k] Done
 FSM installed successfully in namespace [fsm-system] with mesh name [fsm]
 ```
-

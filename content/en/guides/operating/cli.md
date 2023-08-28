@@ -23,13 +23,13 @@ In a bash-based shell on Linux/macOS or [Windows Subsystem for Linux](https://do
 
 ```console
 # Specify the FSM version that will be leveraged throughout these instructions
-fsm_VERSION={{< param fsm_version >}}
+FSM_VERSION={{< param fsm_version >}}
 
 # Linux curl command only
-curl -sL "https://github.com/flomesh-io/fsm/releases/download/$fsm_VERSION/fsm-$fsm_VERSION-linux-amd64.tar.gz" | tar -vxzf -
+curl -sL "https://github.com/flomesh-io/fsm/releases/download/$FSM_VERSION/fsm-$FSM_VERSION-linux-amd64.tar.gz" | tar -vxzf -
 
 # macOS curl command only
-curl -sL "https://github.com/flomesh-io/fsm/releases/download/$fsm_VERSION/fsm-$fsm_VERSION-darwin-amd64.tar.gz" | tar -vxzf -
+curl -sL "https://github.com/flomesh-io/fsm/releases/download/$FSM_VERSION/fsm-$FSM_VERSION-darwin-amd64.tar.gz" | tar -vxzf -
 ```
 
 The `fsm` client binary runs on your client machine and allows you to manage FSM in your Kubernetes cluster. Use the following commands to install the FSM `fsm` client binary in a bash-based shell on Linux or [Windows Subsystem for Linux](https://docs.microsoft.com/windows/wsl/about). These commands copy the `fsm` client binary to the standard user program location in your `PATH`.
@@ -54,7 +54,7 @@ fsm version
 
 Building FSM from source requires more steps but is the best way to test the latest changes and useful in a development environment.
 
-You must have a working [Go](https://golang.org/doc/install) environment.
+You must have a working [Go](https://golang.org/doc/install) environment and Helm 3 installed.
 
 ```console
 git clone https://github.com/flomesh-io/fsm.git

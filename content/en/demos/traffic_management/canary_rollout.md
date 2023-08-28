@@ -7,14 +7,12 @@ weight: 21
 
 This guide demonstrates how to perform Canary rollouts using the SMI Traffic Split configuration.
 
-
 ## Prerequisites
 
 - Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
 - Have FSM installed.
 - Have `kubectl` available to interact with the API server.
 - Have `fsm` CLI available for managing the service mesh.
-
 
 ## Demo
 
@@ -23,13 +21,14 @@ In this demo, we will deploy an HTTP application and perform a canary rollout wh
 To split traffic to multiple service backends, the [SMI Traffic Split API](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md) will be used. More about the usage of this API can be found in the [traffic split guide](/guides/traffic_management/traffic_split). For client applications to transparently split traffic to multiple service backends, it is important to note that client applications must direct traffic to the FQDN of the root service referenced in a `TrafficSplit` resource. In this demo, the `curl` client will direct traffic to the `httpbin` root service, initially backed by version `v1` of the service, and then perform a canary rollout to direct a percentage of traffic to version `v2` of the service.
 
 The following steps demonstrate the canary rollout deployment strategy.
+
 > Note: [Permissive traffic policy mode](/guides/traffic_management/permissive_mode) is enabled to avoid the need to create explicit access control policies.
 
 1. Enable permissive mode
 
     ```bash
-    fsm_namespace=fsm-system # Replace fsm-system with the namespace where FSM is installed
-    kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
+    FSM_NAMESPACE=fsm-system # Replace fsm-system with the namespace where FSM is installed
+    kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
     ```
 
 1. Deploy the `curl` client into the `curl` namespace after enrolling its namespace to the mesh.
@@ -46,6 +45,7 @@ The following steps demonstrate the canary rollout deployment strategy.
     ```
 
     Confirm the `curl` client pod is up and running.
+
     ```console
     $ kubectl get pods -n curl
     NAME                    READY   STATUS    RESTARTS   AGE
@@ -144,7 +144,7 @@ The following steps demonstrate the canary rollout deployment strategy.
 1. Confirm traffic is split proportional to the weights assigned to the backend services. Since we configured a weight of `50` for both `v1` and `v2`, requests should be load balanced to both the versions as seen below.
 
     ```console
-    $ for i in {1..10}; do kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -sI http://httpbin.httpbin:14001/json | egrep 'HTTP|pod'; done
+    for i in {1..10}; do kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -sI http://httpbin.httpbin:14001/json | egrep 'HTTP|pod'; done
     HTTP/1.1 200 OK
     pod: httpbin-v2-6b48697db-cdqld
     HTTP/1.1 200 OK

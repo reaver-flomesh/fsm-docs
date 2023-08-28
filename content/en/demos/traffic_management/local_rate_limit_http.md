@@ -15,18 +15,19 @@ This guide demonstrates how to configure rate limiting for HTTP requests destine
 - Have `fsm` CLI available for managing the service mesh.
 - FSM version >= v1.2.0.
 
-
 ## Demo
 
 The following demo shows a client sending HTTP requests to the `fortio` service. We will see the impact of applying local HTTP rate limiting policies targeting the `fortio` service to control the throughput of requests destined to the service backend.
 
 1. For simplicity, enable [permissive traffic policy mode](/guides/traffic_management/permissive_mode) so that explicit SMI traffic access policies are not required for application connectivity within the mesh.
+
     ```bash
-    export fsm_namespace=fsm-system # Replace fsm-system with the namespace where FSM is installed
-    kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
+    export FSM_NAMESPACE=fsm-system # Replace fsm-system with the namespace where FSM is installed
+    kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
     ```
 
 1. Deploy the `fortio` HTTP service in the `demo` namespace after enrolling its namespace to the mesh. The `fortio` HTTP service runs on port `8080`.
+
     ```bash
     # Create the demo namespace
     kubectl create namespace demo
@@ -41,29 +42,36 @@ The following demo shows a client sending HTTP requests to the `fortio` service.
     Confirm the `fortio` service pod is up and running.
 
     ```console
-    $ kubectl get pods -n demo
+    kubectl get pods -n demo
     NAME                            READY   STATUS    RESTARTS   AGE
     fortio-c4bd7857f-7mm6w          2/2     Running   0          22m
     ```
 
 1. Deploy the `fortio-client` app in the `demo` namespace. We will use this client to send TCP traffic to the `fortio TCP echo` service deployed previously.
+
     ```bash
     kubectl apply -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/fortio/fortio-client.yaml -n demo
     ```
 
     Confirm the `fortio-client` pod is up and running.
 
-    ```console
-    $ kubectl get pods -n demo
+    ```shell
+    kubectl get pods -n demo
     NAME                            READY   STATUS    RESTARTS   AGE
     fortio-client-b9b7bbfb8-prq7r   2/2     Running   0          7s
     ```
 
 1. Confirm the `fortio-client` app is able to successfully make HTTP requests to the `fortio` HTTP service on port `8080`. We call the `fortio` service with `3` concurrent connections (`-c 3`) and send `10` requests (`-n 10`).
-    ```console
-    $ fortio_client="$(kubectl get pod -n demo -l app=fortio-client -o jsonpath='{.items[0].metadata.name}')"
 
-    $ kubectl exec "$fortio_client" -n demo -c fortio-client -- fortio load -c 3 -n 10 http://fortio.demo.svc.cluster.local:8080
+    ```shell
+    fortio_client="$(kubectl get pod -n demo -l app=fortio-client -o jsonpath='{.items[0].metadata.name}')"
+
+    kubectl exec "$fortio_client" -n demo -c fortio-client -- fortio load -c 3 -n 10 http://fortio.demo.svc.cluster.local:8080
+    ```
+
+    You will get the result as below.
+    
+    ```console
     Fortio 1.33.0 running at 8 queries per second, 8->8 procs, for 10 calls: http://fortio.demo.svc.cluster.local:8080
     20:58:07 I httprunner.go:93> Starting http test for http://fortio.demo.svc.cluster.local:8080 with 3 threads at 8.0 qps and parallel warmup
     Starting at 8 qps with 3 thread(s) [gomax 8] : exactly 10, 3 calls each (total 9 + 1)
@@ -96,11 +104,13 @@ The following demo shows a client sending HTTP requests to the `fortio` service.
     ```
 
     As seen above, all the HTTP requests from the `fortio-client` pod succeeded.
+
     ```
     Code 200 : 10 (100.0 %)
     ```
 
 1. Next, apply a local rate limiting policy to rate limit HTTP requests at the virtual host level to `3 requests per minute`.
+
     ```bash
     kubectl apply -f - <<EOF
     apiVersion: policy.flomesh.io/v1alpha1
@@ -119,16 +129,19 @@ The following demo shows a client sending HTTP requests to the `fortio` service.
     ```
 
     Confirm no HTTP requests have been rate limited yet by examining the stats on the `fortio` backend pod.
-    ```console
-    $ fortio_server="$(kubectl get pod -n demo -l app=fortio -o jsonpath='{.items[0].metadata.name}')"
 
-    $ fsm proxy get stats "$fortio_server" -n demo | grep 'http_local_rate_limiter.http_local_rate_limit.rate_limited'
+    ```shell
+    fortio_server="$(kubectl get pod -n demo -l app=fortio -o jsonpath='{.items[0].metadata.name}')"
+
+    fsm proxy get stats "$fortio_server" -n demo | grep 'http_local_rate_limiter.http_local_rate_limit.rate_limited'
     http_local_rate_limiter.http_local_rate_limit.rate_limited: 0
     ```
 
 1. Confirm HTTP requests are rate limited.
+
     ```console
-    $ kubectl exec "$fortio_client" -n demo -c fortio-client -- fortio load -c 3 -n 10 http://fortio.demo.svc.cluster.local:8080
+    kubectl exec "$fortio_client" -n demo -c fortio-client -- fortio load -c 3 -n 10 http://fortio.demo.svc.cluster.local:8080
+
     Fortio 1.33.0 running at 8 queries per second, 8->8 procs, for 10 calls: http://fortio.demo.svc.cluster.local:8080
     21:06:36 I httprunner.go:93> Starting http test for http://fortio.demo.svc.cluster.local:8080 with 3 threads at 8.0 qps and parallel warmup
     Starting at 8 qps with 3 thread(s) [gomax 8] : exactly 10, 3 calls each (total 9 + 1)
@@ -180,18 +193,22 @@ The following demo shows a client sending HTTP requests to the `fortio` service.
     ```
 
     As seen above, only `3` out of `10` HTTP requests succeeded, while the remaining `7` requests were rate limited as per the rate limiting policy.
+
     ```
     Code 200 : 3 (30.0 %)
     Code 429 : 7 (70.0 %)
     ```
 
     Examine the stats to further confirm this.
+
     ```console
-    $ fsm proxy get stats "$fortio_server" -n demo | grep 'http_local_rate_limiter.http_local_rate_limit.rate_limited'
+    fsm proxy get stats "$fortio_server" -n demo | grep 'http_local_rate_limiter.http_local_rate_limit.rate_limited'
+
     http_local_rate_limiter.http_local_rate_limit.rate_limited: 7
     ```
 
 1. Next, let's update our rate limiting policy to allow a burst of requests. Bursts allow a given number of requests over the baseline rate of 3 requests per minute defined by our rate limiting policy.
+
     ```bash
     kubectl apply -f - <<EOF
     apiVersion: policy.flomesh.io/v1alpha1
@@ -211,8 +228,10 @@ The following demo shows a client sending HTTP requests to the `fortio` service.
     ```
 
 1. Confirm the burst capability allows a burst of requests within a small window of time.
+
     ```console
-    $ kubectl exec "$fortio_client" -n demo -c fortio-client -- fortio load -c 3 -n 10 http://fortio.demo.svc.cluster.local:8080
+    kubectl exec "$fortio_client" -n demo -c fortio-client -- fortio load -c 3 -n 10 http://fortio.demo.svc.cluster.local:8080
+
     Fortio 1.33.0 running at 8 queries per second, 8->8 procs, for 10 calls: http://fortio.demo.svc.cluster.local:8080
     21:11:04 I httprunner.go:93> Starting http test for http://fortio.demo.svc.cluster.local:8080 with 3 threads at 8.0 qps and parallel warmup
     Starting at 8 qps with 3 thread(s) [gomax 8] : exactly 10, 3 calls each (total 9 + 1)
@@ -247,17 +266,21 @@ The following demo shows a client sending HTTP requests to the `fortio` service.
     ```
 
     As seen above, all HTTP requests succeeded as we allowed a burst of 10 requests with our rate limiting policy.
+
     ```
     Code 200 : 10 (100.0 %)
     ```
 
     Further, examine the stats to confirm the burst allows additional requests to go through. The number of requests rate limited hasn't increased since our previous rate limit test before we configured the burst setting.
+
     ```console
-    $ fsm proxy get stats "$fortio_server" -n demo | grep 'http_local_rate_limiter.http_local_rate_limit.rate_limited'
-    http_local_rate_limiter.http_local_rate_limit.rate_limited: 7
+    fsm proxy get stats "$fortio_server" -n demo | grep 'http_local_rate_limiter.http_local_rate_limit.rate_limited'
+
+    http_local_rate_limiter.http_local_rate_limit.rate_limited: 0
     ```
 
 1. Next, let's configure the rate limting policy for a specific HTTP route allowed on the upstream service.
+
     > Note: Since we are using permissive traffic policy mode in the demo, an HTTP route with a wildcard path regex `.*` is allowed on the upstream backend, so we will configure a rate limiting policy for this route. However, when using SMI policies in the mesh, paths corresponding to matching allowed SMI HTTP routing rules can be configured.
 
     ```bash
@@ -279,8 +302,10 @@ The following demo shows a client sending HTTP requests to the `fortio` service.
     ```
 
 1. Confirm HTTP requests are rate limited at a per-route level.
+
     ```console
-    $ kubectl exec "$fortio_client" -n demo -c fortio-client -- fortio load -c 3 -n 10 http://fortio.demo.svc.cluster.local:8080
+    kubectl exec "$fortio_client" -n demo -c fortio-client -- fortio load -c 3 -n 10 http://fortio.demo.svc.cluster.local:8080
+
     Fortio 1.33.0 running at 8 queries per second, 8->8 procs, for 10 calls: http://fortio.demo.svc.cluster.local:8080
     21:19:34 I httprunner.go:93> Starting http test for http://fortio.demo.svc.cluster.local:8080 with 3 threads at 8.0 qps and parallel warmup
     Starting at 8 qps with 3 thread(s) [gomax 8] : exactly 10, 3 calls each (total 9 + 1)
@@ -331,13 +356,15 @@ The following demo shows a client sending HTTP requests to the `fortio` service.
     ```
 
     As seen above, only `3` out of `10` HTTP requests succeeded, while the remaining `7` requests were rate limited as per the rate limiting policy.
+
     ```
     Code 200 : 3 (30.0 %)
     Code 429 : 7 (70.0 %)
     ```
 
     Examine the stats to further confirm this. `7` additional requests have been rate limited after configuring HTTP route level rate limiting since our previous test, indicated by the total of `14` HTTP requests rate limited in the stats.
+
     ```console
-    $ fsm proxy get stats "$fortio_server" -n demo | grep 'http_local_rate_limiter.http_local_rate_limit.rate_limited'
+    fsm proxy get stats "$fortio_server" -n demo | grep 'http_local_rate_limiter.http_local_rate_limit.rate_limited'
     http_local_rate_limiter.http_local_rate_limit.rate_limited: 14
     ```
