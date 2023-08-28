@@ -18,39 +18,35 @@ FSM can optionally use the [FSM](https://github.com/flomesh-io/fsm) ingress cont
 
 ## Demo
 
-First, install FSM and fsm under the `fsm-system` namespace, and name the grid `fsm`.
+We will install FSM under the `fsm-system` namespace, and name it `fsm`.
 
 ```bash
-export fsm_namespace=fsm-system # Replace fsm-system with the namespace where FSM will be installed
-export fsm_mesh_name=fsm # Replace fsm with the desired FSM mesh name
+export FSM_NAMESPACE=fsm-system # Replace fsm-system with the namespace where FSM will be installed
+export FSM_MESH_NAME=fsm # Replace fsm with the desired FSM mesh name
 ```
 
-Using the `fsm` command line tool.
+We have two options to install FSM Ingress Controller. One is installing it along with FSM during FSM installation(it won't be enabled by default):
 
 ```bash
-fsm install --set fsm.enabled=true \
-    --mesh-name "$fsm_mesh_name" \
-    --fsm-namespace "$fsm_namespace"
+fsm install \
+    --mesh-name "$FSM_MESH_NAME" \
+    --fsm-namespace "$FSM_NAMESPACE" \
+    --set=fsm.fsmIngress.enabled=true
 ```
 
-Using ``Helm`` to install.
+Another is installing it separately if you already have FSM mesh installed.
+
+Using the `fsm` command line tool to enable FSM Ingress Controller.
 
 ```bash
-helm install "$fsm_mesh_name" fsm --repo https://flomesh-io.github.io/fsm \
-    --set fsm.enabled=true
-```
-
-In order to authorize clients by restricting access to backend traffic, we will configure IngressBackend so that only ingress traffic from the `ingress-pipy-controller` endpoint can be routed to the backend service. In order to discover the `ingress-pipy-controller` endpoint, we need the FSM controller and the corresponding namespace to monitor it. However, to ensure that the FSM functions properly, it cannot be injected with a Pipy sidecar.
-
-```bash
-kubectl label namespace "$fsm_namespace" flomesh.io/monitored-by="$fsm_mesh_name"
+fsm ingress enable --fsm-namespace "$FSM_NAMESPACE"
 ```
 
 Save the external IP address and port of the entry gateway, which will be used later to test access to the backend application.
 
 ```bash
-export ingress_host="$(kubectl -n "$fsm_namespace" get service ingress-pipy-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}') "
-export ingress_port="$(kubectl -n "$fsm_namespace" get service ingress-pipy-controller -o jsonpath='{.spec.ports[? (@.name=="http")].port}')"
+export ingress_host="$(kubectl -n "$FSM_NAMESPACE" get service fsm-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}')"
+export ingress_port="$(kubectl -n "$FSM_NAMESPACE" get service fsm-ingress -o jsonpath='{.spec.ports[?(@.name=="http")].port}')"
 ```
 
 The next step is to deploy the sample `httpbin` service.
@@ -69,13 +65,12 @@ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param
 Ensure that the `httpbin` service and pod are up and running properly by
 
 ```console
-kubectl get pods -n httpbin
-NAME READY STATUS RESTARTS AGE
-httpbin-74677b7df7-zzlm2 2/2 Running 0 11h
+kubectl get pods,svc -n httpbin                                                                                                                  default/fsm-system ⎈
+NAME                           READY   STATUS            RESTARTS   AGE
+pod/httpbin-5c4bbfb664-xsk7j   0/2     PodInitializing   0          29s
 
-kubectl get svc -n httpbin
-NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE
-httpbin ClusterIP 10.0.22.196 <none> 14001/TCP 11h
+NAME              TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)     AGE
+service/httpbin   ClusterIP   10.43.83.102   <none>        14001/TCP   30s
 ```
 
 ### HTTP Ingress
@@ -93,7 +88,7 @@ spec:
   ingressClassName: pipy
   rules:
   - host: httpbin.org
-    paths: http:
+    http:
       paths:
       - path: /
         pathType: Prefix
@@ -116,8 +111,8 @@ spec:
       protocol: http
   sources:
   - kind: Service
-    namespace: "$fsm_namespace"
-    name: ingress-pipy-controller
+    namespace: "$FSM_NAMESPACE"
+    name: fsm-ingress
 EOF
 ```
 

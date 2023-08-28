@@ -90,19 +90,28 @@ FSM supports multiple options to expose mesh services externally using ingress w
 
 Using [FSM](https://github.com/flomesh-io/fsm) ingress controllers and edge proxy is the preferred method for executing Ingress in an FSM managed services mesh. Using FSM, users get a high-performance ingress controller with rich policy specifications for a variety of scenarios, while maintaining lightweight profiles.
 
-To use FSM as an ingress, enable it during mesh installation at
+To use FSM as an ingress, enable it during mesh installation by passing option `--set=fsm.fsmIngress.enabled=true`:
 
 ```bash
-fsm install --set fsm.enabled=true
+fsm install \
+    --set=fsm.fsmIngress.enabled=true
+```
+
+Or enable ingress feature after mesh installed:
+
+```bash
+fsm ingress enable --fsm-namespace <FSM NAMESPACE>
 ```
 
 In addition to configuring the edge proxy for FSM using the appropriate API, the service mesh backend in FSM will only accept traffic from authorized edge proxy or gateways. FSM's [IngressBackend specification][1] allows cluster administrators and application owners to explicitly specify how the service mesh backend should authorize ingress traffic. The following sections describe how to use the `IngressBackend` and `HTTPProxy` APIs in combination to allow HTTP and HTTPS ingress traffic to be routed to the mesh backend.
 
-It is recommended that ingress traffic always be restricted to authorized clients. To do this, enable FSM to monitor the endpoints of the FSM edge proxy located in the namespace where the FSM installation is located: ``bash
+It is recommended that ingress traffic always be restricted to authorized clients. To do this, enable FSM to monitor the endpoints of the edge proxy located in the namespace where the ingress installation is located: 
 
 ```bash
 kubectl label ns <fsm namespace> flomesh.io/monitored-by=<mesh name>
 ```
+
+> If using FSM Ingress as Ingress controller, there is no need to execute command above.
 
 #### HTTP Ingress using FSM
 
@@ -142,17 +151,17 @@ spec:
   sources:
     - kind: Service
       namespace: fsm-system
-      name: ingress-pipy-controller
+      name: fsm-ingress
 ```
 
 The above configuration allows external clients to access the `foo` service under the `test` namespace.
 
 1. The Ingress configuration will route incoming HTTP traffic from external sources with the `Host:` header of `foo-basic.bar.com` to the service named `foo` on port `80` in the `test` namespace.
-2. IngressBackend is configured to allow only endpoints named `ingress-pipy-controller` service from the same namespace where FSM is installed (default is `fsm-system`) to access port `80` of the `foo` serivce under the `test` namespace.
+2. IngressBackend is configured to allow only endpoints named `fsm-ingress` service from the same namespace where FSM is installed (default is `fsm-system`) to access port `80` of the `foo` serivce under the `test` namespace.
 
 #### Examples
 
-Refer to the [Ingress with FSM demo](/demos/ingress_fms) for examples on how to expose mesh services externally using FSM in FSM.
+Refer to the [Ingress with FSM demo](/demos/ingress/ingress_fsm/) for examples on how to expose mesh services externally using FSM in FSM.
 
 ### 2. Bring your own Ingress Controller and Gateway
 
