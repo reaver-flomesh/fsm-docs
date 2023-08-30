@@ -2,7 +2,7 @@
 title: "Egress Passthrough to Unknown Destinations"
 description: "Accessing external services without Egress policies"
 type: docs
-weight: 16
+weight: 1
 ---
 
 This guide demonstrates a client within the service mesh accessing destinations external to the mesh using FSM's Egress capability to passthrough traffic to unknown destinations without an Egress policy.
@@ -10,18 +10,18 @@ This guide demonstrates a client within the service mesh accessing destinations 
 
 ## Prerequisites
 
-- Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
-- Have FSM installed.
-- Have `kubectl` available to interact with the API server.
-- Have `fsm` CLI available for managing the service mesh.
+- Kubernetes cluster version {{< param min_k8s_version >}} or higher.
+- Interact with the API server using `kubectl`.
+- FSM CLI installed.
+- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/kubernetes_ingress/#installation)
 
 
 ## HTTP(S) mesh-wide Egress passthrough demo
 
 1. Enable global egress passthrough if not enabled:
     ```bash
-    export fsm_namespace=fsm-system # Replace fsm-system with the namespace where FSM is installed
-    kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enableEgress":true}}}'  --type=merge
+    export FSM_NAMESPACE=fsm-system # Replace fsm-system with the namespace where FSM is installed
+    kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"traffic":{"enableEgress":true}}}'  --type=merge
     ```
 
 1. Deploy the `curl` client into the `curl` namespace after enrolling its namespace to the mesh.
@@ -39,14 +39,16 @@ This guide demonstrates a client within the service mesh accessing destinations 
     Confirm the `curl` client pod is up and running.
 
     ```console
-    $ kubectl get pods -n curl
+    kubectl get pods -n curl
+
     NAME                    READY   STATUS    RESTARTS   AGE
     curl-54ccc6954c-9rlvp   2/2     Running   0          20s
     ```
 
 1. Confirm the `curl` client is able to make successful HTTPS requests to the `httpbin.org` website on port `443`.
     ```console
-    $ kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -I https://httpbin.org:443
+    kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -I https://httpbin.org:443
+
     HTTP/2 200
     date: Tue, 16 Mar 2021 22:19:00 GMT
     content-type: text/html; charset=utf-8
@@ -60,10 +62,14 @@ This guide demonstrates a client within the service mesh accessing destinations 
 
 1. Confirm the HTTPS requests fail when mesh-wide egress is disabled.
     ```bash
-    kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enableEgress":false}}}'  --type=merge
+    kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"traffic":{"enableEgress":false}}}'  --type=merge
     ```
+
+    Let's trigger the request again, and you will find it failed this time.
+
     ```console
-    $ kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -I https://httpbin.org:443
-	  curl: (7) Failed to connect to httpbin.org port 443 after 3 ms: Connection refused
-	  command terminated with exit code 7
+    kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -I https://httpbin.org:443
+
+    curl: (7) Failed to connect to httpbin.org port 443 after 114 ms: Couldn't connect to server
+command terminated with exit code 7
     ```

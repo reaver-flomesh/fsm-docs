@@ -1,8 +1,8 @@
 ---
-title: "Ingress with FSM"
+title: "Ingress with Service Mesh"
 description: "HTTP ingress implemented by the FSM Ingress controller"
 type: docs
-weight: 10
+weight: 1
 draft: false
 ---
 
@@ -12,34 +12,16 @@ FSM can optionally use the [FSM](https://github.com/flomesh-io/fsm) ingress cont
 
 - Kubernetes cluster version {{< param min_k8s_version >}} or higher.
 - Interact with the API server using `kubectl`.
-- FSM is not installed, and must be removed if it is installed.
-- Installed `fsm` or `Helm 3` command line tool for installing FSM and FSM.
-- FSM version >= v1.1.0.
+- FSM CLI installed.
+- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/kubernetes_ingress/#installation)
 
 ## Demo
 
-We will install FSM under the `fsm-system` namespace, and name it `fsm`.
+Assume that we have FSM installed under the `fsm-system` namespace, and named with `fsm`.
 
 ```bash
 export FSM_NAMESPACE=fsm-system # Replace fsm-system with the namespace where FSM will be installed
 export FSM_MESH_NAME=fsm # Replace fsm with the desired FSM mesh name
-```
-
-We have two options to install FSM Ingress Controller. One is installing it along with FSM during FSM installation(it won't be enabled by default):
-
-```bash
-fsm install \
-    --mesh-name "$FSM_MESH_NAME" \
-    --fsm-namespace "$FSM_NAMESPACE" \
-    --set=fsm.fsmIngress.enabled=true
-```
-
-Another is installing it separately if you already have FSM mesh installed.
-
-Using the `fsm` command line tool to enable FSM Ingress Controller.
-
-```bash
-fsm ingress enable --fsm-namespace "$FSM_NAMESPACE"
 ```
 
 Save the external IP address and port of the entry gateway, which will be used later to test access to the backend application.

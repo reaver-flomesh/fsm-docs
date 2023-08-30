@@ -1,34 +1,20 @@
 ---
-title: "ErieCanal Ingress Controller - Advanced TLS"
-description: "ErieCanal Ingress Controller advanced TLS features and configuration"
+title: "Ingress Controller - Advanced TLS"
+description: "FSM Ingress Controller advanced TLS features and configuration"
 type: docs
 weight: 11
 ---
 
 This guide demonstrate how to configure TLS and its related functionality.
 
-### Prerequisites
+## Prerequisites
 
-* Kubernetes cluster, version {{< param min_k8s_version >}} and higher
-* Helm 3 CLI for standalone installation of ErieCanal Ingress
+- Kubernetes cluster version {{< param min_k8s_version >}} or higher.
+- Interact with the API server using `kubectl`.
+- FSM CLI installed.
+- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/kubernetes_ingress/#installation)
 
 Continuing with the previous article environment and providing examples of HTTP access at port `8000` and HTTPS access at port `8443`.
-
-### Install ErieCanal  Ingress
-
-if you haven't yet installed ErieCanal, you can use Helm to install ec.
-
-```shell
-helm repo add ec https://ec.flomesh.io
-helm repo update
-
-helm install \
-  --namespace erie-canal \
-  --create-namespace \
-  --set ec.ingress.tls.enabled=true \
-  --set ec.serviceLB.enabled=true \
-  ec ec/erie-canal
-```
 
 ### Sample Application
 
@@ -123,7 +109,7 @@ EOF
 
 ### HTTPS Upstream
 
-This example demonstrates how ErieCanal Ingress can send requests to an HTTPS backend. ErieCanal Ingress provides the following 3 annotations:
+This example demonstrates how FSM Ingress can send requests to an HTTPS backend. FSM Ingress provides the following 3 annotations:
 
 - `pipy.ingress.kubernetes.io/upstream-ssl-name`：SNI of the upstream service, such as `example.com`
 - `pipy.ingress.kubernetes.io/upstream-ssl-secret`：Secret that contains the TLS certificate, formatted as `SECRET_NAME` or `NAMESPACE/SECRET_NAME`, such as `httpbin/tls-cert`
@@ -159,7 +145,7 @@ To create the secret `tls-cert` with a certificate and key, you can use the foll
 
 ```shell
 kubectl create secret generic -n httpbin tls-cert \
-  --from-file=ca.crt=./ca-cert.pem
+  --from-file=tls.crt=./ca-cert.pem --from-file=ca.crt=./ca-cert.pem --from-file=tls.key=ca-key.pem
 ```
 
 Apply the above Ingress configuration and access the HTTPS upstream application using HTTP ingress
@@ -183,11 +169,11 @@ ingress 2023-01-31 09:05:03.285 [INF] [balancer] _target.id 10.42.0.20:8443
 
 This example demonstrates how to verify client certificates when TLS termination and mTLS are enabled.
 
-Before using the mTLS feature, ensure that ErieCanal Ingress is enabled and configured with TLS, by providing the parameter `--set ec.serviceLB.enabled=true` during ErieCanal installation.
+Before using the mTLS feature, ensure that FSM Ingress is enabled and configured with TLS, by providing the parameter `--set fsm.serviceLB.enabled=true` during FSM installation.
 
-To enable the mTLS feature, you can either enable it during ErieCanal Ingress installation by providing the parameter `--set ec.ingress.tls.mTLS=true` or modify the configuration after installation. The specific operation is to modify the `ConfigMap` `fsm-mesh-config` under the ErieCanal namespace, and set the value of `tls.mTLS` to `true`.
+To enable the mTLS feature, you can either enable it during FSM Ingress installation by providing the parameter `--set fsm.fsmIngress.tls.mTLS=true` or modify the configuration after installation. The specific operation is to modify the `ConfigMap` `fsm-mesh-config` under the FSM namespace, and set the value of `tls.mTLS` to `true`.
 
-In ErieCanal Ingress, the annotation `pipy.ingress.kubernetes.io/tls-trusted-ca-secret` is provided to configure trusted client certificates.
+In FSM Ingress, the annotation `pipy.ingress.kubernetes.io/tls-trusted-ca-secret` is provided to configure trusted client certificates.
 
 ```yaml
 apiVersion: networking.k8s.io/v1

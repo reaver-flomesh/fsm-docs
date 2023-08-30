@@ -29,8 +29,10 @@ FSM supports configuring fine grained policies for traffic destined to external 
 
 ```bash
 # Replace fsm-system with the namespace where FSM is installed
-kubectl patch meshconfig fsm-mesh-config -n fsm-system -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}'  --type=merge
+kubectl patch meshconfig fsm-mesh-config -n fsm-system -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}},"traffic":{"enableEgress":false}}' --type=merge
 ```
+
+> Remember to disable egress passthrough with set `traffic.enableEgress: false`.
 
 Refer to the [Egress policy demo](/demos/egress/egress_policy) and [API documentation](/api_reference/policy/v1alpha1/#policy.flomesh.io/v1alpha1.EgressSpec) on how to configure policies for routing egress traffic for various protocols.
 
@@ -40,10 +42,10 @@ Refer to the [Egress policy demo](/demos/egress/egress_policy) and [API document
 
 Egress can be enabled mesh-wide during FSM install or post install. When egress is enabled mesh-wide, outbound traffic from pods are allowed to egress the pod as long as the traffic does not match in-mesh traffic policies that otherwise deny the traffic.
 
-1. During FSM install (default `fsm.enableEgress=false`):
+1. During FSM installation, the egress feature is **enabled by default**. You can disabled via options as below.
 
    ```bash
-   fsm install --set fsm.enableEgress=true
+   fsm install --set fsm.enableEgress=false
    ```
 
 2. After FSM has been installed:
@@ -54,6 +56,8 @@ Egress can be enabled mesh-wide during FSM install or post install. When egress 
    # Replace fsm-system with the namespace where FSM is installed
    kubectl patch meshconfig fsm-mesh-config -n fsm-system -p '{"spec":{"traffic":{"enableEgress":true}}}' --type=merge
    ```
+
+   > With kubectl patching, it could be disabled too.
 
 ### Disabling mesh-wide Egress passthrough to external destinations
 

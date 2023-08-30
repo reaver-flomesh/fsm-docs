@@ -1,35 +1,20 @@
 ---
-title: "ErieCanal Ingress Controller - Multi-tenancy"
-description: "Achieving multi-tenancy with ErieCanal Ingress Controller"
+title: "FSM Ingress Controller - Multi-tenancy"
+description: "Achieving multi-tenancy with FSM Ingress Controller"
 type: docs
 weight: 12
+draft: true
 ---
 
-This guide demonstrate how to use the ErieCanal Ingress controller to create physical isolation of Ingress controllers when hosting multiple tenants in your Kubernetes cluster
+This guide demonstrate how to use the FSM Ingress controller to create physical isolation of Ingress controllers when hosting multiple tenants in your Kubernetes cluster
 
 ### Prerequisites
 
-* Kubernetes cluster, version {{< param min_k8s_version >}} and higher
-* Helm 3 CLI for standalone installation of ErieCanal Ingress
+- Kubernetes cluster version {{< param min_k8s_version >}} or higher.
+- Interact with the API server using `kubectl`.
+- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/kubernetes_ingress/#installation)
 
 Continuing with the previous article environment and providing examples of HTTP access at port `8000` and HTTPS access at port `8443`.
-
-### Install ErieCanal  Ingress
-
-if you haven't yet installed ErieCanal, you can use Helm to install ec.
-
-```shell
-helm repo add ec https://ec.flomesh.io
-helm repo update
-
-helm install \
-  --namespace erie-canal \
-  --create-namespace \
-  --set ec.serviceLB.enabled=true \
-  --set ec.ingress.namespaced=true \
-  ec ec/erie-canal
-```
-
 
 ### Sample Application
 

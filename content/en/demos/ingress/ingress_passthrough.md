@@ -1,51 +1,28 @@
 ---
-title: "ErieCanal Ingress Controller - SSL Passthrough"
-description: "How to use SSL passthrough feature of ErieCanal Ingress"
+title: "FSM Ingress Controller - SSL Passthrough"
+description: "How to use SSL passthrough feature of FSM Ingress"
 type: docs
 weight: 13
 ---
 
-This guide demonstrate how to configure SSL passthrough feature of ErieCanal Ingress
+This guide demonstrate how to configure SSL passthrough feature of FSM Ingress
 
 ### Prerequisites
 
-* Kubernetes cluster, version {{< param min_k8s_version >}} and higher
-* Helm 3 CLI for standalone installation of ErieCanal Ingress
+- Kubernetes cluster version {{< param min_k8s_version >}} or higher.
+- Interact with the API server using `kubectl`.
+- FSM CLI installed.
+- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/kubernetes_ingress/#installation)
 
+## Setup
 
-### Install ErieCanal  Ingress
+Once environment preparation done, let's retrieve Ingress host IP and port information.
 
-if you haven't yet installed ErieCanal, you can use Helm to install ec.
+```bash
+export FSM_NAMESPACE=fsm-system #change this to the namespace your FSM ingress installed in
 
-```shell
-helm repo add ec https://ec.flomesh.io
-helm repo update
-
-helm install \
-  --namespace erie-canal \
-  --create-namespace \
-  --set ec.ingress.tls.sslPassthrough.enabled=true \
-  --set ec.serviceLB.enabled=true \
-  --set ec.ingress.tls.enabled=true \
-  ec ec/erie-canal
-```
-
-Make sure pods are up and running.
-
-```shell
-kubectl get po -n erie-canal
-NAME                                                      READY   STATUS    RESTARTS   AGE
-erie-canal-repo-5f6dc647c7-w45sl                          1/1     Running   0          26s
-erie-canal-manager-864c74b978-fdks9                       1/1     Running   0          26s
-svclb-erie-canal-ingress-pipy-controller-26382000-scgt2   2/2     Running   0          19s
-erie-canal-ingress-pipy-5cfc98bb48-v9x5s                  1/1     Running   0          26s
-```
-
-Retrieve Ingress host IP and port information.
-
-```shell
-export ingress_host="$(kubectl -n erie-canal get service erie-canal-ingress-pipy-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')"
-export ingress_port="$(kubectl -n erie-canal get service erie-canal-ingress-pipy-controller -o jsonpath='{.spec.ports[?(@.name=="https")].port}')"
+export ingress_host="$(kubectl -n "$FSM_NAMESPACE" get service fsm-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}')"
+export ingress_port="$(kubectl -n "$FSM_NAMESPACE" get service fsm-ingress -o jsonpath='{.spec.ports[?(@.name=="http")].port}')"
 ```
 
 ## Test
@@ -54,6 +31,7 @@ For simplicity, we will not deploy an upstream service here, but instead use `ht
 
 ```shell
 curl https://httpbin.org/get -i --resolve httpbin.org:443:$ingress_host:$ingress_port
+
 HTTP/2 200
 date: Tue, 31 Jan 2023 11:21:41 GMT
 content-type: application/json

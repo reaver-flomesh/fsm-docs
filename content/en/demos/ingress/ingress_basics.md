@@ -1,42 +1,18 @@
 ---
-title: "ErieCanal Ingress Controller basics"
-description: "Using ErieCanal Ingress controller to serve HTTP/HTTPS traffic"
+title: "Ingress Controller - Basics"
+description: "Using FSM Ingress controller to serve HTTP/HTTPS traffic"
 type: docs
 weight: 10
 ---
 
-This guide demonstrate how to serve HTTP and HTTPs traffic via ErieCanal Ingress controller.
+This guide demonstrate how to serve HTTP and HTTPs traffic via FSM Ingress controller.
 
+## Prerequisites
 
-### Prerequisites
-
-* Kubernetes cluster, version {{< param min_k8s_version >}} and higher
-* Helm 3 CLI for standalone installation of ErieCanal Ingress
-
-
-### Setup k8s cluster
-
-```shell
-export INSTALL_K3S_VERSION=v1.23.8+k3s2
-curl -sfL https://get.k3s.io | sh -s - --disable traefik --disable servicelb --write-kubeconfig-mode 644 --write-kubeconfig ~/.kube/config
-```
-
-
-### Install ErieCanal  Ingress
-
-Use Helm to install fsm。
-
-```shell
-helm repo add ec https://ec.flomesh.io
-helm repo update
-
-helm install \
-  --namespace erie-canal \
-  --create-namespace \
-  --set ec.ingress.tls.enabled=true \
-  --set ec.serviceLB.enabled=true \
-  ec ec/erie-canal
-```
+- Kubernetes cluster version {{< param min_k8s_version >}} or higher.
+- Interact with the API server using `kubectl`.
+- FSM CLI installed.
+- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/kubernetes_ingress/#installation)
 
 ### Sample Application
 
@@ -176,9 +152,9 @@ Explanation of some of fields:
 By viewing the Ingress Controller Service, you can see that its type is `LoadBalancer`, and its external address is `10.0.0.12`, which is exactly the node's IP address.
 
 ```shell
-kubectl get svc -n erie-canal -l app.kubernetes.io/component=controller
-NAME                                 TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                      AGE
-erie-canal-ingress-pipy-controller   LoadBalancer   10.43.144.20   10.0.0.12     80:30508/TCP,443:30607/TCP   10m
+kubectl get svc -n fsm-system -l app=fsm-ingress
+NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+fsm-ingress   LoadBalancer   10.43.243.124   10.0.2.4      80:30508/TCP   16h
 ```
 
 Applying the Ingress configuration above, when accessing the uri `/hi` and `/` endpoints of the `httpbin` service, we can use the node's IP address and port `80`.
@@ -203,7 +179,14 @@ curl http://example.com/ --connect-to example.com:80:$HOST_IP:80
 
 ### HTTPS protocol
 
-This example shows how to configure an ingress controller to support **HTTPS** access. By default, the **ErieCanal Ingress** does not enable TLS ingress, and you need to turn on the TLS ingress functionality by using the parameter `--set ec.ingress.tls.enabled=true` during installation.
+This example shows how to configure an ingress controller to support **HTTPS** access. By default, the **FSM Ingress** does not enable TLS ingress, and you need to turn on the TLS ingress functionality by using the parameter `--set fsm.ingress.tls.enabled=true` during installation.
+
+Or execute the command below to enable ingress TLS after installed.
+
+```bash
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"ingress":{"tls":{"enabled":true}}}}' --type=merge
+```
 
 The Ingress resource in the following example configures the url `https://example.com` to access ingress.
 
@@ -241,10 +224,11 @@ Issue TLS certificate
 openssl req -x509 -newkey rsa:4096 -keyout ingress-key.pem -out ingress-cert.pem -sha256 -days 365 -nodes -subj '/CN=example.com'
 ```
 
-Create a `Secre`t using the certificate and key.
+Create a `Secret` using the certificate and key.
 
 ```shell
-kubectl create secret tls ingress-cert --cert=ingress-cert.pem --key=ingress-key.pem -n httpbin
+kubectl create secret generic -n httpbin ingress-cert \
+  --from-file=tls.crt=./ingress-cert.pem --from-file=tls.key=ingress-key.pem
 ```
 
 Apply above configuration changes. Test service using the `ingress-cert.pem` as the CA certificate to make the request, noting that the Ingress mTLS feature is currently disabled.
@@ -256,7 +240,7 @@ Hi, there!
 
 ## Advanced Configuration
 
-Next, we will introduce the advanced configuration of ErieCanal Ingress. Advanced configuration is set through the `metadata.annotations` field of the `Ingress` resource. The currently supported features are:
+Next, we will introduce the advanced configuration of FSM Ingress. Advanced configuration is set through the `metadata.annotations` field of the `Ingress` resource. The currently supported features are:
 
 - Path Rewrite
 - Specifying Load Balancing Algorithm
@@ -266,7 +250,7 @@ Next, we will introduce the advanced configuration of ErieCanal Ingress. Advance
 
 This example demonstrates how to use the rewrite path annotation.
 
-ErieCanal provides two annotations, `pipy.ingress.kubernetes.io/rewrite-target-from` and `pipy.ingress.kubernetes.io/rewrite-target-to`, to configure path rewrite, both of these are required, when used.
+FSM provides two annotations, `pipy.ingress.kubernetes.io/rewrite-target-from` and `pipy.ingress.kubernetes.io/rewrite-target-to`, to configure path rewrite, both of these are required, when used.
 
 In the following example, a route rule defines that requests with a path prefix of `/httpbin` will be routed to the `14001` port of the `httpbin` service, but the service itself does not have this path. This is where the path rewrite feature comes in.
 
@@ -309,7 +293,7 @@ Hi, there!
 
 This example demonstrates specifying the load balancing algorithm when you have multiple replicas running and you want to distribute load among them.
 
-By default, ErieCanal Ingress uses the **Round-Robin** load balancing algorithm, but other algorithms can be specified using the annotation `pipy.ingress.kubernetes.io/lb-type annotation`. Other supported load balancing algorithms are:
+By default, FSM Ingress uses the **Round-Robin** load balancing algorithm, but other algorithms can be specified using the annotation `pipy.ingress.kubernetes.io/lb-type annotation`. Other supported load balancing algorithms are:
 
 - `round-robin`
 - `hashing`
@@ -409,7 +393,7 @@ Response from pod httpbin-5f69c44674-t9cxc
 
 This example demonstrates session persistence functionality.
 
-ErieCanal Ingress provides the annotation `pipy.ingress.kubernetes.io/session-sticky` to configure session persistence, with a default value of `false` (equivalent to `no`, `0`, `off`, or ` `), meaning that the session is not kept. If you need to keep the session, you need to set the value to `true`, `yes`, `1`, or `on`.
+FSM Ingress provides the annotation `pipy.ingress.kubernetes.io/session-sticky` to configure session persistence, with a default value of `false` (equivalent to `no`, `0`, `off`, or ` `), meaning that the session is not kept. If you need to keep the session, you need to set the value to `true`, `yes`, `1`, or `on`.
 
 For example, in the following example, the annotation value is set to `true`, used to maintain the session between the two instances of the backend service.
 

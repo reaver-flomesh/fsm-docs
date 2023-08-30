@@ -2,7 +2,7 @@
 title: "Egress Policy"
 description: "Accessing external services using Egress policies"
 type: docs
-weight: 15
+weight: 3
 ---
 
 This guide demonstrates a client within the service mesh accessing destinations external to the mesh using FSM's Egress policy API.
@@ -10,18 +10,18 @@ This guide demonstrates a client within the service mesh accessing destinations 
 
 ## Prerequisites
 
-- Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
-- Have FSM installed.
-- Have `kubectl` available to interact with the API server.
-- Have `fsm` CLI available for managing the service mesh.
+- Kubernetes cluster version {{< param min_k8s_version >}} or higher.
+- Interact with the API server using `kubectl`.
+- FSM CLI installed.
+- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/kubernetes_ingress/#installation)
 
 
 ## Demo
 
-1. Enable egress policy if not enabled:
+1. Enable egress policy if not enabled, at the same time we should confirm egress passthrough is disabled:
     ```bash
-    export fsm_namespace=fsm-system # Replace fsm-system with the namespace where FSM is installed
-    kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}'  --type=merge
+    # Replace fsm-system with the namespace where FSM is installed
+    kubectl patch meshconfig fsm-mesh-config -n fsm-system -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}},"traffic":{"enableEgress":false}}' --type=merge
     ```
 
 1. Deploy the `curl` client into the `curl` namespace after enrolling its namespace to the mesh.
@@ -39,7 +39,7 @@ This guide demonstrates a client within the service mesh accessing destinations 
     Confirm the `curl` client pod is up and running.
 
     ```console
-    $ kubectl get pods -n curl
+    kubectl get pods -n curl
     NAME                    READY   STATUS    RESTARTS   AGE
     curl-54ccc6954c-9rlvp   2/2     Running   0          20s
     ```
@@ -48,7 +48,7 @@ This guide demonstrates a client within the service mesh accessing destinations 
 
 1. Confirm the `curl` client is unable make the HTTP request `http://httpbin.org:80/get` to the `httpbin.org` website on port `80`.
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get
     command terminated with exit code 7
     ```
 
@@ -75,7 +75,7 @@ This guide demonstrates a client within the service mesh accessing destinations 
 
 1. Confirm the `curl` client is able to make successful HTTP requests to `http://httpbin.org:80/get`.
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get
     HTTP/1.1 200 OK
     date: Mon, 04 Jul 2022 07:48:24 GMT
     content-type: application/json
@@ -92,7 +92,7 @@ This guide demonstrates a client within the service mesh accessing destinations 
     ```
 
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get
     command terminated with exit code 7
     ```
 
@@ -102,7 +102,7 @@ Since HTTPS traffic is encrypted with TLS, FSM routes HTTPS based traffic by pro
 
 1. Confirm the `curl` client is unable make the HTTPS request `https://httpbin.org:443/get` to the `httpbin.org` website on port `443`.
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://httpbin.org:443/get
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://httpbin.org:443/get
     command terminated with exit code 7
     ```
 
@@ -129,7 +129,7 @@ Since HTTPS traffic is encrypted with TLS, FSM routes HTTPS based traffic by pro
 
 1. Confirm the `curl` client is able to make successful HTTPS requests to `https://httpbin.org:443/get`.
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://httpbin.org:443/get
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://httpbin.org:443/get
     HTTP/2 200
     date: Thu, 13 May 2021 22:09:36 GMT
     content-type: application/json
@@ -144,7 +144,7 @@ Since HTTPS traffic is encrypted with TLS, FSM routes HTTPS based traffic by pro
     kubectl delete egress httpbin-443 -n curl
     ```
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://httpbin.org:443/get
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://httpbin.org:443/get
     command terminated with exit code 7
     ```
 
@@ -154,7 +154,7 @@ TCP based Egress traffic is matched against the destination port and IP address 
 
 1. Confirm the `curl` client is unable make the HTTPS request `https://flomesh.io:443` to the `flomesh.io` website on port `443`. Since HTTPS uses TCP as the underlying transport protocol, TCP based routing should implicitly enable access to any HTTP(s) host on the specified port.
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://flomesh.io:443
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://flomesh.io:443
     command terminated with exit code 7
     ```
 
@@ -180,17 +180,9 @@ TCP based Egress traffic is matched against the destination port and IP address 
 
 1. Confirm the `curl` client is able to make successful HTTPS requests to `https://flomesh.io:443`.
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://flomesh.io:443
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://flomesh.io:443
     HTTP/2 200
-    cache-control: public, max-age=0, must-revalidate
-    content-length: 0
-    content-type: text/html; charset=UTF-8
-    date: Thu, 13 May 2021 22:35:07 GMT
-    etag: "353ebaaf9573718bd1df6b817a472e47-ssl"
-    strict-transport-security: max-age=31536000
-    age: 0
-    server: Netlify
-    x-nf-request-id: 35a4f2dc-5356-45dc-9208-63e6fa162e0f-3350874
+    content-type: text/html
     ```
 
 1. Confirm the `curl` client can no longer make successful HTTPS requests to `https://flomesh.io:443` when the above policy is removed.
@@ -198,7 +190,7 @@ TCP based Egress traffic is matched against the destination port and IP address 
     kubectl delete egress tcp-443 -n curl
     ```
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://flomesh.io:443
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://flomesh.io:443
     command terminated with exit code 7
     ```
 
@@ -208,9 +200,10 @@ HTTP Egress policies can specify SMI HTTPRouteGroup matches for fine grained tra
 
 1. Confirm the `curl` client is unable make HTTP requests to `http://httpbin.org:80/get` and `http://httpbin.org:80/status/200` to the `httpbin.org` website on port `80`.
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get
     command terminated with exit code 7
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/status/200
+
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/status/200
     command terminated with exit code 7
     ```
 
@@ -251,7 +244,7 @@ HTTP Egress policies can specify SMI HTTPRouteGroup matches for fine grained tra
 
 1. Confirm the `curl` client is able to make successful HTTP requests to `http://httpbin.org:80/get`.
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get
     HTTP/1.1 200 OK
     date: Thu, 13 May 2021 21:49:35 GMT
     content-type: application/json
@@ -262,10 +255,10 @@ HTTP Egress policies can specify SMI HTTPRouteGroup matches for fine grained tra
 
 2. Confirm the `curl` client is unable to make successful HTTP requests to `http://httpbin.org:80/status/200`.
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/status/200
-    HTTP/1.1 404 Not Found
-    date: Fri, 14 May 2021 17:08:48 GMT
-    transfer-encoding: chunked
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/status/200
+    HTTP/1.1 403 Forbidden
+    content-length: 13
+    connection: keep-alive
     ```
 
 3. Update the matching SMI HTTPRouteGroup resource to allow requests to HTTP paths matching the regex `/status.*`.
@@ -287,7 +280,7 @@ HTTP Egress policies can specify SMI HTTPRouteGroup matches for fine grained tra
 
 4. Confirm the `curl` client can now make successful HTTP requests to `http://httpbin.org:80/status/200`.
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/status/200
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/status/200
     HTTP/1.1 200 OK
     date: Fri, 14 May 2021 17:10:48 GMT
     content-type: text/html; charset=utf-8
