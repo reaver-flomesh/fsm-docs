@@ -15,7 +15,6 @@ This guide demonstrates how to configure circuit breaking for destinations that 
 - Have `fsm` CLI available for managing the service mesh.
 - FSM version >= v1.0.0.
 
-
 ## Demo
 
 The following demo shows a load-testing client [fortio](https://github.com/fortio/fortio) sending traffic to the `httpbin` service. We will see how applying circuit breakers for traffic to the `httpbin` service impacts the `fortio` client when the configured circuit breaking limits trip.
@@ -23,11 +22,13 @@ The following demo shows a load-testing client [fortio](https://github.com/forti
 For simplicity, enable [permissive traffic policy mode](/guides/traffic_management/permissive_mode) so that explicit SMI traffic access policies are not required for application connectivity within the mesh.
 
 ```bash
-export fsm_namespace=fsm-system # Replace fsm-system with the namespace where FSM is installed
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
+export FSM_NAMESPACE=fsm-system # Replace fsm-system with the namespace where FSM is installed
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
 ```
 
 ### Deploy services
+
+Deploy server service.
 
 ```shell
 kubectl create namespace server
@@ -383,7 +384,3 @@ Check the logs of the sidecar, at the 202nd request, the number of slow requests
 ```shell
 2023-02-08 07:38:25.284 [INF] [circuit_breaker] total/slowAmount/errorAmount (open)  server/fortio|8080 202 28 0
 ```
-
-
-
-

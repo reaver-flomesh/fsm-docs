@@ -16,6 +16,7 @@ This guide demonstrates how to configure retry policy for a client and server ap
 ## Demo
 
 1. Install FSM with permissive mode and retry policy enabled.
+
     ```bash
     fsm install --set=fsm.enablePermissiveTrafficPolicy=true --set=fsm.featureFlags.enableRetryPolicy=true
     ```
@@ -35,7 +36,9 @@ This guide demonstrates how to configure retry policy for a client and server ap
     ```bash
     kubectl get svc,pod -n httpbin
     ```
+
     Should look similar to below
+
     ```console
     NAME      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)     AGE
     httpbin   ClusterIP   10.96.198.23   <none>        14001/TCP   20s
@@ -45,6 +48,7 @@ This guide demonstrates how to configure retry policy for a client and server ap
     ```
 
 1. Deploy the `curl` into the `curl` namespace after enrolling its namespace to the mesh.
+
     ```bash
     kubectl create namespace curl
 
@@ -58,13 +62,16 @@ This guide demonstrates how to configure retry policy for a client and server ap
     ```bash
     kubectl get pods -n curl
     ```
-    Should look similar to below
+
+    Should look similar to below.
+
     ```console
     NAME                    READY   STATUS    RESTARTS   AGE
     curl-54ccc6954c-9rlvp   2/2     Running   0          20s
      ```
 
 1. Apply the Retry policy to retry when the `curl` ServiceAccount receives a `5xx` code when sending a request to `httpbin` Service.
+
     ```bash
     kubectl apply -f - <<EOF
     kind: Retry
@@ -109,14 +116,17 @@ This guide demonstrates how to configure retry policy for a client and server ap
     connection: keep-alive
     ```
 
-
 2. Query for the stats between `curl` to `httpbin`.
+
     ```bash
     curl_client="$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')"
     fsm proxy get stats -n curl "$curl_client" | grep upstream_rq_retry
     ```
+
     The number of times the request from the `curl` pod to the `httpbin` pod was retried using the exponential backoff retry should be equal to the `numRetries` field in the retry policy.
+
     The `upstream_rq_retry_limit_exceeded` stat shows the number of requests not retried because it's more than the maximum retries allowed - `numRetries`.
+
      ```console
     cluster.httpbin/httpbin|14001.upstream_rq_retry: 4
     cluster.httpbin/httpbin|14001.upstream_rq_retry_backoff_exponential: 4
@@ -127,6 +137,7 @@ This guide demonstrates how to configure retry policy for a client and server ap
     ```
 
 3. Send a HTTP request that returns a non-5xx status code from the `curl` pod to the `httpbin` service.
+
     ```bash
     curl_client="$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')"
     kubectl exec "$curl_client" -n curl -c curl -- curl -sI httpbin.httpbin.svc.cluster.local:14001/status/404
