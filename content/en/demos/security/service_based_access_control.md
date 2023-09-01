@@ -17,7 +17,7 @@ This guide demonstrates an access control mechanism applied at Service level to 
 
 ## Demo
 
-deploy the sample services `httpbin` and `curl`.
+Deploy the sample services `httpbin` and `curl`.
 
 ```shell
 #Mock target service
@@ -38,6 +38,7 @@ At this point, we send a request from service  `curl` to target service `httpbin
 
 ```shell
 kubectl exec "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}')" -n curl -- curl -sI http://httpbin.httpbin:14001/get
+# You will get error as below
 command terminated with exit code 56
 ```
 
@@ -46,7 +47,7 @@ The access fails because by default the services outside the mesh cannot access 
 Before applying the policy, you need to enable the access control feature, which is disabled by default.
 
 ```shell
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"featureFlags":{"enableAccessControlPolicy":true}}}' --type=merge
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"featureFlags":{"enableAccessControlPolicy":true}}}' --type=merge
 ```
 
 ## Plaintext transfer
@@ -100,6 +101,7 @@ Execute the command again to send the authentication request, and you can see th
 
 ```shell
 kubectl exec "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}')" -n curl -- curl -sI http://httpbin.httpbin:14001/get
+#Response as below
 HTTP/1.1 200 OK
 server: gunicorn/19.9.0
 date: Mon, 07 Nov 2022 08:47:55 GMT
@@ -123,7 +125,7 @@ The previous ones we used were plaintext transfers, next we look at encrypted tr
 The default access policy certificate feature is off, turn it on by executing the following command.
 
 ```shell
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"featureFlags":{"enableAccessCertPolicy":true}}}' --type=merge
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"featureFlags":{"enableAccessCertPolicy":true}}}' --type=merge
 ```
 
 Create `AccessCert` for the access source to assign a certificate for data encryption. The controller will store the certificate information in `Secret` `curl-mtls-secret` under the namespace `curl`, and here also assign SAN `curl.curl.cluster.local` for the access source.

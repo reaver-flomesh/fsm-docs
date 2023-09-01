@@ -2,18 +2,17 @@
 title: "Egress Gateway Passthrough to Unknown Destinations"
 description: "Accessing external services via Egress Gateway without Egress policies"
 type: docs
-weight: 17
+weight: 2
 ---
 
 This guide demonstrates a client within the service mesh accessing destinations external to the mesh via egress gateway using FSM's Egress capability to passthrough traffic to unknown destinations without an Egress policy.
 
 ## Prerequisites
 
-- Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
-- Have FSM installed.
-- Have `kubectl` available to interact with the API server.
-- Have `fsm` CLI available for managing the service mesh.
-- Have `helm` CLI avaiable to install fsm.
+- Kubernetes cluster version {{< param min_k8s_version >}} or higher.
+- Interact with the API server using `kubectl`.
+- FSM CLI installed.
+- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/kubernetes_ingress/#installation)
 
 ## Egress Gateway passthrough demo
 

@@ -39,8 +39,8 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     Create the namespace where FSM will be installed.
 
     ```bash
-    export fsm_namespace=fsm-system # Replace fsm-system with the namespace where FSM is installed
-    kubectl create namespace "$fsm_namespace"
+    export FSM_NAMESPACE=fsm-system # Replace fsm-system with the namespace where FSM is installed
+    kubectl create namespace "$FSM_NAMESPACE"
     ```
 
     Next, we use a `SelfSigned` issuer to bootstrap a custom root certificate. This will create a `SelfSigned` issuer, issue a root certificate, and use that root as a `CA` issuer for certificates issued to workloads within the mesh.
@@ -52,7 +52,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     kind: Issuer
     metadata:
       name: selfsigned
-      namespace: "$fsm_namespace"
+      namespace: "$FSM_NAMESPACE"
     spec:
       selfSigned: {}
     ---
@@ -60,7 +60,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     kind: Certificate
     metadata:
       name: fsm-ca
-      namespace: "$fsm_namespace"
+      namespace: "$FSM_NAMESPACE"
     spec:
       isCA: true
       duration: 87600h # 365 days
@@ -75,7 +75,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     kind: Issuer
     metadata:
       name: fsm-ca
-      namespace: "$fsm_namespace"
+      namespace: "$FSM_NAMESPACE"
     spec:
       ca:
         secretName: fsm-ca-bundle
@@ -85,7 +85,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
 3. Confirm the `fsm-ca-bundle` CA secret is created by `cert-manager` in FSM's namespace.
    
     ```console
-    $ kubectl get secret fsm-ca-bundle -n "$fsm_namespace"
+    kubectl get secret fsm-ca-bundle -n "$FSM_NAMESPACE"
     NAME            TYPE                DATA   AGE
     fsm-ca-bundle   kubernetes.io/tls   3      84s
     ```
@@ -101,7 +101,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     Confirm the FSM control plane pods are ready and running.
     
     ```console
-    $ kubectl get pod -n "$fsm_namespace"
+    kubectl get pod -n "$FSM_NAMESPACE"
     NAME                              READY   STATUS    RESTARTS   AGE
     fsm-bootstrap-7ddc6f9b85-k8ptp    1/1     Running   0          2m52s
     fsm-controller-79b777889b-mqk4g   1/1     Running   0          2m52s
@@ -112,7 +112,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     > Note: this is not a requirement to use `cert-manager` but simplifies the demo by not requiring explicit traffic policies for application connectivity.
 
     ```bash
-    kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
+    kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
     ```
 
 6. Deploy the `httpbin` service into the `httpbin` namespace after enrolling its namespace to the mesh. The `httpbin` service runs on port `14001`.
@@ -131,13 +131,13 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     Confirm the `httpbin` service and pods are up and running.
 
     ```console
-    $ kubectl get svc -n httpbin
+    kubectl get svc -n httpbin
     NAME      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)     AGE
     httpbin   ClusterIP   10.96.198.23   <none>        14001/TCP   20s
     ```
 
     ```console
-    $ kubectl get pods -n httpbin
+    kubectl get pods -n httpbin
     NAME                     READY   STATUS    RESTARTS   AGE
     httpbin-5b8b94b9-lt2vs   2/2     Running   0          20s
     ```
@@ -158,7 +158,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     Confirm the `curl` client pod is up and running.
 
     ```console
-    $ kubectl get pods -n curl
+    kubectl get pods -n curl
     NAME                    READY   STATUS    RESTARTS   AGE
     curl-54ccc6954c-9rlvp   2/2     Running   0          20s
     ```
@@ -166,7 +166,8 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
 8.  Confirm the `curl` client is able to access the `httpbin` service on port `14001`.
 
     ```console
-    $ kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -I http://httpbin.httpbin:14001
+    kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -I http://httpbin.httpbin:14001
+    #Response as below
     HTTP/1.1 200 OK
     server: gunicorn/19.9.0
     date: Mon, 04 Jul 2022 09:34:11 GMT
