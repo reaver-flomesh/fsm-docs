@@ -68,7 +68,7 @@ FSM provides the means to specify a global list of IP ranges to exclude from out
 
     ```bash
     # To exclude the IP ranges 1.1.1.1/32 and 2.2.2.2/24 from outbound interception
-    fsm install --set="fsm.outboundIPRangeExclusionList={1.1.1.1/32,2.2.2.2/24}
+    fsm install --set=fsm.outboundIPRangeExclusionList="{1.1.1.1/32,2.2.2.2/24}"
     ```
 
 1. By setting the `outboundIPRangeExclusionList` field in the `fsm-mesh-config` resource:
@@ -107,7 +107,7 @@ FSM provides the means to specify a global list of IP ranges to include for outb
 
     ```bash
     # To include the IP ranges 1.1.1.1/32 and 2.2.2.2/24 for outbound interception
-    fsm install --set="fsm.outboundIPRangeInclusionList=[1.1.1.1/32,2.2.2.2/24]
+    fsm install --set=fsm.outboundIPRangeInclusionList="[1.1.1.1/32,2.2.2.2/24]"
     ```
 
 1. By setting the `outboundIPRangeInclusionList` field in the `fsm-mesh-config` resource:
@@ -146,7 +146,7 @@ FSM provides the means to specify a global list of ports to exclude from outboun
 
     ```bash
     # To exclude the ports 6379 and 7070 from outbound sidecar interception
-    fsm install --set="fsm.outboundPortExclusionList={6379,7070}
+    fsm install --set=fsm.outboundPortExclusionList="{6379,7070}"
     ```
 
 1. By setting the `outboundPortExclusionList` field in the `fsm-mesh-config` resource:
@@ -183,7 +183,7 @@ FSM provides the means to specify a global list of ports to exclude from inbound
 
     ```bash
     # To exclude the ports 6379 and 7070 from inbound sidecar interception
-    fsm install --set="fsm.inboundPortExclusionList=[6379,7070]
+    fsm install --set=fsm.inboundPortExclusionList="[6379,7070]"
     ```
 
 1. By setting the `inboundPortExclusionList` field in the `fsm-mesh-config` resource:
