@@ -12,7 +12,7 @@ This guide demonstrate how to serve HTTP and HTTPs traffic via FSM Ingress contr
 - Kubernetes cluster version {{< param min_k8s_version >}} or higher.
 - Interact with the API server using `kubectl`.
 - FSM CLI installed.
-- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/kubernetes_ingress/#installation)
+- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/fsm_ingress/#installation)
 
 ### Sample Application
 
@@ -160,7 +160,7 @@ fsm-ingress   LoadBalancer   10.43.243.124   10.0.2.4      80:30508/TCP   16h
 Applying the Ingress configuration above, when accessing the uri `/hi` and `/` endpoints of the `httpbin` service, we can use the node's IP address and port `80`.
 
 ```shell
-export HOST_IP=10.0.0.12
+export HOST_IP=$(ip addr show eth0 | grep 'inet ' | awk '{print $2}' | cut -d/ -f1)
 curl http://example.com/hi --connect-to example.com:80:$HOST_IP:80
 Hi, there!
 
@@ -221,14 +221,16 @@ spec:
 Issue TLS certificate
 
 ```shell
-openssl req -x509 -newkey rsa:4096 -keyout ingress-key.pem -out ingress-cert.pem -sha256 -days 365 -nodes -subj '/CN=example.com'
+openssl genrsa -out ingress-key.pem 2048
+openssl req -new -key ingress-key.pem -out ingress.csr -subj '/CN=example.com'
+openssl x509 -req -in ingress.csr -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out ingress-cert.pem -days 365
 ```
 
 Create a `Secret` using the certificate and key.
 
 ```shell
 kubectl create secret generic -n httpbin ingress-cert \
-  --from-file=tls.crt=./ingress-cert.pem --from-file=tls.key=ingress-key.pem
+  --from-file=tls.crt=./ingress-cert.pem --from-file=tls.key=ingress-key.pem --from-file=ca.crt=./ca-cert.pem
 ```
 
 Apply above configuration changes. Test service using the `ingress-cert.pem` as the CA certificate to make the request, noting that the Ingress mTLS feature is currently disabled.

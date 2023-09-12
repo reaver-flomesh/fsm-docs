@@ -2,7 +2,7 @@
 title: "TLS Passthrough"
 description: "Guide on configuring TLS offloading/termination, passthrough on FSM Ingress"
 type: docs
-weight: 4
+weight: 5
 ---
 
 # FSM Ingress Controller - TLS Passthrough

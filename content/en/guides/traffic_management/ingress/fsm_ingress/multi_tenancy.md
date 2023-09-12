@@ -2,7 +2,7 @@
 title: "Multi-tenancy Ingress"
 description: "How to use the FSM Ingress controller to create physical isolation of Ingress controllers when hosting multiple tenants in your Kubernetes cluster"
 type: docs
-weight: 3
+weight: 6
 draft: true
 ---
 

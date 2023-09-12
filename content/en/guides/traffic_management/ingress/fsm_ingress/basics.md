@@ -2,9 +2,8 @@
 title: "Basics"
 description: "Guide on basics of FSM Ingress basics"
 type: docs
-weight: 1
+weight: 3
 ---
-
 
 
 ## Demo

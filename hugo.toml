@@ -16,7 +16,7 @@ enableRobotsTXT = true
 enableGitInfo = true
 
 # Comment out to enable taxonomies in Docsy
-disableKinds = ["taxonomy", "taxonomyTerm"]
+disableKinds = ["taxonomy"]
 
 # You can add your own taxonomies
 [taxonomies]
@@ -137,8 +137,10 @@ prism_syntax_highlighting = true
 # Version params
 # Version params
 fsm_branch = "main"
-fsm_version = "v1.1.0"
+fsm_version = "v1.1.1-beta.6"
 min_k8s_version = "v1.19.0"
+gateway_api_version="0.7.1"
+min_k8s_version_gateway_api = "v1.21.0"
 pipy_version = "0.90.2-41"
 
 [[params.versions]]

@@ -2,7 +2,7 @@
 title: "Advanced TLS"
 description: "Guide on configuring FSM Ingress with TLS and its advanced use"
 type: docs
-weight: 2
+weight: 4
 ---
 
 # FSM Ingress Controller - Advanced TLS
