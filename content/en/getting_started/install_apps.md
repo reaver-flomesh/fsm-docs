@@ -3,7 +3,6 @@ title: "Deploy Sample Applications"
 description: "Deploy the sample bookstore applications"
 type: docs
 weight: 2
-aliases: = ["/docs/install/manual_demo/"]
 ---
 
 In this section we will deploy 5 different Pods, and we will apply policies to control the traffic between them.
