@@ -26,10 +26,10 @@ jobs:
     - name: Build Hugo Site
       run: hugo --minify
 
-    # - name: Archive Public Folder
-    #   run: |
-    #     zip -r public.zip public
-    #   working-directory: ${{ github.workspace }}
+    - name: Archive Public Folder
+      run: |
+        zip -r public.zip public
+      working-directory: ${{ github.workspace }}
 
     - name: Upload Archive
       uses: actions/upload-artifact@v2
