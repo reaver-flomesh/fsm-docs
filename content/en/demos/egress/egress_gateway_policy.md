@@ -16,36 +16,28 @@ This guide demonstrates a client within the service mesh accessing destinations 
 
 ## Egress Gateway passthrough demo
 
-1. Deploy egress gateway via fsm.
+1. Deploy egress gateway during FSM installation.
+
     ```bash
-    helm repo add fsm https://flomesh-io.github.io/fsm
-    helm repo update
-    helm install --namespace fsm --create-namespace --set fsm.version=0.2.0 --set fsm.egressGateway.enabled=true fsm fsm/fsm
+    fsm install --set=fsm.egressGateway.enabled=true
     ```
-2. Declare egress gateway.
-    
+
+    Or, enable egress gateway with FSM CLI.
+
     ```bash
-    kubectl apply -f - <<EOF
-    kind: EgressGateway
-    apiVersion: policy.flomesh.io/v1alpha1
-    metadata:
-    name: global-egress-gateway
-    namespace: curl
-    spec:
-    global:
-        - service: fsm-egress-gateway
-        namespace: fsm
-    EOF
+    fsm egressgateway enable
     ```
    
+   > There are more options supported by `fsm egressgateway enable`.
 
-3. Disable global egress passthrough to enable egress policy if not disabled:
+2. Disable global egress passthrough to enable egress policy if not disabled:
+    
     ```bash
-    export fsm_namespace=fsm-system # Replace fsm-system with the namespace where FSM is installed
-    kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enableEgress":false}}}'  --type=merge
+    export FSM_NAMESPACE=fsm-system # Replace fsm-system with the namespace where FSM is installed
+    kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"traffic":{"enableEgress":false}}}'  --type=merge
     ```
 
-4. Deploy the `curl` client into the `curl` namespace after enrolling its namespace to the mesh.
+3. Deploy the `curl` client into the `curl` namespace after enrolling its namespace to the mesh.
 
     ```bash
     # Create the curl namespace
@@ -66,13 +58,14 @@ This guide demonstrates a client within the service mesh accessing destinations 
     curl-7bb5845476-8s9kv   2/2     Running   0          29s
     ```
 
-5. Confirm the `curl` client is unable make the HTTP request `http://httpbin.org:80/get` to the `httpbin.org` website on port `80`.
+4. Confirm the `curl` client is unable make the HTTP request `http://httpbin.org:80/get` to the `httpbin.org` website on port `80`.
+    
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get
+    kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get
     command terminated with exit code 7
     ```
 
-6. Apply an Egress policy to allow the `curl` client's ServiceAccount to access the `httpbin.org` website on port `80` serving the `http` protocol.
+5. Apply an Egress policy to allow the `curl` client's ServiceAccount to access the `httpbin.org` website on port `80` serving the `http` protocol.
     
     ```bash
     kubectl apply -f - <<EOF
@@ -93,7 +86,7 @@ This guide demonstrates a client within the service mesh accessing destinations 
         protocol: http
     EOF
 
-7. Confirm the `curl` client is able to make successful HTTP requests to `http://httpbin.org:80/get`.
+6. Confirm the `curl` client is able to make successful HTTP requests to `http://httpbin.org:80/get`.
 
     ```bash
     kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get

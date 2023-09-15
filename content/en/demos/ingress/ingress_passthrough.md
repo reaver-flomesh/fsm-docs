@@ -12,17 +12,17 @@ This guide demonstrate how to configure SSL passthrough feature of FSM Ingress
 - Kubernetes cluster version {{< param min_k8s_version >}} or higher.
 - Interact with the API server using `kubectl`.
 - FSM CLI installed.
-- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/kubernetes_ingress/#installation)
+- TLS passthrough enabled following by [installation document](/guides/traffic_management/ingress/fsm_ingress/tls_passthrough/#installation)
 
 ## Setup
 
-Once environment preparation done, let's retrieve Ingress host IP and port information.
+Once all done, let's retrieve Ingress host IP and port information.
 
 ```bash
 export FSM_NAMESPACE=fsm-system #change this to the namespace your FSM ingress installed in
 
 export ingress_host="$(kubectl -n "$FSM_NAMESPACE" get service fsm-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}')"
-export ingress_port="$(kubectl -n "$FSM_NAMESPACE" get service fsm-ingress -o jsonpath='{.spec.ports[?(@.name=="http")].port}')"
+export ingress_port="$(kubectl -n "$FSM_NAMESPACE" get service fsm-ingress -o jsonpath='{.spec.ports[?(@.name=="https")].port}')"
 ```
 
 ## Test

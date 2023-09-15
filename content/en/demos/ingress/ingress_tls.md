@@ -12,13 +12,13 @@ This guide demonstrate how to configure TLS and its related functionality.
 - Kubernetes cluster version {{< param min_k8s_version >}} or higher.
 - Interact with the API server using `kubectl`.
 - FSM CLI installed.
-- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/kubernetes_ingress/#installation)
+- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/fsm_ingress/installation/#installation)
 
 Continuing with the previous article environment and providing examples of HTTP access at port `8000` and HTTPS access at port `8443`.
 
 ### Sample Application
 
-The example application used here provides access through both **HTTP** at port `8000` and **HTTPS** at port `8443`, with the following URI:
+The example application below  provides access through both **HTTP** at port `8000` and **HTTPS** at port `8443`, with the following URI:
 
 - `/` returns a simple HTML page
 - `/hi` returns a `200` response with string `Hi, there!`
@@ -156,12 +156,17 @@ curl http://example.com/hi --connect-to example.com:80:$HOST_IP:80
 Hi, there!
 ```
 
-Check the logs of the `erie-canal-ingress-pipy-xxx` pod to see that it is connecting to the upstream HTTPS port `8443`.
+Check the logs of the fsm-ingress pod to see that it is connecting to the upstream HTTPS port `8443`.
 
 ```console
-ingress 2023-01-31 09:05:03.285 [INF] [balancer] _sourceIP 10.42.0.1
-ingress 2023-01-31 09:05:03.285 [INF] [balancer] _connectTLS true 
-ingress 2023-01-31 09:05:03.285 [INF] [balancer] _target.id 10.42.0.20:8443
+kubectl logs -n fsm-system -l app=fsm-ingress | tail -5
+2023-09-14 04:39:41.933 [INF] [router] Request Host:  example.com
+2023-09-14 04:39:41.933 [INF] [router] Request Path:  /hi
+2023-09-14 04:39:41.934 [INF] [balancer] _sourceIP 10.42.0.1
+2023-09-14 04:39:41.934 [INF] [balancer] _connectTLS true
+2023-09-14 04:39:41.934 [INF] [balancer] _mTLS true
+2023-09-14 04:39:41.934 [INF] [balancer] _target.id 10.42.0.101:8443
+2023-09-14 04:39:41.934 [INF] [balancer] _isOutboundGRPC false
 ```
 
 
@@ -169,9 +174,15 @@ ingress 2023-01-31 09:05:03.285 [INF] [balancer] _target.id 10.42.0.20:8443
 
 This example demonstrates how to verify client certificates when TLS termination and mTLS are enabled.
 
-Before using the mTLS feature, ensure that FSM Ingress is enabled and configured with TLS, by providing the parameter `--set fsm.serviceLB.enabled=true` during FSM installation.
+Before using the mTLS feature, ensure that FSM Ingress is enabled and configured with TLS, by providing the parameter `--set fsm.serviceLB.enabled=true` during FSM installation. 
 
-To enable the mTLS feature, you can either enable it during FSM Ingress installation by providing the parameter `--set fsm.fsmIngress.tls.mTLS=true` or modify the configuration after installation. The specific operation is to modify the `ConfigMap` `fsm-mesh-config` under the FSM namespace, and set the value of `tls.mTLS` to `true`.
+**Note: This can be enabled ONLY during FSM installation.**
+
+To enable the mTLS feature, you can either enable it during FSM Ingress installation by providing the parameter `--set fsm.fsmIngress.tls.mTLS=true` or modify the configuration after installation. The specific operation is to modify the `ConfigMap` `fsm-mesh-config` under the FSM namespace, and set the value of `tls.mTLS` to `true`. Or, enable it when enabling FSM ingress with command below:
+
+```bash
+fsm ingress enable --tls-enable --mtls
+```
 
 In FSM Ingress, the annotation `pipy.ingress.kubernetes.io/tls-trusted-ca-secret` is provided to configure trusted client certificates.
 

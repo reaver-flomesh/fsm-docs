@@ -29,7 +29,7 @@ FSM supports configuring fine grained policies for traffic destined to external 
 
 ```bash
 # Replace fsm-system with the namespace where FSM is installed
-kubectl patch meshconfig fsm-mesh-config -n fsm-system -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}},"traffic":{"enableEgress":false}}' --type=merge
+kubectl patch meshconfig fsm-mesh-config -n fsm-system -p '{"spec":{"featureFlags":{"enableEgressPolicy":true},"traffic":{"enableEgress":false}}}' --type=merge
 ```
 
 > Remember to disable egress passthrough with set `traffic.enableEgress: false`.

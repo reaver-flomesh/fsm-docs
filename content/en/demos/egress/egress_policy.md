@@ -21,7 +21,7 @@ This guide demonstrates a client within the service mesh accessing destinations 
 1. Enable egress policy if not enabled, at the same time we should confirm egress passthrough is disabled:
     ```bash
     # Replace fsm-system with the namespace where FSM is installed
-    kubectl patch meshconfig fsm-mesh-config -n fsm-system -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}},"traffic":{"enableEgress":false}}' --type=merge
+    kubectl patch meshconfig fsm-mesh-config -n fsm-system -p '{"spec":{"featureFlags":{"enableEgressPolicy":true},"traffic":{"enableEgress":false}}}' --type=merge
     ```
 
 1. Deploy the `curl` client into the `curl` namespace after enrolling its namespace to the mesh.

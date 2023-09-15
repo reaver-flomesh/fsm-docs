@@ -5,12 +5,11 @@ type: docs
 weight: 5
 ---
 
-# FSM Ingress Controller - TLS Passthrough
+## FSM Ingress Controller - TLS Passthrough
 
 This guide will demonstrate TLS passthrough feature of FSM Ingress.
 
-
-## What is TLS passthrough
+### What is TLS passthrough
 
 TLS (Secure Socket Layer), also known as TLS (Transport Layer Security), protects the security communication between the client and the server through encryption.
 
@@ -18,19 +17,31 @@ TLS (Secure Socket Layer), also known as TLS (Transport Layer Security), protect
 
 TLS Passthrough is one of the two ways that a proxy server handles TLS requests (the other is TLS offload). In TLS passthrough mode, the proxy does not decrypt the TLS request from the client but instead forwards it to the upstream server for decryption, meaning the data remains encrypted while passing through the proxy, thus ensuring the security of important and sensitive data.
 
-## Advantages of TLS passthrough
+### Advantages of TLS passthrough
 
 * Since the data is not decrypted on the proxy but is forwarded to the upstream server in an encrypted manner, the data is protected from network attacks.
 * Encrypted data arrives at the upstream server without decryption, ensuring the confidentiality of the data.
 * This is also the simplest method of configuring TLS for the proxy.
 
-## Disadvantages of TLS passthrough
+### Disadvantages of TLS passthrough
 
 * Malicious code may be present in the traffic, which will directly reach the backend server.
 * In the TLS passthrough process, switching servers is not possible.
 * Layer-7 traffic processing cannot be performed.
 
+## Installation
 
+The TLS passthrough feature can be enabled during installation of FSM.
+
+```shell
+fsm install --set=fsm.image.registry=addozhang --set=fsm.image.tag=latest-main --set=fsm.fsmIngress.enabled=true --set=fsm.fsmIngress.tls.enabled=true --set=fsm.fsmIngress.tls.sslPassthrough.enabled=true
+```
+
+Or you can enable it during FSM Ingress enabling when already have FSM installed.
+
+```shell
+fsm ingress enable --tls-enable --passthrough-enable
+```
 
 ## Demo
 

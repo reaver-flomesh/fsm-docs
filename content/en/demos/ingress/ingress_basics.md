@@ -12,7 +12,7 @@ This guide demonstrate how to serve HTTP and HTTPs traffic via FSM Ingress contr
 - Kubernetes cluster version {{< param min_k8s_version >}} or higher.
 - Interact with the API server using `kubectl`.
 - FSM CLI installed.
-- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/fsm_ingress/#installation)
+- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/fsm_ingress/installation/#installation)
 
 ### Sample Application
 
