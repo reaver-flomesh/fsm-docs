@@ -1,0 +1,38 @@
+name: Hugo Build and Archive
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: "0.110.0"
+        extended: true
+
+    - name: Install Node.js Dependencies
+      run: npm install
+      working-directory: ${{ github.workspace }}
+
+    - name: Build Hugo Site
+      run: hugo --minify
+
+    # - name: Archive Public Folder
+    #   run: |
+    #     zip -r public.zip public
+    #   working-directory: ${{ github.workspace }}
+
+    - name: Upload Archive
+      uses: actions/upload-artifact@v2
+      with:
+        name: public-archive
+        path: public
