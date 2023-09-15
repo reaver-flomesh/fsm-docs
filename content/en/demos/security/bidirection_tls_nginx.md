@@ -3,6 +3,7 @@ title: "Bi-direction TLS with NginX Ingress"
 description: "Configuring different TLS certificates for Ingress and Egress"
 type: docs
 weight: 13
+draft: true
 ---
 
 This guide will demonstrate with multiple scenarios on how to configure different TLS certificates for Nginx Ingress and Egress communication.

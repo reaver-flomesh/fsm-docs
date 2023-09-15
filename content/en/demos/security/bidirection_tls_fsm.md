@@ -20,41 +20,15 @@ This guide will demonstrate with multiple scenarios on how to configure differen
 if you haven't yet installed FSM Ingress controller, you can install that quickly via
 
 ```bash
-helm repo add fsm https://charts.flomesh.io
+fsm install \
+    --set=fsm.fsmIngress.enabled=true \
+    --set=fsm.fsmIngress.tls.enabled=true \
+    --set=fsm.fsmIngress.tls.mTLS=true
 
-helm install --namespace flomesh --create-namespace \
-    --set fsm.version=0.2.0 \
-    --set fsm.ingress.tls.enabled=true \
-    --set fsm.ingress.tls.mTLS=true fsm fsm/fsm
-
-kubectl wait --namespace flomesh \
+kubectl wait --namespace fsm-system \
   --for=condition=ready pod \
-  --selector=app.kubernetes.io/instance=fsm-ingress-pipy \
+  --selector=app=fsm-ingress \
   --timeout=300s
-
-kubectl patch deployment -n flomesh fsm-ingress-pipy -p \
-'{
-  "spec": {
-    "template": {
-      "spec": {
-        "containers": [
-          {
-            "name": "ingress",
-            "ports": [
-              {
-                "containerPort": 8000,
-                "hostPort": 80,
-                "name": "ingress",
-                "protocol": "TCP"
-              }
-            ]
-          }
-        ]
-      }
-    }
-  }
-}'
-
 ```
 
 ### Deploy demo pods
@@ -87,7 +61,7 @@ Traffic flow:
 Client --**http**--> ingress-pipy Controller
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress-pipy-controller.flomesh/hello
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress.fsm-system/hello
 ```
 
 #### Test results
@@ -144,8 +118,8 @@ spec:
       protocol: http
   sources:
   - kind: Service
-    namespace: flomesh
-    name: fsm-ingress-pipy-controller
+    namespace: fsm-system
+    name: fsm-ingress
 EOF
 ```
 
@@ -156,7 +130,7 @@ Traffic Flow:
 Client --**http**--> FSM Ingress --**http** --> sidecar --> Middle
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress-pipy-controller.flomesh/hello
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress.fsm-system/hello
 ```
 
 #### Test Results
@@ -180,26 +154,26 @@ hello world.
 #### Disable Egress Permissive mode
 
 ```bash
-export fsm_namespace=fsm-system
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enableEgress":false}}}' --type=merge
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"traffic":{"enableEgress":false}}}' --type=merge
 ```
 
 #### Enable Egress Policy
 
 ```bash
-export fsm_namespace=fsm-system
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}'  --type=merge
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}' --type=merge
 ```
 
 #### Create Egress mTLS Secret
 
 ```bash
-curl https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/ca.crt -o ca.crt
-curl https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/middle.crt -o middle.crt
-curl https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/middle.key -o middle.key
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/pipy-ca.crt -o pipy-ca.crt
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/middle.crt -o middle.crt
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/middle.key -o middle.key
 
 kubectl create secret generic -n fsm-system egress-middle-cert \
-  --from-file=ca.crt=./ca.crt \
+  --from-file=ca.crt=./pipy-ca.crt \
   --from-file=tls.crt=./middle.crt \
   --from-file=tls.key=./middle.key 
 ```
@@ -222,6 +196,8 @@ spec:
       issuer: other
       cert:
         sn: 1
+        subjectAltNames: 
+        - flomesh.io
         expiration: 2030-1-1 00:00:00
         secret:
           name: egress-middle-cert
@@ -241,7 +217,7 @@ Traffic Flow:
 Client --**http**--> FSM Ingress --**http**--> sidecar --> Middle --> sidecar --**egress mtls**--> Server
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress-pipy-controller.flomesh/time
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress.fsm-system/time
 ```
 
 #### Test Results
@@ -280,7 +256,7 @@ Traffic flow:
 Client --**http**--> FSM Ingress Controller
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress-pipy-controller.flomesh/hello
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress.fsm-system/hello
 ```
 
 #### Test Results
@@ -299,8 +275,8 @@ Service Not Found
 #### Setup Ingress Controller TLS Certificate
 
 ```bash
-export fsm_namespace=fsm-system
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p \
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p \
 '{
   "spec":{
     "certificate":{
@@ -309,7 +285,7 @@ kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p \
           "name":"ingress-controller-cert",
           "namespace":"fsm-system"
         },
-        "subjectAltNames":["fsm.flomesh.cluster.local"],
+        "subjectAltNames":["fsm.fsm-system.cluster.local"],
         "validityDuration":"24h"
       }
     }
@@ -367,10 +343,10 @@ spec:
       skipClientCertValidation: false
   sources:
   - kind: Service
-    namespace: flomesh
-    name: fsm-ingress-pipy-controller
+    namespace: fsm-system
+    name: fsm-ingress
   - kind: AuthenticatedPrincipal
-    name: fsm.flomesh.cluster.local
+    name: fsm.fsm-system.cluster.local
 EOF
 ```
 
@@ -381,7 +357,7 @@ Traffic flow:
 Client --**http**--> FSM Ingress --**mtls** --> sidecar --> Middle
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress-pipy-controller.flomesh/hello
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress.fsm-system/hello
 ```
 
 #### Test Results
@@ -405,26 +381,26 @@ hello world.
 #### Disable Egress Permissive mode
 
 ```bash
-export fsm_namespace=fsm-system
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enableEgress":false}}}' --type=merge
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"traffic":{"enableEgress":false}}}' --type=merge
 ```
 
 #### Enable Egress Policy
 
 ```bash
-export fsm_namespace=fsm-system
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}'  --type=merge
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}' --type=merge
 ```
 
 #### Create Egress mTLS Secret
 
 ```bash
-curl https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/ca.crt -o ca.crt
-curl https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/middle.crt -o middle.crt
-curl https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/middle.key -o middle.key
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/pipy-ca.crt -o pipy-ca.crt
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/middle.crt -o middle.crt
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/middle.key -o middle.key
 
 kubectl create secret generic -n fsm-system egress-middle-cert \
-  --from-file=ca.crt=./ca.crt \
+  --from-file=ca.crt=./pipy-ca.crt \
   --from-file=tls.crt=./middle.crt \
   --from-file=tls.key=./middle.key 
 ```
@@ -447,6 +423,8 @@ spec:
       issuer: other
       cert:
         sn: 1
+        subjectAltNames: 
+        - flomesh.io
         expiration: 2030-1-1 00:00:00
         secret:
           name: egress-middle-cert
@@ -466,7 +444,7 @@ Traffic flow:
 Client --**http**--> FSM Ingress --**mtls**--> sidecar --> Middle --> sidecar --**egress mtls**--> Server
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress-pipy-controller.flomesh/time
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress.fsm-system/time
 ```
 
 #### Test Results
@@ -490,8 +468,8 @@ The current time: 2022-12-09 08:03:59.990118972 +0000 UTC m=+21257.813505728
 This business scenario is tested and the strategy is cleaned up to avoid affecting subsequent tests
 
 ```bash
-export fsm_namespace=fsm-system
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"certificate":{"ingressGateway":null}}}' --type=merge
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"certificate":{"ingressGateway":null}}}' --type=merge
 
 kubectl delete ingress -n egress-middle egress-middle
 kubectl delete ingressbackend -n egress-middle egress-middle
@@ -509,7 +487,7 @@ Traffic flow:
 Client --**http**--> FSM Ingress Controller
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress-pipy-controller.flomesh/hello
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress.fsm-system/hello
 ```
 
 #### Test Results
@@ -528,17 +506,16 @@ Service Not Found
 #### Setup Ingress Controller Cert
 
 ```bash
-export fsm_namespace=fsm-system
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"certificate":{"ingressGateway":{"secret":{"name":"ingress-controller-cert","namespace":"fsm-system"},"subjectAltNames":["fsm.flomesh.cluster.local"],"validityDuration":"24h"}}}}' --type=merge
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"certificate":{"ingressGateway":{"secret":{"name":"ingress-controller-cert","namespace":"fsm-system"},"subjectAltNames":["fsm.fsm-system.cluster.local"],"validityDuration":"24h"}}}}' --type=merge
 ```
 
 #### Create Ingress TLS Secret
 
 ```bash
-curl https://raw.githubusercontent.com/flomesh-io/fsm/main/samples/mTLS-ingress/ca.crt -o pipy-ca.crt
-curl https://raw.githubusercontent.com/flomesh-io/fsm/main/samples/mTLS-ingress/ingress-pipy.crt -o ingress-pipy.crt
-curl https://raw.githubusercontent.com/flomesh-io/fsm/main/samples/mTLS-ingress/ingress-pipy.key -o ingress-pipy.key
-
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/pipy-ca.crt -o pipy-ca.crt
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/ingress-pipy.crt -o ingress-pipy.crt
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/ingress-pipy.key -o ingress-pipy.key
 kubectl create secret generic -n egress-middle ingress-pipy-cert-secret \
   --from-file=ca.crt=./pipy-ca.crt \
   --from-file=tls.crt=./ingress-pipy.crt \
@@ -548,12 +525,12 @@ kubectl create secret generic -n egress-middle ingress-pipy-cert-secret \
 #### Create Egress mTLS Secret
 
 ```bash
-curl https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/ca.crt -o ca.crt
-curl https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/middle.crt -o middle.crt
-curl https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/middle.key -o middle.key
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/pipy-ca.crt -o pipy-ca.crt
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/middle.crt -o middle.crt
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/middle.key -o middle.key
 
 kubectl create secret generic -n fsm-system egress-middle-cert \
-  --from-file=ca.crt=./ca.crt \
+  --from-file=ca.crt=./pipy-ca.crt \
   --from-file=tls.crt=./middle.crt \
   --from-file=tls.key=./middle.key
 ```
@@ -586,7 +563,7 @@ spec:
               number: 8080
   tls:
   - hosts:
-    - fsm-ingress-pipy-controller.flomesh
+    - fsm-ingress.fsm-system
     secretName: ingress-pipy-cert-secret
 EOF
 ```
@@ -610,18 +587,18 @@ spec:
       skipClientCertValidation: false
   sources:
   - kind: Service
-    namespace: flomesh
-    name: fsm-ingress-pipy-controller
+    namespace: fsm-system
+    name: fsm-ingress
   - kind: AuthenticatedPrincipal
-    name: fsm.flomesh.cluster.local
+    name: fsm.fsm-system.cluster.local
 EOF
 ```
 
 #### Replace client TLS
 
 ```shell
-curl https://raw.githubusercontent.com/flomesh-io/fsm/main/samples/mTLS-ingress/client.crt -o client.crt
-curl https://raw.githubusercontent.com/flomesh-io/fsm/main/samples/mTLS-ingress/client.key -o client.key
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/client.crt -o client.crt
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/client.key -o client.key
 
 kubectl create secret generic -n egress-client egress-client-secret \
   --from-file=ca.crt=./pipy-ca.crt \
@@ -657,7 +634,7 @@ kubectl -n egress-client patch deploy client -p \
 #### FSM disable inbound mTLS
 
 ```shell
-kubectl -n flomesh get cm fsm-mesh-config -o yaml | sed 's/"mTLS": true/"mTLS": false/g' | kubectl apply -f -
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"ingress":{"tls":{"mTLS": false}}}}' --type=merge
 ```
 
 #### Test Commands
@@ -667,7 +644,7 @@ Traffic flow:
 Client --**tls**--> Ingress FSM --**mtls** --> sidecar --> Middle
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -ksi https://fsm-ingress-pipy-controller.flomesh/hello --key /client/tls.key --cert /client/tls.crt
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -ksi https://fsm-ingress.fsm-system/hello --key /client/tls.key --cert /client/tls.crt
 ```
 
 #### Test Results
@@ -690,15 +667,15 @@ hello world.
 #### Disable Egress Permissive mode
 
 ```bash
-export fsm_namespace=fsm-system
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enableEgress":false}}}' --type=merge
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"traffic":{"enableEgress":false}}}' --type=merge
 ```
 
 #### Enable Egress Policy
 
 ```bash
-export fsm_namespace=fsm-system
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}'  --type=merge
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}' --type=merge
 ```
 
 #### Setup Egress Policy
@@ -720,6 +697,8 @@ spec:
       cert:
         sn: 1
         expiration: 2030-1-1 00:00:00
+        subjectAltNames: 
+        - flomesh.io
         secret:
           name: egress-middle-cert
           namespace: fsm-system
@@ -738,7 +717,7 @@ Traffic flow:
 Client --**tls**-->  Ingress FSM --**mtls**--> sidecar --> Middle --> sidecar --**egress mtls**--> Server
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -ksi https://fsm-ingress-pipy-controller.flomesh/time --key /client/tls.key --cert /client/tls.crt
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -ksi https://fsm-ingress.fsm-system/time --key /client/tls.key --cert /client/tls.crt
 ```
 
 #### Test Results
@@ -761,8 +740,8 @@ The current time: 2022-12-15 07:04:26.62032737 +0000 UTC m=+4972.430170668
 This business scenario is tested and the strategy is cleaned up to avoid affecting subsequent tests
 
 ```bash
-export fsm_namespace=fsm-system
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"certificate":{"ingressGateway":null}}}' --type=merge
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"certificate":{"ingressGateway":null}}}' --type=merge
 
 kubectl delete ingress -n egress-middle egress-middle
 kubectl delete ingressbackend -n egress-middle egress-middle
@@ -780,7 +759,7 @@ Traffic flow:
 Client --**http**--> FSM Ingress Controller
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress-pipy-controller.flomesh/hello
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si http://fsm-ingress.fsm-system/hello
 ```
 
 #### Test Results
@@ -799,23 +778,23 @@ Service Not Found
 #### Setup Ingress Controller Cert
 
 ```bash
-export fsm_namespace=fsm-system
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"certificate":{"ingressGateway":{"secret":{"name":"ingress-controller-cert","namespace":"fsm-system"},"subjectAltNames":["fsm.flomesh.cluster.local"],"validityDuration":"24h"}}}}' --type=merge
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"certificate":{"ingressGateway":{"secret":{"name":"ingress-controller-cert","namespace":"fsm-system"},"subjectAltNames":["fsm.fsm-system.cluster.local"],"validityDuration":"24h"}}}}' --type=merge
 ```
 
 #### Create FSM TLS Secret and CA Secret
 
 ```bash
-curl https://raw.githubusercontent.com/flomesh-io/fsm/main/samples/mTLS-ingress/ca.crt -o pipy-ca.crt
-curl https://raw.githubusercontent.com/flomesh-io/fsm/main/samples/mTLS-ingress/ingress-pipy.crt -o ingress-pipy.crt
-curl https://raw.githubusercontent.com/flomesh-io/fsm/main/samples/mTLS-ingress/ingress-pipy.key -o ingress-pipy.key
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/pipy-ca.crt -o pipy-ca.crt
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/ingress-pipy.crt -o ingress-pipy.crt
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/ingress-pipy.key -o ingress-pipy.key
 
 kubectl create secret generic -n egress-middle ingress-pipy-cert-secret \
   --from-file=ca.crt=./pipy-ca.crt \
   --from-file=tls.crt=./ingress-pipy.crt \
   --from-file=tls.key=./ingress-pipy.key
 
-kubectl create secret generic -n egress-middle ingress-pipy-ca-secret \
+kubectl create secret generic -n egress-middle ingress-controller-ca-secret \
   --from-file=ca.crt=./pipy-ca.crt
 ```
 
@@ -823,8 +802,8 @@ kubectl create secret generic -n egress-middle ingress-pipy-ca-secret \
 
 ```shell
 
-curl https://raw.githubusercontent.com/flomesh-io/fsm/main/samples/mTLS-ingress/client.crt -o client.crt
-curl https://raw.githubusercontent.com/flomesh-io/fsm/main/samples/mTLS-ingress/client.key -o client.key
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/client.crt -o client.crt
+curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/client.key -o client.key
 
 kubectl create secret generic -n egress-client egress-client-secret \
   --from-file=ca.crt=./pipy-ca.crt \
@@ -867,7 +846,8 @@ metadata:
   name: egress-middle
   namespace: egress-middle
   annotations:
-    pipy.ingress.kubernetes.io/tls-trusted-ca-secret: egress-middle/ingress-pipy-ca-secret
+    # mTLS
+    pipy.ingress.kubernetes.io/tls-trusted-ca-secret: egress-middle/ingress-controller-ca-secret
     pipy.ingress.kubernetes.io/tls-verify-client: "on"
     pipy.ingress.kubernetes.io/tls-verify-depth: "1"
 
@@ -889,7 +869,7 @@ spec:
               number: 8080
   tls:
   - hosts:
-    - fsm-ingress-pipy-controller.flomesh
+    - fsm-ingress.fsm-system
     secretName: ingress-pipy-cert-secret
 EOF
 ```
@@ -913,17 +893,17 @@ spec:
       skipClientCertValidation: false
   sources:
   - kind: Service
-    namespace: flomesh
-    name: fsm-ingress-pipy-controller
+    namespace: fsm-system
+    name: fsm-ingress
   - kind: AuthenticatedPrincipal
-    name: fsm.flomesh.cluster.local
+    name: fsm.fsm-system.cluster.local
 EOF
 ```
 
 #### FSM enable inbound mTLS
 
 ```shell
-kubectl -n flomesh get cm fsm-mesh-config -o yaml | sed 's/"mTLS": false/"mTLS": true/g' | kubectl apply -f -
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"ingress":{"tls":{"mTLS": true}}}}' --type=merge
 ```
 
 #### Test Commands
@@ -933,7 +913,7 @@ Traffic flow:
 Client --**mtls**--> Ingress FSM --**mtls** --> sidecar --> Middle
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -ksi https://fsm-ingress-pipy-controller.flomesh/hello  --cacert /client/ca.crt --key /client/tls.key --cert /client/tls.crt
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -ksi https://fsm-ingress.fsm-system/hello  --cacert /client/ca.crt --key /client/tls.key --cert /client/tls.crt
 ```
 
 #### Test Results
@@ -956,26 +936,26 @@ hello world.
 #### Disable Egress Permissive mode
 
 ```bash
-export fsm_namespace=fsm-system
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"traffic":{"enableEgress":false}}}' --type=merge
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"traffic":{"enableEgress":false}}}' --type=merge
 ```
 
 #### Enable Egress Policy
 
 ```bash
-export fsm_namespace=fsm-system
-kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}'  --type=merge
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}' --type=merge
 ```
 
 #### Create Egress mTLS Secret
 
 ```bash
-curl https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/ca.crt -o ca.crt
+curl https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/pipy-ca.crt -o pipy-ca.crt
 curl https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/middle.crt -o middle.crt
 curl https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/middle.key -o middle.key
 
 kubectl create secret generic -n fsm-system egress-middle-cert \
-  --from-file=ca.crt=./ca.crt \
+  --from-file=ca.crt=./pipy-ca.crt \
   --from-file=tls.crt=./middle.crt \
   --from-file=tls.key=./middle.key
 ```
@@ -1017,7 +997,7 @@ Traffic flow:
 Client --**mtls**--> Ingress FSM --**mtls**--> sidecar --> Middle --> sidecar --**egress mtls**--> Server
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -ksi https://fsm-ingress-pipy-controller.flomesh/time --cacert /client/ca.crt --key /client/tls.key --cert /client/tls.crt
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -ksi https://fsm-ingress.fsm-system/time --cacert /client/ca.crt --key /client/tls.key --cert /client/tls.crt
 ```
 
 #### Test Results
