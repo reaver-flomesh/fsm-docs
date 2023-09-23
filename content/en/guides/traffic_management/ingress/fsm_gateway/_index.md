@@ -9,7 +9,7 @@ The FSM Gateway serves as an implementation of the [Kubernetes Gateway API](http
 
 Upon activation of the FSM Gateway, the FSM controller, assuming the position of gateway overseer, diligently monitors both Kubernetes native resources and Gateway API assets. Subsequently, it dynamically furnishes the pertinent configurations to [Pipy](https://github.com/flomesh-io/pipy), functioning as a proxy.
 
-!!!IMAGE HERE
+![FSM Gateway Architecture](/images/fsm-gateway.png)
 
 Should you have an interest in the FSM Gateway, the ensuing documentation might prove beneficial.
 

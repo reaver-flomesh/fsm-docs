@@ -90,17 +90,18 @@ curl -H 'host:foo.example.com' http://$GATEWAY_IP:8000/get
 
 ### Replace URL Prefix Path
 
-In backend server, there is another path `/status/{statusCode}` which will respond with specified status code.
+In backend server, there is another two paths:
+- `/status/{statusCode}` will respond with specified status code.
+- `/stream/{n}` will respond the response of `/get` `n` times in stream.
 
 ```bash
 curl -s -w "%{response_code}\n" -H 'host:foo.example.com' http://$GATEWAY_IP:8000/status/204
 204
-curl -s -w "%{response_code}\n" -H 'host:foo.example.com' http://$GATEWAY_IP:8000/status/20
-0
-200
+curl -s -H 'host:foo.example.com' http://$GATEWAY_IP:8000/stream/1
+{"url": "http://foo.example.com/stream/1", "args": {}, "headers": {"Host": "foo.example.com", "User-Agent": "curl/7.68.0", "Accept": "*/*", "Connection": "keep-alive"}, "origin": "10.42.0.161", "id": 0}
 ```
 
-If we hope to change all `20x` codes to `200`, the rule is required to update again.
+If we hope to change the behavior of `/status` to `/stream`, the rule is required to update again.
 
 ```bash
 apiVersion: gateway.networking.k8s.io/v1beta1
@@ -117,13 +118,13 @@ spec:
   - matches:
     - path:
         type: PathPrefix
-        value: /status/20
+        value: /status    
     filters:
     - type: URLRewrite
       urlRewrite: 
         path: 
           type: ReplacePrefixMatch
-          replacePrefixMatch: /status/20
+          replacePrefixMatch: /stream
     backendRefs:
     - name: httpbin
       port: 8080          
@@ -136,11 +137,12 @@ spec:
       port: 8080
 ```
 
-Update the rule again, we will get `200` response even we specify `204`.
+If we trigger the request to `/status/204` path again, we will stream the request data `204` times.
 
 ```bash
-curl -s -w "%{response_code}\n" -H 'host:foo.example.com' http://$GATEWAY_IP:8000/status/204
-200
+curl -s -H 'host:foo.example.com' http://$GATEWAY_IP:8000/status/204
+{"url": "http://foo.example.com/stream/204", "args": {}, "headers": {"Host": "foo.example.com", "User-Agent": "curl/7.68.0", "Accept": "*/*", "Connection": "keep-alive"}, "origin": "10.42.0.161", "id": 99}
+...
 ```
 
 ### Replace Host Name
@@ -192,5 +194,5 @@ curl -H 'host:foo.example.com' http://$GATEWAY_IP:8000/get
     "User-Agent": "curl/7.68.0"
   },
   "origin": "10.42.0.87",
-  "url": "http://foo.example.com/get"
+  "url": "http://baz.example.com/get"
 ```

@@ -65,6 +65,6 @@ The evolution of Kubernetes to the edge side solves the difficulties of edge com
 
 ## Architecture
 
-![Architecture diagram](https://user-images.githubusercontent.com/2224492/176060685-8504c433-c91b-4f9e-9754-f9ccb6c28a87.png)
+![Architecture diagram](/images/fsm-architecture.png)
 
-To break the tight coupling on Pipy and open doors for 3rd parties to develop or make use of their data plane or sidecar proxies, we have refactored the `FSM v1.2.0` codebase to make it generic and provide extension points. We strongly believe in and support open source and our [proposal](https://github.com/flomesh-io/fsm/issues/4874) for this refactoring have been submitted to upstream for their review, discussion, and/or utilization.
+To break the tight coupling on Pipy and open doors for 3rd parties to develop or make use of their data plane or sidecar proxies, we have refactored the `FSM v1.1.x` codebase to make it generic and provide extension points. We strongly believe in and support open source and our [proposal](https://github.com/flomesh-io/fsm/issues/4874) for this refactoring have been submitted to upstream for their review, discussion, and/or utilization.
