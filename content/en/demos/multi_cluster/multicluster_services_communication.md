@@ -18,7 +18,7 @@ For demonstration purposes we will be creating 4 Kubernetes clusters and high-le
 
 - `kubectx`: for switching between multiple `kubeconfig contexts` (clusters)
 - `k3d`: for creating multiple `k3s` clusters locally using containers
-- `helm`: for deploying `FSM`
+- FSM CLI: for deploying `FSM`
 - `docker`: required to run `k3d`
 - Have `fsm` CLI available for managing the service mesh.
 - FSM version >= v1.2.0.
@@ -63,7 +63,6 @@ do
   k3d cluster create ${CLUSTER_NAME} \
     --image docker.io/rancher/k3s:v1.23.8-k3s2 \
     --api-port "${HOST_IP}:${API_PORT}" \
-    --port "${API_PORT}:6443@server:0" \
     --port "${PORT}:80@server:0" \
     --servers-memory 4g \
     --k3s-arg "--disable=traefik@server:0" \
@@ -74,22 +73,31 @@ do
     ((PORT=PORT+1))
 done
 ```
+### Install FSM 
 
-### Install FSM
-
-Install FSM to newly created 4 clusters.
+Install the service mesh FSM to the clusters `cluster-1`, `cluster-2`, and `cluster-3`. The control plane does not handle application traffic and does not need to be installed.
 
 ```sh
-helm repo update
-export FSM_NAMESPACE=flomesh
-export FSM_VERSION=0.2.0-alpha.9
-for CLUSTER_NAME in control-plane cluster-1 cluster-2 cluster-3
-do 
-  kubectx k3d-${CLUSTER_NAME}
-  sleep 1
-  helm install --namespace ${FSM_NAMESPACE} --create-namespace --version=${FSM_VERSION} --set fsm.logLevel=5 fsm fsm/fsm
-  sleep 1
-  kubectl wait --for=condition=ready pod --all -n $FSM_NAMESPACE
+export FSM_NAMESPACE=fsm-system
+export FSM_MESH_NAME=fsm
+for CONFIG in kubeconfig_cp kubeconfig_c1 kubeconfig_c2 kubeconfig_c3; do
+  DNS_SVC_IP="$(kubectl --kubeconfig ${!CONFIG} get svc -n kube-system -l k8s-app=kube-dns -o jsonpath='{.items[0].spec.clusterIP}')"
+  CLUSTER_NAME=$(if [ "${CONFIG}" == "kubeconfig_c1" ]; then echo "cluster-1"; elif [ "${CONFIG}" == "kubeconfig_c2" ]; then echo "cluster-2"; else echo "cluster-3"; fi)
+  desc "Installing fsm service mesh in cluster ${CLUSTER_NAME}"
+  KUBECONFIG=${!CONFIG} $fsm_binary install \
+    --mesh-name "$FSM_MESH_NAME" \
+    --fsm-namespace "$FSM_NAMESPACE" \
+    --set=fsm.image.tag=${release} \
+    --set=fsm.certificateProvider.kind=tresor \
+    --set=fsm.image.pullPolicy=Always \
+    --set=fsm.sidecarLogLevel=error \
+    --set=fsm.controllerLogLevel=warn \
+    --set=fsm.fsmIngress.enabled=true \
+    --timeout=900s \
+    --set=fsm.localDNSProxy.enable=true \
+    --set=fsm.localDNSProxy.primaryUpstreamDNSServerIPAddr="${DNS_SVC_IP}"
+
+  kubectl --kubeconfig ${!CONFIG} wait --for=condition=ready pod --all -n $FSM_NAMESPACE --timeout=120s
 done
 ```
 
@@ -115,36 +123,11 @@ metadata:
 spec:
   gatewayHost: ${HOST_IP}
   gatewayPort: ${PORT}
+  fsmMeshConfigName: ${FSM_NAMESPACE}
   kubeconfig: |+
 `k3d kubeconfig get ${CLUSTER_NAME} | sed 's|^|    |g' | sed "s|0.0.0.0|$HOST_IP|g"`
 EOF
 ((PORT=PORT+1))
-done
-```
-
-### Install FSM Service Mesh
-
-Download fsm CLI
-
-Install the service mesh FSM to the clusters `cluster-1`, `cluster-2`, and `cluster-3`. The control plane does not handle application traffic and does not need to be installed.
-
-```sh
-export FSM_NAMESPACE=fsm-system
-export FSM_MESH_NAME=fsm
-for CLUSTER_NAME in cluster-1 cluster-2 cluster-3
-do
-  kubectx k3d-${CLUSTER_NAME}
-  DNS_SVC_IP="$(kubectl get svc -n kube-system -l k8s-app=kube-dns -o jsonpath='{.items[0].spec.clusterIP}')"
-fsm install \
-    --mesh-name "$FSM_MESH_NAME" \
-    --fsm-namespace "$FSM_NAMESPACE" \
-    --set=fsm.certificateProvider.kind=tresor \
-    --set=fsm.image.pullPolicy=Always \
-    --set=fsm.sidecarLogLevel=error \
-    --set=fsm.controllerLogLevel=warn \
-    --timeout=900s \
-    --set=fsm.localDNSProxy.enable=true \
-    --set=fsm.localDNSProxy.primaryUpstreamDNSServerIPAddr="${DNS_SVC_IP}"
 done
 ```
 
