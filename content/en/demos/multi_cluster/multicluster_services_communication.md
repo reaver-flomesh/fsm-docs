@@ -87,7 +87,6 @@ for CONFIG in kubeconfig_cp kubeconfig_c1 kubeconfig_c2 kubeconfig_c3; do
   KUBECONFIG=${!CONFIG} $fsm_binary install \
     --mesh-name "$FSM_MESH_NAME" \
     --fsm-namespace "$FSM_NAMESPACE" \
-    --set=fsm.image.tag=${release} \
     --set=fsm.certificateProvider.kind=tresor \
     --set=fsm.image.pullPolicy=Always \
     --set=fsm.sidecarLogLevel=error \
