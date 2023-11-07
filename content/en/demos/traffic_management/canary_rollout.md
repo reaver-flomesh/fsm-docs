@@ -34,7 +34,7 @@ Download the FSM CLI.
 ```shell
 system=$(uname -s | tr '[:upper:]' '[:lower:]')
 arch=$(uname -m | sed -E 's/x86_/amd/' | sed -E 's/aarch/arm/')
-release=v1.1.4
+release={{< param fsm_version >}}
 curl -L https://github.com/flomesh-io/fsm/releases/download/${release}/fsm-${release}-${system}-${arch}.tar.gz | tar -vxzf -
 cp ./${system}-amd64/fsm /usr/local/bin/fsm
 ```
