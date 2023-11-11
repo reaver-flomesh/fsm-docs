@@ -37,6 +37,10 @@ An essential aspect is setting [the request and limit resource](https://github.c
 
 ## Latency
 
+**Illustration: xxx_baseline means that the service is accessed directly without sidecar; xxx_both means that both the client and the server have sidecars. **
+
+The X-axis represents the number of concurrencies; the Y-axis represents latency in milliseconds
+
 ### P50
 
 ![](https://github.com/addozhang/istio-tools/assets/2224492/ac37b7a7-bd39-408a-905c-304f4b71a607)
@@ -54,6 +58,8 @@ An essential aspect is setting [the request and limit resource](https://github.c
 ![](https://github.com/addozhang/istio-tools/assets/2224492/5c5eee13-aeba-4755-9617-a3985156964b)
 
 ## Resource Consumption
+
+Among them, the CPU consumption of Istio and FSM is higher when there are two concurrencies. It is speculated that the reason is that there is no preheating before the test starts.
 
 ### Client sidecar cpu
 
