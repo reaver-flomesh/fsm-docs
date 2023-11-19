@@ -57,13 +57,13 @@ The following section documents the additional steps needed to allow an already 
 - Make sure the Prometheus instance has appropriate RBAC rules to be able to reach both the pods and Kubernetes API - this might be dependent on specific requirements and situations for different deployments:
 ```yaml
 - apiGroups: [""]
-   resources: ["nodes", "nodes/proxy",  "nodes/metrics", "services", "endpoints", "pods", "ingresses", "configmaps"]
-   verbs: ["list", "get", "watch"]
- - apiGroups: ["extensions"]
-   resources: ["ingresses", "ingresses/status"]
-   verbs: ["list", "get", "watch"]
- - nonResourceURLs: ["/metrics"]
-   verbs: ["get"]
+  resources: ["nodes", "nodes/proxy",  "nodes/metrics", "services", "endpoints", "pods", "ingresses", "configmaps"]
+  verbs: ["list", "get", "watch"]
+- apiGroups: ["extensions"]
+  resources: ["ingresses", "ingresses/status"]
+  verbs: ["list", "get", "watch"]
+- nonResourceURLs: ["/metrics"]
+  verbs: ["get"]
 ```
 
 - If desired, use the Prometheus Service definition to allow Prometheus to scrape itself:
@@ -76,49 +76,49 @@ annotations:
 - Amend Prometheus' configmap to reach the pods/Pipy endpoints. FSM automatically appends the port annotations to the pods and takes care of pushing the listener configuration to the pods for Prometheus to reach:
 ```yaml
 - job_name: 'kubernetes-pods'
-   kubernetes_sd_configs:
-   - role: pod
-   relabel_configs:
-   - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
-      action: keep
-      regex: true
-   - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
-      action: replace
-      target_label: __metrics_path__
-      regex: (.+)
-   - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-      action: replace
-      regex: ([^:]+)(?::\d+)?;(\d+)
-      replacement: $1:$2
-      target_label: __address__
-   - source_labels: [__meta_kubernetes_namespace]
-      action: replace
-      target_label: source_namespace
-   - source_labels: [__meta_kubernetes_pod_name]
-      action: replace
-      target_label: source_pod_name
-   - regex: '(__meta_kubernetes_pod_label_app)'
-      action: labelmap
-      replacement: source_service
-   - regex: '(__meta_kubernetes_pod_label_fsm_sidecar_uid|__meta_kubernetes_pod_label_pod_template_hash|__meta_kubernetes_pod_label_version)'
-      action: drop
-   - source_labels: [__meta_kubernetes_pod_controller_kind]
-      action: replace
-      target_label: source_workload_kind
-   - source_labels: [__meta_kubernetes_pod_controller_name]
-      action: replace
-      target_label: source_workload_name
-   - source_labels: [__meta_kubernetes_pod_controller_kind]
-      action: replace
-      regex: ^ReplicaSet$
-      target_label: source_workload_kind
-      replacement: Deployment
-   - source_labels:
-      - __meta_kubernetes_pod_controller_kind
-      - __meta_kubernetes_pod_controller_name
-      action: replace
-      regex: ^ReplicaSet;(.*)-[^-]+$
-      target_label: source_workload_name
+  kubernetes_sd_configs:
+  - role: pod
+  relabel_configs:
+  - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+    action: keep
+    regex: true
+  - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+    action: replace
+    target_label: __metrics_path__
+    regex: (.+)
+  - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+    action: replace
+    regex: ([^:]+)(?::\d+)?;(\d+)
+    replacement: $1:$2
+    target_label: __address__
+  - source_labels: [__meta_kubernetes_namespace]
+    action: replace
+    target_label: source_namespace
+  - source_labels: [__meta_kubernetes_pod_name]
+    action: replace
+    target_label: source_pod_name
+  - regex: '(__meta_kubernetes_pod_label_app)'
+    action: labelmap
+    replacement: source_service
+  - regex: '(__meta_kubernetes_pod_label_fsm_sidecar_uid|__meta_kubernetes_pod_label_pod_template_hash|__meta_kubernetes_pod_label_version)'
+    action: drop
+  - source_labels: [__meta_kubernetes_pod_controller_kind]
+    action: replace
+    target_label: source_workload_kind
+  - source_labels: [__meta_kubernetes_pod_controller_name]
+    action: replace
+    target_label: source_workload_name
+  - source_labels: [__meta_kubernetes_pod_controller_kind]
+    action: replace
+    regex: ^ReplicaSet$
+    target_label: source_workload_kind
+    replacement: Deployment
+  - source_labels:
+    - __meta_kubernetes_pod_controller_kind
+    - __meta_kubernetes_pod_controller_name
+    action: replace
+    regex: ^ReplicaSet;(.*)-[^-]+$
+    target_label: source_workload_name
 ```
 
 #### Grafana
