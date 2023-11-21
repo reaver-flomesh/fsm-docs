@@ -12,7 +12,7 @@ This guide demonstrate how to use the FSM Ingress controller to create physical 
 
 - Kubernetes cluster version {{< param min_k8s_version >}} or higher.
 - Interact with the API server using `kubectl`.
-- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/kubernetes_ingress/#installation)
+- FSM Ingress Controller installed followed by [installation document](/guides/traffic_management/ingress/fsm_ingress/installation/#installation)
 
 Continuing with the previous article environment and providing examples of HTTP access at port `8000` and HTTPS access at port `8443`.
 
