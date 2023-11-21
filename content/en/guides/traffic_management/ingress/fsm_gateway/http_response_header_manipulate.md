@@ -1,5 +1,5 @@
 ---
-title: "HTTP Request Header Manipulate"
+title: "HTTP Response Header Manipulate"
 description: ""
 type: docs
 weight: 7
