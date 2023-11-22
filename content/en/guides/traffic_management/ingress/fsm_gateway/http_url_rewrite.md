@@ -41,6 +41,7 @@ curl -H 'host:foo.example.com' http://$GATEWAY_IP:8000/get
 Example bellow will replace the `/get` path to `/headers` path.
 
 ```yaml
+kubectl apply -n httpbin -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: HTTPRoute
 metadata:
@@ -72,6 +73,7 @@ spec:
     backendRefs:
     - name: httpbin
       port: 8080
+EOF
 ```
 
 After updated the HTTP rule, we will get the same response as `/headers` when requesting `/get`.
@@ -104,6 +106,7 @@ curl -s -H 'host:foo.example.com' http://$GATEWAY_IP:8000/stream/1
 If we hope to change the behavior of `/status` to `/stream`, the rule is required to update again.
 
 ```bash
+kubectl apply -n httpbin -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: HTTPRoute
 metadata:
@@ -135,6 +138,7 @@ spec:
     backendRefs:
     - name: httpbin
       port: 8080
+EOF
 ```
 
 If we trigger the request to `/status/204` path again, we will stream the request data `204` times.
@@ -150,6 +154,7 @@ curl -s -H 'host:foo.example.com' http://$GATEWAY_IP:8000/status/204
 Let's follow the example rule below. It will replace host name from `foo.example.com` to `baz.example.com` for all traffic requesting `/get`.
 
 ```bash
+kubectl apply -n httpbin -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: HTTPRoute
 metadata:
@@ -179,6 +184,7 @@ spec:
     backendRefs:
     - name: httpbin
       port: 8080
+EOF
 ```
 
 Update rule and trigger request. We can see the client is requesting url `http://foo.example.com/get`, but the `Host` is replaced.

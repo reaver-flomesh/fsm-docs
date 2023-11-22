@@ -45,6 +45,7 @@ With header adding feature, let's try to add a new header to request by add `HTT
 Modifying the `HTTPRoute` `http-route-foo` and add `RequestHeaderModifier` filter.
 
 ```yaml
+kubectl apply -n httpbin -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: HTTPRoute
 metadata:
@@ -69,6 +70,7 @@ spec:
         add: 
         - name: "header-2-add"
           value: "foo"
+EOF
 ```
 
 Now request the path `/headers` again and you will get the new header injected by gateway.
@@ -95,6 +97,7 @@ curl -H 'host:foo.example.com' http://$GATEWAY_IP:8000/headers
 Let's update the `HTTPRoute` resource again and set two headers with new value. One does not exist and another does.
 
 ```yaml
+kubectl apply -n httpbin -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: HTTPRoute
 metadata:
@@ -121,6 +124,7 @@ spec:
           value: "foo"
         - name: "user-agent"
           value: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"
+EOF
 ```
 
 In the response, we can get the two headers updated.
@@ -145,6 +149,7 @@ The last operation is `remove`, which can remove the header of client sending.
 Let's update the `HTTPRoute` resource to remove `user-agent` header directly to hide client type from backend service.
 
 ```yaml
+kubectl apply -n httpbin -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: HTTPRoute
 metadata:
@@ -168,6 +173,7 @@ spec:
       requestHeaderModifier:
         remove:
         - "user-agent"
+EOF
 ```
 
 With resource udpated, the user agent is invisible on backend service side.

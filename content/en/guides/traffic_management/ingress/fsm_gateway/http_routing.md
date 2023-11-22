@@ -17,7 +17,7 @@ In FSM Gateway, the [HTTPRoute resource](https://gateway-api.sigs.k8s.io/api-typ
 
 ## Demonstration
 
-### Deploy example
+### Deploy sample
 
 First, let's install the example in namespace `httpbin` with commands below.
 

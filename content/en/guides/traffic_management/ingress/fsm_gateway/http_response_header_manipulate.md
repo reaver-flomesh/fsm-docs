@@ -45,6 +45,7 @@ With header adding feature, let's try to add a new header to response by add `HT
 Modifying the `HTTPRoute` `http-route-foo` and add `ResponseHeaderModifier` filter.
 
 ```yaml
+kubectl apply -n httpbin -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: HTTPRoute
 metadata:
@@ -69,6 +70,7 @@ spec:
         add: 
         - name: "header-2-add"
           value: "foo"
+EOF
 ```
 
 Now request the path `/headers` again and you will get the new header in response injected by gateway.
@@ -93,6 +95,7 @@ connection: keep-alive
 Let's update the `HTTPRoute` resource again and set two headers with new value. One does not exist and another does.
 
 ```yaml
+kubectl apply -n httpbin -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: HTTPRoute
 metadata:
@@ -119,6 +122,7 @@ spec:
           value: "foo"
         - name: "server"
           value: "fsm/gateway"
+EOF
 ```
 
 In the response, we can get the two headers updated.
@@ -143,6 +147,7 @@ The last operation is `remove`, which can remove the header of client sending.
 Let's update the `HTTPRoute` resource to remove `server` header directly to hide backend implementation from client.
 
 ```yaml
+kubectl apply -n httpbin -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: HTTPRoute
 metadata:
@@ -166,6 +171,7 @@ spec:
       responseHeaderModifier:
         remove:
         - "server"
+EOF
 ```
 
 With resource udpated, the backend server implementation is invisible on client side.
