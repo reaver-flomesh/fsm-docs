@@ -42,7 +42,7 @@ kubectl create secret tls simple-gateway-cert --key=example.com.key --cert=examp
 ### Deploy sample app
 
 ```shell
-kubectl apply -n httpbin -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/gateway/http-termination.yaml
+kubectl apply -n httpbin -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/gateway/tls-termination.yaml
 ```
 
 ### Test
