@@ -61,13 +61,13 @@ metadata:
   name: simple-fsm-gateway
 spec:
   gatewayClassName: fsm-gateway-cls
-listeners:
-  - protocol: HTTP
-    port: 8000
-    name: http
-    allowedRoutes:
-      namespaces:
-        from: Same
+  listeners:
+    - protocol: HTTP
+      port: 8000
+      name: http
+      allowedRoutes:
+        namespaces:
+          from: Same
 EOF
 ```
 
