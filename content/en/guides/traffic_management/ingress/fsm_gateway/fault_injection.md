@@ -14,8 +14,6 @@ The fault injection feature is a powerful testing mechanism used to enhance the 
 
 FSM Gateway supports these two types of fault injection and provides two types of granular fault injection: domain and routing. Next, we will show you the fault injection of FSM Gateway through a demonstration.
 
-## Configuration
-
 ## Prerequisites
 
   * Kubernetes cluster version v1.21.0 or higher.
