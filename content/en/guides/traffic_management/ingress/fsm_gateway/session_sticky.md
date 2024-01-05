@@ -120,14 +120,14 @@ Hello, world
 
 Next, configure the session sticky strategy.
 
-- `targetRef` specifies the target resource for the policy. In a retry policy, the target resource can only be a K8s `core` `Service`. Here, the `pipy` in the `server` namespace is specified.
+- `targetRef` specifies the target resource for the policy. In this policy, the target resource can only be a K8s `core` `Service`. Here, the `pipy` in the `server` namespace is specified.
 - `ports` is a list of service ports, as a service may expose multiple ports, allowing different ports to set retry strategies.
 	- `port` is the service port, set to `8080` for the `pipy` service in this example.
 	- `config` is the core configuration of the strategy.
 		- `cookieName` is the name of the cookie used for session sticky via cookie-based load balancing. This field is optional, but when cookie-based session sticky is enabled, it defines the name of the cookie storing backend server information, such as `_srv_id`. This means that when a user first visits the application, a cookie named `_srv_id` is set, typically corresponding to a backend server. When the user revisits, this cookie ensures their requests are routed to the same server as before.
 		- `expires` is the lifespan of the cookie during session sticky. This defines how long the cookie will last, i.e., how long the user's consecutive requests will be directed to the same backend server.
 
-For detailed configuration, refer to the official documentation [SessionStickyPolicy](https://fsm-docs.flomesh.io/api_reference/policyattachment/v1alpha1/#gateway.flomesh.io/v1alpha1.SessionStickyPolicy).
+For detailed configuration, refer to the official documentation [SessionStickyPolicy](/api_reference/policyattachment/v1alpha1/#gateway.flomesh.io/v1alpha1.SessionStickyPolicy).
 
 ```shell
 kubectl apply -n server -f - <<EOF
