@@ -2,7 +2,7 @@
 title: "Retry"
 description: "Gateway retry feature enhances service reliability by resending failed requests, mitigating temporary issues, and improving user experience with strategic policies."
 type: docs
-weight: 26
+weight: 28
 draft: false
 ---
 
