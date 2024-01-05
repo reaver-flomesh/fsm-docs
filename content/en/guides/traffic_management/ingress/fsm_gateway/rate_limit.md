@@ -15,6 +15,8 @@ FSM Gateway's rate limiting can be implemented based on various criteria, includ
 
 ## Configuration
 
+For detailed configuration, please refer to [RateLimitPolicy API Reference](/api_reference/policyattachment/v1alpha1/#gateway.flomesh.io/v1alpha1.RateLimitPolicy).
+
 - `targetRef` refers to the target resource for applying the policy, set here for port granularity, hence referencing the `Gateway` resource `simple-fsm-gateway`.
 - `bps`: The default rate limit for the port, measured in bytes per second.
 - `config`: L7 rate limiting configuration.

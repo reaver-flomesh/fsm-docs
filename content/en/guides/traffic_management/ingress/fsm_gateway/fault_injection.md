@@ -97,7 +97,7 @@ EOF
 
 When we request the `/headers` and `/get` paths, we can get the correct response.
 
-Next, we inject a `404` fault with a `100%` probability on the `/headers` route.
+Next, we inject a `404` fault with a `100%` probability on the `/headers` route. For detailed configuration, please refer to [FaultInjectionPolicy API Reference](/api_reference/policyattachment/v1alpha1/#gateway.flomesh.io/v1alpha1.FaultInjectionPolicy).
 
 ```shell
 kubectl apply -n httpbin -f - <<EOF

@@ -73,6 +73,8 @@ For example, in the policy below:
 - With the prevalence of cloud services and distributed network architectures, the direct connection to the gateway is no longer the client but an intermediate proxy. In such cases, we usually use the HTTP header `X-Forwarded-For` to identify the client's IP address. In FSM Gateway's policy, the `enableXFF` field controls whether to obtain the client's IP address from the `X-Forwarded-For` header.
 - For denied communications, customize the response with `statusCode` and `message`.
 
+For detailed configuration, please refer to [AccessControlPolicy API Reference](/api_reference/policyattachment/v1alpha1/#gateway.flomesh.io/v1alpha1.AccessControlPolicy).
+
 ```shell
 kubectl apply -n httpbin -f - <<EOF
 apiVersion: gateway.flomesh.io/v1alpha1
