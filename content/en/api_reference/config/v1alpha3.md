@@ -1,25 +1,25 @@
 ---
-title: "Config v1alpha2 API Reference"
-description: "Config v1alpha2 API reference documentation."
+title: "Config v1alpha3 API Reference"
+description: "Config v1alpha3 API reference documentation."
 type: docs
 ---
 
 <p>Packages:</p>
 <ul>
 <li>
-<a href="#config.flomesh.io%2fv1alpha2">config.flomesh.io/v1alpha2</a>
+<a href="#config.flomesh.io%2fv1alpha3">config.flomesh.io/v1alpha3</a>
 </li>
 </ul>
-<h2 id="config.flomesh.io/v1alpha2">config.flomesh.io/v1alpha2</h2>
+<h2 id="config.flomesh.io/v1alpha3">config.flomesh.io/v1alpha3</h2>
 <div>
-<p>Package v1alpha2 is the v1alpha2 version of the API.</p>
+<p>Package v1alpha3 is the v1alpha3 version of the API.</p>
 </div>
 Resource Types:
 <ul></ul>
-<h3 id="config.flomesh.io/v1alpha2.CertManagerProviderSpec">CertManagerProviderSpec
+<h3 id="config.flomesh.io/v1alpha3.CertManagerProviderSpec">CertManagerProviderSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.ProviderSpec">ProviderSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.ProviderSpec">ProviderSpec</a>)
 </p>
 <div>
 <p>CertManagerProviderSpec defines the configuration of the cert-manager provider</p>
@@ -67,10 +67,10 @@ string
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.CertificateSpec">CertificateSpec
+<h3 id="config.flomesh.io/v1alpha3.CertificateSpec">CertificateSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.MeshConfigSpec">MeshConfigSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
 </p>
 <div>
 <p>CertificateSpec is the type to reperesent FSM&rsquo;s certificate management configuration.</p>
@@ -109,7 +109,7 @@ int
 <td>
 <code>ingressGateway</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.IngressGatewayCertSpec">
+<a href="#config.flomesh.io/v1alpha3.IngressGatewayCertSpec">
 IngressGatewayCertSpec
 </a>
 </em>
@@ -121,10 +121,10 @@ IngressGatewayCertSpec
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.ClusterPropertySpec">ClusterPropertySpec
+<h3 id="config.flomesh.io/v1alpha3.ClusterPropertySpec">ClusterPropertySpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.ClusterSetSpec">ClusterSetSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.ClusterSetSpec">ClusterSetSpec</a>)
 </p>
 <div>
 <p>ClusterPropertySpec is the type to represent cluster property.</p>
@@ -161,10 +161,10 @@ string
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.ClusterSetSpec">ClusterSetSpec
+<h3 id="config.flomesh.io/v1alpha3.ClusterSetSpec">ClusterSetSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.MeshConfigSpec">MeshConfigSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
 </p>
 <div>
 <p>ClusterSetSpec is the type to represent cluster set.</p>
@@ -179,9 +179,90 @@ string
 <tbody>
 <tr>
 <td>
+<code>isManaged</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>IsManaged defines if the cluster is managed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>uid</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>UID defines Unique ID of cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>region</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Region defines Region of cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>zone</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Zone defines Zone of cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>group</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Group defines Group of cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Name defines Name of cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>controlPlaneUID</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>ControlPlaneUID defines the unique ID of the control plane cluster,
+in case it&rsquo;s managed</p>
+</td>
+</tr>
+<tr>
+<td>
 <code>properties</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.ClusterPropertySpec">
+<a href="#config.flomesh.io/v1alpha3.ClusterPropertySpec">
 []ClusterPropertySpec
 </a>
 </em>
@@ -192,10 +273,94 @@ string
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.ExternalAuthzSpec">ExternalAuthzSpec
+<h3 id="config.flomesh.io/v1alpha3.EgressGatewaySpec">EgressGatewaySpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.TrafficSpec">TrafficSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
+</p>
+<div>
+<p>EgressGatewaySpec is the type to represent egress gateway.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>Enabled defines if flb is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>logLevel</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>LogLevel defines the log level of gateway api.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mode</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Mode defines the mode of egress gateway.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>port</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>Port defines the port of egress gateway.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>adminPort</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>AdminPort defines the admin port of egress gateway.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>replicas</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>Replicas defines the replicas of egress gateway.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.flomesh.io/v1alpha3.ExternalAuthzSpec">ExternalAuthzSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.TrafficSpec">TrafficSpec</a>)
 </p>
 <div>
 <p>ExternalAuthzSpec is a type to represent external authorization configuration.</p>
@@ -278,10 +443,94 @@ response against the external authorization endpoint.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.FeatureFlags">FeatureFlags
+<h3 id="config.flomesh.io/v1alpha3.FLBSpec">FLBSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.MeshConfigSpec">MeshConfigSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
+</p>
+<div>
+<p>FLBSpec is the type to represent flb.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>Enabled defines if flb is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>strictMode</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>StrictMode defines if flb is in strict mode.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>upstreamMode</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.FLBUpstreamMode">
+FLBUpstreamMode
+</a>
+</em>
+</td>
+<td>
+<p>UpstreamMode defines the upstream mode of flb.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>secretName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>SecretName defines the secret name of flb.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.flomesh.io/v1alpha3.FLBUpstreamMode">FLBUpstreamMode
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.FLBSpec">FLBSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>&#34;Endpoint&#34;</p></td>
+<td></td>
+</tr><tr><td><p>&#34;NodePort&#34;</p></td>
+<td></td>
+</tr></tbody>
+</table>
+<h3 id="config.flomesh.io/v1alpha3.FeatureFlags">FeatureFlags
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
 </p>
 <div>
 <p>FeatureFlags is a type to represent FSM&rsquo;s feature flags.</p>
@@ -407,12 +656,301 @@ bool
 <p>EnableAutoDefaultRoute defines if auto default route is enabled.</p>
 </td>
 </tr>
+<tr>
+<td>
+<code>enableValidateGatewayListenerHostname</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>EnableValidateGatewayListenerHostname defines if validate gateway listener hostname is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enableValidateHTTPRouteHostnames</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>EnableValidateHTTPRouteHostnames defines if validate http route hostnames is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enableValidateGRPCRouteHostnames</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>EnableValidateGRPCRouteHostnames defines if validate grpc route hostnames is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enableValidateTLSRouteHostnames</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>EnableValidateTCPRouteHostnames defines if validate tcp route hostnames is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enableGatewayAgentService</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>EnableGatewayAgentService defines if agent service is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enableGatewayProxyTag</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>EnableGatewayProxyTag defines if gateway proxy-tag header is enabled.</p>
+</td>
+</tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.IngressGatewayCertSpec">IngressGatewayCertSpec
+<h3 id="config.flomesh.io/v1alpha3.GatewayAPISpec">GatewayAPISpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.CertificateSpec">CertificateSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
+</p>
+<div>
+<p>GatewayAPISpec is the type to represent gateway api.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>Enabled defines if gateway api is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>logLevel</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>LogLevel defines the log level of gateway api.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>fgwLogLevel</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>FGWLogLevel defines the log level of FGW.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>StripAnyHostPort</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>StripAnyHostPort defines if strip any host port is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sslPassthroughUpstreamPort</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>SSLPassthroughUpstreamPort defines the default upstream port of SSL passthrough.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>http1PerRequestLoadBalancing</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>HTTP1PerRequestLoadBalancing defines if load balancing based on per-request is enabled for http1.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>http2PerRequestLoadBalancing</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>HTTP2PerRequestLoadBalancing defines if load balancing based on per-request is enabled for http2.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>proxyTag</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.ProxyTag">
+ProxyTag
+</a>
+</em>
+</td>
+<td>
+<p>ProxyTag defines the proxy tag configuration of gateway api.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.flomesh.io/v1alpha3.HTTP">HTTP
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.IngressSpec">IngressSpec</a>)
+</p>
+<div>
+<p>HTTP is the type to represent http.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>Enabled defines if http is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>bind</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>Bind defines the bind port of http.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>listen</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>Listen defines the listen port of http.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>nodePort</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>NodePort defines the node port of http.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.flomesh.io/v1alpha3.ImageSpec">ImageSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
+</p>
+<div>
+<p>ImageSpec is the type to represent image.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>registry</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Registry defines the registry of docker image.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>tag</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Tag defines the tag of docker image.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>pullPolicy</code><br/>
+<em>
+<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#pullpolicy-v1-core">
+Kubernetes core/v1.PullPolicy
+</a>
+</em>
+</td>
+<td>
+<p>PullPolicy defines the pull policy of docker image.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.flomesh.io/v1alpha3.IngressGatewayCertSpec">IngressGatewayCertSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.CertificateSpec">CertificateSpec</a>)
 </p>
 <div>
 <p>IngressGatewayCertSpec is the type to represent the certificate specification for an ingress gateway.</p>
@@ -462,10 +1000,102 @@ Kubernetes core/v1.SecretReference
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.LocalDNSProxy">LocalDNSProxy
+<h3 id="config.flomesh.io/v1alpha3.IngressSpec">IngressSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.SidecarSpec">SidecarSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
+</p>
+<div>
+<p>IngressSpec is the type to represent ingress.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>Enabled defines if ingress is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>namespaced</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>Namespaced defines if ingress is namespaced.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>type</code><br/>
+<em>
+<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#servicetype-v1-core">
+Kubernetes core/v1.ServiceType
+</a>
+</em>
+</td>
+<td>
+<p>Type defines the type of ingress service.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>logLevel</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>LogLevel defines the log level of ingress.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>http</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.HTTP">
+HTTP
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>HTTP defines the http configuration of ingress.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>tls</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.TLS">
+TLS
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>TLS defines the tls configuration of ingress.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.flomesh.io/v1alpha3.LocalDNSProxy">LocalDNSProxy
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.SidecarSpec">SidecarSpec</a>)
 </p>
 <div>
 <p>LocalDNSProxy is the type to represent FSM&rsquo;s local DNS proxy configuration.</p>
@@ -497,6 +1127,7 @@ string
 </em>
 </td>
 <td>
+<em>(Optional)</em>
 <p>PrimaryUpstreamDNSServerIPAddr defines a primary upstream DNS server for local DNS Proxy.</p>
 </td>
 </tr>
@@ -508,15 +1139,42 @@ string
 </em>
 </td>
 <td>
+<em>(Optional)</em>
 <p>SecondaryUpstreamDNSServerIPAddr defines a secondary upstream DNS server for local DNS Proxy.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>wildcard</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.WildcardDN">
+WildcardDN
+</a>
+</em>
+</td>
+<td>
+<p>Wildcard defines Wildcard DN.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>db</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.ResolveDN">
+[]ResolveDN
+</a>
+</em>
+</td>
+<td>
+<p>DB defines Resolve DB.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.LocalProxyMode">LocalProxyMode
+<h3 id="config.flomesh.io/v1alpha3.LocalProxyMode">LocalProxyMode
 (<code>string</code> alias)</h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.SidecarSpec">SidecarSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.SidecarSpec">SidecarSpec</a>)
 </p>
 <div>
 <p>LocalProxyMode is a type alias representing the way the sidecar proxies to the main application</p>
@@ -536,7 +1194,7 @@ string
 </td>
 </tr></tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.MeshConfig">MeshConfig
+<h3 id="config.flomesh.io/v1alpha3.MeshConfig">MeshConfig
 </h3>
 <div>
 <p>MeshConfig is the type used to represent the mesh configuration.</p>
@@ -569,7 +1227,7 @@ Refer to the Kubernetes API documentation for the fields of the
 <td>
 <code>spec</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.MeshConfigSpec">
+<a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">
 MeshConfigSpec
 </a>
 </em>
@@ -584,7 +1242,7 @@ MeshConfigSpec
 <td>
 <code>clusterSet</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.ClusterSetSpec">
+<a href="#config.flomesh.io/v1alpha3.ClusterSetSpec">
 ClusterSetSpec
 </a>
 </em>
@@ -597,7 +1255,7 @@ ClusterSetSpec
 <td>
 <code>sidecar</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.SidecarSpec">
+<a href="#config.flomesh.io/v1alpha3.SidecarSpec">
 SidecarSpec
 </a>
 </em>
@@ -610,7 +1268,7 @@ SidecarSpec
 <td>
 <code>repoServer</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.RepoServerSpec">
+<a href="#config.flomesh.io/v1alpha3.RepoServerSpec">
 RepoServerSpec
 </a>
 </em>
@@ -623,7 +1281,7 @@ RepoServerSpec
 <td>
 <code>traffic</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.TrafficSpec">
+<a href="#config.flomesh.io/v1alpha3.TrafficSpec">
 TrafficSpec
 </a>
 </em>
@@ -636,7 +1294,7 @@ TrafficSpec
 <td>
 <code>observability</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.ObservabilitySpec">
+<a href="#config.flomesh.io/v1alpha3.ObservabilitySpec">
 ObservabilitySpec
 </a>
 </em>
@@ -649,7 +1307,7 @@ ObservabilitySpec
 <td>
 <code>certificate</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.CertificateSpec">
+<a href="#config.flomesh.io/v1alpha3.CertificateSpec">
 CertificateSpec
 </a>
 </em>
@@ -662,7 +1320,7 @@ CertificateSpec
 <td>
 <code>featureFlags</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.FeatureFlags">
+<a href="#config.flomesh.io/v1alpha3.FeatureFlags">
 FeatureFlags
 </a>
 </em>
@@ -675,7 +1333,7 @@ FeatureFlags
 <td>
 <code>pluginChains</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.PluginChainsSpec">
+<a href="#config.flomesh.io/v1alpha3.PluginChainsSpec">
 PluginChainsSpec
 </a>
 </em>
@@ -684,15 +1342,106 @@ PluginChainsSpec
 <p>PluginChains defines the default plugin chains.</p>
 </td>
 </tr>
+<tr>
+<td>
+<code>ingress</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.IngressSpec">
+IngressSpec
+</a>
+</em>
+</td>
+<td>
+<p>Ingress defines the configurations of Ingress features.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>gatewayAPI</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.GatewayAPISpec">
+GatewayAPISpec
+</a>
+</em>
+</td>
+<td>
+<p>GatewayAPI defines the configurations of GatewayAPI features.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>serviceLB</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.ServiceLBSpec">
+ServiceLBSpec
+</a>
+</em>
+</td>
+<td>
+<p>ServiceLB defines the configurations of ServiceLBServiceLB features.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>flb</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.FLBSpec">
+FLBSpec
+</a>
+</em>
+</td>
+<td>
+<p>FLB defines the configurations of FLB features.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>egressGateway</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.EgressGatewaySpec">
+EgressGatewaySpec
+</a>
+</em>
+</td>
+<td>
+<p>EgressGateway defines the configurations of EgressGateway features.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>image</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.ImageSpec">
+ImageSpec
+</a>
+</em>
+</td>
+<td>
+<p>Image defines the configurations of Image info</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>misc</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.MiscSpec">
+MiscSpec
+</a>
+</em>
+</td>
+<td>
+<p>Misc defines the configurations of misc info</p>
+</td>
+</tr>
 </table>
 </td>
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.MeshConfigSpec">MeshConfigSpec
+<h3 id="config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.MeshConfig">MeshConfig</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfig">MeshConfig</a>)
 </p>
 <div>
 <p>MeshConfigSpec is the spec for FSM&rsquo;s configuration.</p>
@@ -709,7 +1458,7 @@ PluginChainsSpec
 <td>
 <code>clusterSet</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.ClusterSetSpec">
+<a href="#config.flomesh.io/v1alpha3.ClusterSetSpec">
 ClusterSetSpec
 </a>
 </em>
@@ -722,7 +1471,7 @@ ClusterSetSpec
 <td>
 <code>sidecar</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.SidecarSpec">
+<a href="#config.flomesh.io/v1alpha3.SidecarSpec">
 SidecarSpec
 </a>
 </em>
@@ -735,7 +1484,7 @@ SidecarSpec
 <td>
 <code>repoServer</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.RepoServerSpec">
+<a href="#config.flomesh.io/v1alpha3.RepoServerSpec">
 RepoServerSpec
 </a>
 </em>
@@ -748,7 +1497,7 @@ RepoServerSpec
 <td>
 <code>traffic</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.TrafficSpec">
+<a href="#config.flomesh.io/v1alpha3.TrafficSpec">
 TrafficSpec
 </a>
 </em>
@@ -761,7 +1510,7 @@ TrafficSpec
 <td>
 <code>observability</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.ObservabilitySpec">
+<a href="#config.flomesh.io/v1alpha3.ObservabilitySpec">
 ObservabilitySpec
 </a>
 </em>
@@ -774,7 +1523,7 @@ ObservabilitySpec
 <td>
 <code>certificate</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.CertificateSpec">
+<a href="#config.flomesh.io/v1alpha3.CertificateSpec">
 CertificateSpec
 </a>
 </em>
@@ -787,7 +1536,7 @@ CertificateSpec
 <td>
 <code>featureFlags</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.FeatureFlags">
+<a href="#config.flomesh.io/v1alpha3.FeatureFlags">
 FeatureFlags
 </a>
 </em>
@@ -800,7 +1549,7 @@ FeatureFlags
 <td>
 <code>pluginChains</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.PluginChainsSpec">
+<a href="#config.flomesh.io/v1alpha3.PluginChainsSpec">
 PluginChainsSpec
 </a>
 </em>
@@ -809,9 +1558,100 @@ PluginChainsSpec
 <p>PluginChains defines the default plugin chains.</p>
 </td>
 </tr>
+<tr>
+<td>
+<code>ingress</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.IngressSpec">
+IngressSpec
+</a>
+</em>
+</td>
+<td>
+<p>Ingress defines the configurations of Ingress features.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>gatewayAPI</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.GatewayAPISpec">
+GatewayAPISpec
+</a>
+</em>
+</td>
+<td>
+<p>GatewayAPI defines the configurations of GatewayAPI features.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>serviceLB</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.ServiceLBSpec">
+ServiceLBSpec
+</a>
+</em>
+</td>
+<td>
+<p>ServiceLB defines the configurations of ServiceLBServiceLB features.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>flb</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.FLBSpec">
+FLBSpec
+</a>
+</em>
+</td>
+<td>
+<p>FLB defines the configurations of FLB features.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>egressGateway</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.EgressGatewaySpec">
+EgressGatewaySpec
+</a>
+</em>
+</td>
+<td>
+<p>EgressGateway defines the configurations of EgressGateway features.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>image</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.ImageSpec">
+ImageSpec
+</a>
+</em>
+</td>
+<td>
+<p>Image defines the configurations of Image info</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>misc</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.MiscSpec">
+MiscSpec
+</a>
+</em>
+</td>
+<td>
+<p>Misc defines the configurations of misc info</p>
+</td>
+</tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.MeshRootCertificate">MeshRootCertificate
+<h3 id="config.flomesh.io/v1alpha3.MeshRootCertificate">MeshRootCertificate
 </h3>
 <div>
 <p>MeshRootCertificate defines the configuration for certificate issuing
@@ -845,7 +1685,7 @@ Refer to the Kubernetes API documentation for the fields of the
 <td>
 <code>spec</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.MeshRootCertificateSpec">
+<a href="#config.flomesh.io/v1alpha3.MeshRootCertificateSpec">
 MeshRootCertificateSpec
 </a>
 </em>
@@ -860,7 +1700,7 @@ MeshRootCertificateSpec
 <td>
 <code>provider</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.ProviderSpec">
+<a href="#config.flomesh.io/v1alpha3.ProviderSpec">
 ProviderSpec
 </a>
 </em>
@@ -887,7 +1727,7 @@ string
 <td>
 <code>status</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.MeshRootCertificateStatus">
+<a href="#config.flomesh.io/v1alpha3.MeshRootCertificateStatus">
 MeshRootCertificateStatus
 </a>
 </em>
@@ -899,10 +1739,10 @@ MeshRootCertificateStatus
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.MeshRootCertificateSpec">MeshRootCertificateSpec
+<h3 id="config.flomesh.io/v1alpha3.MeshRootCertificateSpec">MeshRootCertificateSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.MeshRootCertificate">MeshRootCertificate</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshRootCertificate">MeshRootCertificate</a>)
 </p>
 <div>
 <p>MeshRootCertificateSpec defines the mesh root certificate specification</p>
@@ -919,7 +1759,7 @@ MeshRootCertificateStatus
 <td>
 <code>provider</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.ProviderSpec">
+<a href="#config.flomesh.io/v1alpha3.ProviderSpec">
 ProviderSpec
 </a>
 </em>
@@ -941,10 +1781,10 @@ string
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.MeshRootCertificateStatus">MeshRootCertificateStatus
+<h3 id="config.flomesh.io/v1alpha3.MeshRootCertificateStatus">MeshRootCertificateStatus
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.MeshRootCertificate">MeshRootCertificate</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshRootCertificate">MeshRootCertificate</a>)
 </p>
 <div>
 <p>MeshRootCertificateStatus defines the status of the MeshRootCertificate resource</p>
@@ -971,10 +1811,50 @@ All states are specified in constants.go</p>
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.ObservabilitySpec">ObservabilitySpec
+<h3 id="config.flomesh.io/v1alpha3.MiscSpec">MiscSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.MeshConfigSpec">MeshConfigSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
+</p>
+<div>
+<p>MiscSpec is the type to represent misc configs.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>curlImage</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>CurlImage defines the image of curl.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>repoServerImage</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>RepoServerImage defines the image of repo server.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.flomesh.io/v1alpha3.ObservabilitySpec">ObservabilitySpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
 </p>
 <div>
 <p>ObservabilitySpec is the type to represent FSM&rsquo;s observability configurations.</p>
@@ -1013,7 +1893,7 @@ bool
 <td>
 <code>tracing</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.TracingSpec">
+<a href="#config.flomesh.io/v1alpha3.TracingSpec">
 TracingSpec
 </a>
 </em>
@@ -1026,7 +1906,7 @@ TracingSpec
 <td>
 <code>remoteLogging</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.RemoteLoggingSpec">
+<a href="#config.flomesh.io/v1alpha3.RemoteLoggingSpec">
 RemoteLoggingSpec
 </a>
 </em>
@@ -1037,10 +1917,10 @@ RemoteLoggingSpec
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.PluginChainSpec">PluginChainSpec
+<h3 id="config.flomesh.io/v1alpha3.PluginChainSpec">PluginChainSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.PluginChainsSpec">PluginChainsSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.PluginChainsSpec">PluginChainsSpec</a>)
 </p>
 <div>
 <p>PluginChainSpec is the type to represent plugin chain.</p>
@@ -1088,10 +1968,10 @@ bool
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.PluginChainsSpec">PluginChainsSpec
+<h3 id="config.flomesh.io/v1alpha3.PluginChainsSpec">PluginChainsSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.MeshConfigSpec">MeshConfigSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
 </p>
 <div>
 <p>PluginChainsSpec is the type to represent plugin chains.</p>
@@ -1108,7 +1988,7 @@ bool
 <td>
 <code>inbound-tcp</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.PluginChainSpec">
+<a href="#config.flomesh.io/v1alpha3.PluginChainSpec">
 []PluginChainSpec
 </a>
 </em>
@@ -1121,7 +2001,7 @@ bool
 <td>
 <code>inbound-http</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.PluginChainSpec">
+<a href="#config.flomesh.io/v1alpha3.PluginChainSpec">
 []PluginChainSpec
 </a>
 </em>
@@ -1134,7 +2014,7 @@ bool
 <td>
 <code>outbound-tcp</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.PluginChainSpec">
+<a href="#config.flomesh.io/v1alpha3.PluginChainSpec">
 []PluginChainSpec
 </a>
 </em>
@@ -1147,7 +2027,7 @@ bool
 <td>
 <code>outbound-http</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.PluginChainSpec">
+<a href="#config.flomesh.io/v1alpha3.PluginChainSpec">
 []PluginChainSpec
 </a>
 </em>
@@ -1158,10 +2038,10 @@ bool
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.ProviderSpec">ProviderSpec
+<h3 id="config.flomesh.io/v1alpha3.ProviderSpec">ProviderSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.MeshRootCertificateSpec">MeshRootCertificateSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshRootCertificateSpec">MeshRootCertificateSpec</a>)
 </p>
 <div>
 <p>ProviderSpec defines the certificate provider used by the mesh control plane</p>
@@ -1178,7 +2058,7 @@ bool
 <td>
 <code>certManager</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.CertManagerProviderSpec">
+<a href="#config.flomesh.io/v1alpha3.CertManagerProviderSpec">
 CertManagerProviderSpec
 </a>
 </em>
@@ -1192,7 +2072,7 @@ CertManagerProviderSpec
 <td>
 <code>vault</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.VaultProviderSpec">
+<a href="#config.flomesh.io/v1alpha3.VaultProviderSpec">
 VaultProviderSpec
 </a>
 </em>
@@ -1206,7 +2086,7 @@ VaultProviderSpec
 <td>
 <code>tresor</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.TresorProviderSpec">
+<a href="#config.flomesh.io/v1alpha3.TresorProviderSpec">
 TresorProviderSpec
 </a>
 </em>
@@ -1218,10 +2098,49 @@ TresorProviderSpec
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.RemoteLoggingSpec">RemoteLoggingSpec
+<h3 id="config.flomesh.io/v1alpha3.ProxyTag">ProxyTag
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.ObservabilitySpec">ObservabilitySpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.GatewayAPISpec">GatewayAPISpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>srcHostHeader</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>SrcHostHeader defines the src host header.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>dstHostHeader</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>DstHostHeader defines the dst host header.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.flomesh.io/v1alpha3.RemoteLoggingSpec">RemoteLoggingSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.ObservabilitySpec">ObservabilitySpec</a>)
 </p>
 <div>
 <p>RemoteLoggingSpec is the type to represent FSM&rsquo;s remote logging configuration.</p>
@@ -1311,12 +2230,23 @@ string
 <p>SampledFraction defines the sampled fraction.</p>
 </td>
 </tr>
+<tr>
+<td>
+<code>secretName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>SecretName defines the name of the secret that contains the configuration for remote logging.</p>
+</td>
+</tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.RepoServerSpec">RepoServerSpec
+<h3 id="config.flomesh.io/v1alpha3.RepoServerSpec">RepoServerSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.MeshConfigSpec">MeshConfigSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
 </p>
 <div>
 <p>RepoServerSpec is the type to represent repo server.</p>
@@ -1342,6 +2272,17 @@ string
 </tr>
 <tr>
 <td>
+<code>port</code><br/>
+<em>
+int16
+</em>
+</td>
+<td>
+<p>Port defines the pipy repo server&rsquo;s port.</p>
+</td>
+</tr>
+<tr>
+<td>
 <code>codebase</code><br/>
 <em>
 string
@@ -1353,10 +2294,90 @@ string
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.SecretKeyReferenceSpec">SecretKeyReferenceSpec
+<h3 id="config.flomesh.io/v1alpha3.ResolveDN">ResolveDN
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.VaultTokenSpec">VaultTokenSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.LocalDNSProxy">LocalDNSProxy</a>)
+</p>
+<div>
+<p>ResolveDN is the type to represent FSM&rsquo;s Resolve DN configuration.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>dn</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>DN defines resolve DN.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ipv4</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>IPv4 defines a ipv4 address for resolve DN.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.flomesh.io/v1alpha3.SSLPassthrough">SSLPassthrough
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.TLS">TLS</a>)
+</p>
+<div>
+<p>SSLPassthrough is the type to represent ssl passthrough.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>Enabled defines if ssl passthrough is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>upstreamPort</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>UpstreamPort defines the upstream port of ssl passthrough.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.flomesh.io/v1alpha3.SecretKeyReferenceSpec">SecretKeyReferenceSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.VaultTokenSpec">VaultTokenSpec</a>)
 </p>
 <div>
 <p>SecretKeyReferenceSpec defines the configuration of the secret reference</p>
@@ -1404,13 +2425,13 @@ string
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.SidecarDriverSpec">SidecarDriverSpec
+<h3 id="config.flomesh.io/v1alpha3.ServiceLBSpec">ServiceLBSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.SidecarSpec">SidecarSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
 </p>
 <div>
-<p>SidecarDriverSpec is the type to represent FSM&rsquo;s sidecar driver define.</p>
+<p>ServiceLBSpec is the type to represent service lb.</p>
 </div>
 <table>
 <thead>
@@ -1422,65 +2443,32 @@ string
 <tbody>
 <tr>
 <td>
-<code>sidecarName</code><br/>
-<em>
-string
-</em>
-</td>
-<td>
-<p>SidecarName defines the name of the sidecar driver.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>sidecarImage</code><br/>
-<em>
-string
-</em>
-</td>
-<td>
-<p>SidecarImage defines the container image used for the proxy sidecar.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>initContainerImage</code><br/>
-<em>
-string
-</em>
-</td>
-<td>
-<p>InitContainerImage defines the container image used for the init container injected to meshed pods.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>proxyServerPort</code><br/>
-<em>
-uint32
-</em>
-</td>
-<td>
-<p>ProxyServerPort is the port on which the Discovery Service listens for new connections from Sidecars</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>sidecarDisabledMTLS</code><br/>
+<code>enabled</code><br/>
 <em>
 bool
 </em>
 </td>
 <td>
-<p>SidecarDisabledMTLS defines whether mTLS is disabled.</p>
+<p>Enabled defines if service lb is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>image</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Image defines the service lb image.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.SidecarSpec">SidecarSpec
+<h3 id="config.flomesh.io/v1alpha3.SidecarSpec">SidecarSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.MeshConfigSpec">MeshConfigSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
 </p>
 <div>
 <p>SidecarSpec is the type used to represent the specifications for the proxy sidecar.</p>
@@ -1517,17 +2505,6 @@ string
 </tr>
 <tr>
 <td>
-<code>sidecarClass</code><br/>
-<em>
-string
-</em>
-</td>
-<td>
-<p>SidecarClass defines the class used for the proxy sidecar.</p>
-</td>
-</tr>
-<tr>
-<td>
 <code>sidecarImage</code><br/>
 <em>
 string
@@ -1546,30 +2523,6 @@ bool
 </td>
 <td>
 <p>SidecarDisabledMTLS defines whether mTLS is disabled.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>initContainerImage</code><br/>
-<em>
-string
-</em>
-</td>
-<td>
-<p>InitContainerImage defines the container image used for the init container injected to meshed pods.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>sidecarDrivers</code><br/>
-<em>
-<a href="#config.flomesh.io/v1alpha2.SidecarDriverSpec">
-[]SidecarDriverSpec
-</a>
-</em>
-</td>
-<td>
-<p>SidecarDrivers defines the sidecar supported.</p>
 </td>
 </tr>
 <tr>
@@ -1666,7 +2619,7 @@ string
 <td>
 <code>localProxyMode</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.LocalProxyMode">
+<a href="#config.flomesh.io/v1alpha3.LocalProxyMode">
 LocalProxyMode
 </a>
 </em>
@@ -1679,7 +2632,7 @@ LocalProxyMode
 <td>
 <code>localDNSProxy</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.LocalDNSProxy">
+<a href="#config.flomesh.io/v1alpha3.LocalDNSProxy">
 LocalDNSProxy
 </a>
 </em>
@@ -1690,10 +2643,97 @@ LocalDNSProxy
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.TracingSpec">TracingSpec
+<h3 id="config.flomesh.io/v1alpha3.TLS">TLS
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.ObservabilitySpec">ObservabilitySpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.IngressSpec">IngressSpec</a>)
+</p>
+<div>
+<p>TLS is the type to represent tls.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>Enabled defines if tls is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>bind</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>Bind defines the bind port of tls.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>listen</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>Listen defines the listen port of tls.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>nodePort</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>NodePort defines the node port of tls.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mTLS</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>MTLS defines if mTLS is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sslPassthrough</code><br/>
+<em>
+<a href="#config.flomesh.io/v1alpha3.SSLPassthrough">
+SSLPassthrough
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>SSLPassthrough defines the ssl passthrough configuration of tls.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.flomesh.io/v1alpha3.TracingSpec">TracingSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.ObservabilitySpec">ObservabilitySpec</a>)
 </p>
 <div>
 <p>TracingSpec is the type to represent FSM&rsquo;s tracing configuration.</p>
@@ -1763,10 +2803,10 @@ string
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.TrafficSpec">TrafficSpec
+<h3 id="config.flomesh.io/v1alpha3.TrafficSpec">TrafficSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.MeshConfigSpec">MeshConfigSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.MeshConfigSpec">MeshConfigSpec</a>)
 </p>
 <div>
 <p>TrafficSpec is the type used to represent FSM&rsquo;s traffic management configuration.</p>
@@ -1872,7 +2912,7 @@ string
 <td>
 <code>inboundExternalAuthorization</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.ExternalAuthzSpec">
+<a href="#config.flomesh.io/v1alpha3.ExternalAuthzSpec">
 ExternalAuthzSpec
 </a>
 </em>
@@ -1919,10 +2959,10 @@ bool
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.TresorCASpec">TresorCASpec
+<h3 id="config.flomesh.io/v1alpha3.TresorCASpec">TresorCASpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.TresorProviderSpec">TresorProviderSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.TresorProviderSpec">TresorProviderSpec</a>)
 </p>
 <div>
 <p>TresorCASpec defines the configuration of Tresor&rsquo;s root certificate</p>
@@ -1950,10 +2990,10 @@ Kubernetes core/v1.SecretReference
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.TresorProviderSpec">TresorProviderSpec
+<h3 id="config.flomesh.io/v1alpha3.TresorProviderSpec">TresorProviderSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.ProviderSpec">ProviderSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.ProviderSpec">ProviderSpec</a>)
 </p>
 <div>
 <p>TresorProviderSpec defines the configuration of the Tresor provider</p>
@@ -1970,7 +3010,7 @@ Kubernetes core/v1.SecretReference
 <td>
 <code>ca</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.TresorCASpec">
+<a href="#config.flomesh.io/v1alpha3.TresorCASpec">
 TresorCASpec
 </a>
 </em>
@@ -1981,10 +3021,10 @@ TresorCASpec
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.VaultProviderSpec">VaultProviderSpec
+<h3 id="config.flomesh.io/v1alpha3.VaultProviderSpec">VaultProviderSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.ProviderSpec">ProviderSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.ProviderSpec">ProviderSpec</a>)
 </p>
 <div>
 <p>VaultProviderSpec defines the configuration of the Vault provider</p>
@@ -2045,7 +3085,7 @@ string
 <td>
 <code>token</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.VaultTokenSpec">
+<a href="#config.flomesh.io/v1alpha3.VaultTokenSpec">
 VaultTokenSpec
 </a>
 </em>
@@ -2057,10 +3097,10 @@ to connect to Vault</p>
 </tr>
 </tbody>
 </table>
-<h3 id="config.flomesh.io/v1alpha2.VaultTokenSpec">VaultTokenSpec
+<h3 id="config.flomesh.io/v1alpha3.VaultTokenSpec">VaultTokenSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha2.VaultProviderSpec">VaultProviderSpec</a>)
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.VaultProviderSpec">VaultProviderSpec</a>)
 </p>
 <div>
 <p>VaultTokenSpec defines the configuration of the Vault token</p>
@@ -2077,13 +3117,53 @@ to connect to Vault</p>
 <td>
 <code>secretKeyRef</code><br/>
 <em>
-<a href="#config.flomesh.io/v1alpha2.SecretKeyReferenceSpec">
+<a href="#config.flomesh.io/v1alpha3.SecretKeyReferenceSpec">
 SecretKeyReferenceSpec
 </a>
 </em>
 </td>
 <td>
 <p>SecretKeyRef specifies the secret in which the Vault token is stored</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.flomesh.io/v1alpha3.WildcardDN">WildcardDN
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.flomesh.io/v1alpha3.LocalDNSProxy">LocalDNSProxy</a>)
+</p>
+<div>
+<p>WildcardDN is the type to represent FSM&rsquo;s Wildcard DN configuration.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>enable</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>Enable defines a boolean indicating if wildcard are enabled for local DNS Proxy.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ipv4</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>IPv4 defines a ipv4 address for wildcard DN.</p>
 </td>
 </tr>
 </tbody>

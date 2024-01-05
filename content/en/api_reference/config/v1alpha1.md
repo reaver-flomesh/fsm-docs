@@ -344,6 +344,17 @@ bool
 <p>EnablePluginPolicy defines if plugin policy is enabled.</p>
 </td>
 </tr>
+<tr>
+<td>
+<code>enableAutoDefaultRoute</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>EnableAutoDefaultRoute defines if auto default route is enabled.</p>
+</td>
+</tr>
 </tbody>
 </table>
 <h3 id="config.flomesh.io/v1alpha1.IngressGatewayCertSpec">IngressGatewayCertSpec
@@ -890,6 +901,17 @@ bool
 </tr>
 <tr>
 <td>
+<code>level</code><br/>
+<em>
+uint16
+</em>
+</td>
+<td>
+<p>Level defines the remote logging&rsquo;s level.</p>
+</td>
+</tr>
+<tr>
+<td>
 <code>port</code><br/>
 <em>
 uint16
@@ -1120,6 +1142,17 @@ string
 </tr>
 <tr>
 <td>
+<code>sidecarDisabledMTLS</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>SidecarDisabledMTLS defines whether mTLS is disabled.</p>
+</td>
+</tr>
+<tr>
+<td>
 <code>initContainerImage</code><br/>
 <em>
 string
@@ -1162,6 +1195,17 @@ string
 </td>
 <td>
 <p>ConfigResyncInterval defines the resync interval for regular proxy broadcast updates.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sidecarTimeout</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<p>SidecarTimeout defines the connect/idle/read/write timeout.</p>
 </td>
 </tr>
 <tr>
@@ -1336,6 +1380,17 @@ bool
 </tr>
 <tr>
 <td>
+<code>serviceAccessMode</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>ServiceAccessMode defines a string indicating service access mode.</p>
+</td>
+</tr>
+<tr>
+<td>
 <code>inboundExternalAuthorization</code><br/>
 <em>
 <a href="#config.flomesh.io/v1alpha1.ExternalAuthzSpec">
@@ -1348,10 +1403,32 @@ ExternalAuthzSpec
 for all inbound and ingress traffic in the mesh.</p>
 </td>
 </tr>
+<tr>
+<td>
+<code>http1PerRequestLoadBalancing</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>HTTP1PerRequestLoadBalancing defines a boolean indicating if load balancing based on request is enabled for http1.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>http2PerRequestLoadBalancing</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>HTTP1PerRequestLoadBalancing defines a boolean indicating if load balancing based on request is enabled for http2.</p>
+</td>
+</tr>
 </tbody>
 </table>
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>763d323</code>.
+on git commit <code>8abe9ab</code>.
 </em></p>

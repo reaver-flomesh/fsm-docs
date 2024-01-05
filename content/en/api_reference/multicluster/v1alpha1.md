@@ -15,22 +15,19 @@ type: docs
 <p>Package v1alpha1 is the v1alpha1 version of the API.</p>
 </div>
 Resource Types:
-<ul></ul>
-<h3 id="flomesh.io/v1alpha1.AlgoBalancer">AlgoBalancer
-(<code>string</code> alias)</h3>
-<p>
-(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.ServiceExportSpec">ServiceExportSpec</a>)
-</p>
-<div>
-<p>AlgoBalancer defines Balancer Algo</p>
-</div>
-<h3 id="flomesh.io/v1alpha1.ClusterStatus">ClusterStatus
+<ul><li>
+<a href="#flomesh.io/v1alpha1.Cluster">Cluster</a>
+</li><li>
+<a href="#flomesh.io/v1alpha1.GlobalTrafficPolicy">GlobalTrafficPolicy</a>
+</li><li>
+<a href="#flomesh.io/v1alpha1.ServiceExport">ServiceExport</a>
+</li><li>
+<a href="#flomesh.io/v1alpha1.ServiceImport">ServiceImport</a>
+</li></ul>
+<h3 id="flomesh.io/v1alpha1.Cluster">Cluster
 </h3>
-<p>
-(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.ServiceImportStatus">ServiceImportStatus</a>)
-</p>
 <div>
-<p>ClusterStatus contains service configuration mapped to a specific source cluster</p>
+<p>Cluster is the Schema for the clusters API</p>
 </div>
 <table>
 <thead>
@@ -42,64 +39,150 @@ Resource Types:
 <tbody>
 <tr>
 <td>
-<code>cluster</code><br/>
-<em>
+<code>apiVersion</code><br/>
+string</td>
+<td>
+<code>
+flomesh.io/v1alpha1
+</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>kind</code><br/>
 string
-</em>
 </td>
-<td>
-<p>cluster is the name of the exporting cluster. Must be a valid RFC-1123 DNS
-label.</p>
-</td>
+<td><code>Cluster</code></td>
 </tr>
 <tr>
 <td>
-<code>addresses</code><br/>
+<code>metadata</code><br/>
 <em>
-[]string
-</em>
-</td>
-<td>
-<p>in-cluster service, it&rsquo;s the cluster IPs
-otherwise, it&rsquo;s the url of accessing that service in remote cluster
-for example, http(s)://[Ingress IP/domain name]:[port]/[path]</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="flomesh.io/v1alpha1.Endpoint">Endpoint
-</h3>
-<p>
-(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.ServicePort">ServicePort</a>)
-</p>
-<div>
-<p>Endpoint imported service&rsquo;s endpoints</p>
-</div>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>target</code><br/>
-<em>
-<a href="#flomesh.io/v1alpha1.Target">
-Target
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
 </td>
 <td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
 </td>
 </tr>
 <tr>
 <td>
-<code>clusterKey</code><br/>
+<code>spec</code><br/>
+<em>
+<a href="#flomesh.io/v1alpha1.ClusterSpec">
+ClusterSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>region</code><br/>
 <em>
 string
+</em>
+</td>
+<td>
+<p>Region, the locality information of this cluster</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>zone</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Zone, the locality information of this cluster</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>group</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Group, the locality information of this cluster</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>gatewayHost</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>GatewayHost, the Full Qualified Domain Name or IP of the gateway/ingress of this cluster
+If it&rsquo;s an IP address, only IPv4 is supported</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>gatewayPort</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>The port number of the gateway</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>kubeconfig</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Kubeconfig, The kubeconfig of the cluster you want to connnect to
+This&rsquo;s not needed if ClusterMode is InCluster, it will use InCluster
+config</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>fsmMeshConfigName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>FsmMeshConfigName, defines the name of the MeshConfig of managed cluster</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>fsmNamespace</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>FsmNamespace, defines the namespace of managed cluster in which fsm is installed</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#flomesh.io/v1alpha1.ClusterStatus">
+ClusterStatus
+</a>
 </em>
 </td>
 <td>
@@ -122,9 +205,26 @@ string
 <tbody>
 <tr>
 <td>
+<code>apiVersion</code><br/>
+string</td>
+<td>
+<code>
+flomesh.io/v1alpha1
+</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>kind</code><br/>
+string
+</td>
+<td><code>GlobalTrafficPolicy</code></td>
+</tr>
+<tr>
+<td>
 <code>metadata</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -190,122 +290,6 @@ GlobalTrafficPolicyStatus
 </tr>
 </tbody>
 </table>
-<h3 id="flomesh.io/v1alpha1.GlobalTrafficPolicySpec">GlobalTrafficPolicySpec
-</h3>
-<p>
-(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.GlobalTrafficPolicy">GlobalTrafficPolicy</a>)
-</p>
-<div>
-<p>GlobalTrafficPolicySpec defines the desired state of GlobalTrafficPolicy</p>
-</div>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>lbType</code><br/>
-<em>
-<a href="#flomesh.io/v1alpha1.LoadBalancerType">
-LoadBalancerType
-</a>
-</em>
-</td>
-<td>
-<p>Type of global load distribution</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>targets</code><br/>
-<em>
-<a href="#flomesh.io/v1alpha1.TrafficTarget">
-[]TrafficTarget
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="flomesh.io/v1alpha1.GlobalTrafficPolicyStatus">GlobalTrafficPolicyStatus
-</h3>
-<p>
-(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.GlobalTrafficPolicy">GlobalTrafficPolicy</a>)
-</p>
-<div>
-<p>GlobalTrafficPolicyStatus defines the observed state of GlobalTrafficPolicy</p>
-</div>
-<h3 id="flomesh.io/v1alpha1.LoadBalancerType">LoadBalancerType
-(<code>string</code> alias)</h3>
-<p>
-(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.GlobalTrafficPolicySpec">GlobalTrafficPolicySpec</a>)
-</p>
-<div>
-<p>LoadBalancerType defines load balancer type</p>
-</div>
-<table>
-<thead>
-<tr>
-<th>Value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr><td><p>&#34;ActiveActive&#34;</p></td>
-<td><p>ActiveActiveLbType defines AA load balance type</p>
-</td>
-</tr><tr><td><p>&#34;FailOver&#34;</p></td>
-<td><p>FailOverLbType defines FO load balance type</p>
-</td>
-</tr><tr><td><p>&#34;Locality&#34;</p></td>
-<td><p>LocalityLbType defines OL load balance type</p>
-</td>
-</tr></tbody>
-</table>
-<h3 id="flomesh.io/v1alpha1.PathRewrite">PathRewrite
-</h3>
-<p>
-(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.ServiceExportSpec">ServiceExportSpec</a>)
-</p>
-<div>
-<p>PathRewrite defines path rewrite rule.</p>
-</div>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>from</code><br/>
-<em>
-string
-</em>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<code>to</code><br/>
-<em>
-string
-</em>
-</td>
-<td>
-</td>
-</tr>
-</tbody>
-</table>
 <h3 id="flomesh.io/v1alpha1.ServiceExport">ServiceExport
 </h3>
 <div>
@@ -321,9 +305,26 @@ string
 <tbody>
 <tr>
 <td>
+<code>apiVersion</code><br/>
+string</td>
+<td>
+<code>
+flomesh.io/v1alpha1
+</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>kind</code><br/>
+string
+</td>
+<td><code>ServiceExport</code></td>
+</tr>
+<tr>
+<td>
 <code>metadata</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -376,9 +377,7 @@ bool
 <td>
 <code>loadBalancer</code><br/>
 <em>
-<a href="#flomesh.io/v1alpha1.AlgoBalancer">
-AlgoBalancer
-</a>
+github.com/flomesh-io/fsm/pkg/apis.AlgoBalancer
 </em>
 </td>
 <td>
@@ -442,6 +441,479 @@ ServiceExportStatus
 </tr>
 </tbody>
 </table>
+<h3 id="flomesh.io/v1alpha1.ServiceImport">ServiceImport
+</h3>
+<div>
+<p>ServiceImport is the Schema for the ServiceImports API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>apiVersion</code><br/>
+string</td>
+<td>
+<code>
+flomesh.io/v1alpha1
+</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>kind</code><br/>
+string
+</td>
+<td><code>ServiceImport</code></td>
+</tr>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#flomesh.io/v1alpha1.ServiceImportSpec">
+ServiceImportSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>ports</code><br/>
+<em>
+<a href="#flomesh.io/v1alpha1.ServicePort">
+[]ServicePort
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>ips</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ip will be used as the VIP for this service when type is ClusterSetIP.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>type</code><br/>
+<em>
+<a href="#flomesh.io/v1alpha1.ServiceImportType">
+ServiceImportType
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>type defines the type of this service.
+Must be ClusterSetIP or Headless.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sessionAffinity</code><br/>
+<em>
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#serviceaffinity-v1-core">
+Kubernetes core/v1.ServiceAffinity
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Supports &ldquo;ClientIP&rdquo; and &ldquo;None&rdquo;. Used to maintain session affinity.
+Enable client IP based session affinity.
+Must be ClientIP or None.
+Defaults to None.
+Ignored when type is Headless
+More info: <a href="https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies">https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sessionAffinityConfig</code><br/>
+<em>
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#sessionaffinityconfig-v1-core">
+Kubernetes core/v1.SessionAffinityConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>sessionAffinityConfig contains session affinity configuration.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>serviceAccountName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The ServiceAccount associated with this service</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#flomesh.io/v1alpha1.ServiceImportStatus">
+ServiceImportStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="flomesh.io/v1alpha1.ClusterConditionType">ClusterConditionType
+(<code>string</code> alias)</h3>
+<div>
+<p>ClusterConditionType identifies a specific condition.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>&#34;Managed&#34;</p></td>
+<td><p>ClusterManaged means that the cluster has joined the CLusterSet successfully
+and is managed by Control Plane.</p>
+</td>
+</tr></tbody>
+</table>
+<h3 id="flomesh.io/v1alpha1.ClusterSpec">ClusterSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.Cluster">Cluster</a>)
+</p>
+<div>
+<p>ClusterSpec defines the desired state of Cluster</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>region</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Region, the locality information of this cluster</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>zone</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Zone, the locality information of this cluster</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>group</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Group, the locality information of this cluster</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>gatewayHost</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>GatewayHost, the Full Qualified Domain Name or IP of the gateway/ingress of this cluster
+If it&rsquo;s an IP address, only IPv4 is supported</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>gatewayPort</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>The port number of the gateway</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>kubeconfig</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Kubeconfig, The kubeconfig of the cluster you want to connnect to
+This&rsquo;s not needed if ClusterMode is InCluster, it will use InCluster
+config</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>fsmMeshConfigName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>FsmMeshConfigName, defines the name of the MeshConfig of managed cluster</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>fsmNamespace</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>FsmNamespace, defines the namespace of managed cluster in which fsm is installed</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="flomesh.io/v1alpha1.ClusterStatus">ClusterStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.Cluster">Cluster</a>)
+</p>
+<div>
+<p>ClusterStatus defines the observed state of Cluster</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>conditions</code><br/>
+<em>
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#condition-v1-meta">
+[]Kubernetes meta/v1.Condition
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="flomesh.io/v1alpha1.Endpoint">Endpoint
+</h3>
+<p>
+(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.ServicePort">ServicePort</a>)
+</p>
+<div>
+<p>Endpoint represents a single logical &ldquo;backend&rdquo; implementing a service.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>target</code><br/>
+<em>
+<a href="#flomesh.io/v1alpha1.Target">
+Target
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>clusterKey</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="flomesh.io/v1alpha1.GlobalTrafficPolicySpec">GlobalTrafficPolicySpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.GlobalTrafficPolicy">GlobalTrafficPolicy</a>)
+</p>
+<div>
+<p>GlobalTrafficPolicySpec defines the desired state of GlobalTrafficPolicy</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>lbType</code><br/>
+<em>
+<a href="#flomesh.io/v1alpha1.LoadBalancerType">
+LoadBalancerType
+</a>
+</em>
+</td>
+<td>
+<p>Type of global load distribution</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>targets</code><br/>
+<em>
+<a href="#flomesh.io/v1alpha1.TrafficTarget">
+[]TrafficTarget
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="flomesh.io/v1alpha1.GlobalTrafficPolicyStatus">GlobalTrafficPolicyStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.GlobalTrafficPolicy">GlobalTrafficPolicy</a>)
+</p>
+<div>
+<p>GlobalTrafficPolicyStatus defines the observed state of GlobalTrafficPolicy</p>
+</div>
+<h3 id="flomesh.io/v1alpha1.LoadBalancerType">LoadBalancerType
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.GlobalTrafficPolicySpec">GlobalTrafficPolicySpec</a>)
+</p>
+<div>
+<p>LoadBalancerType defines the type of load balancer</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>&#34;ActiveActive&#34;</p></td>
+<td><p>ActiveActiveLbType is the type of load balancer that distributes traffic to all targets</p>
+</td>
+</tr><tr><td><p>&#34;FailOver&#34;</p></td>
+<td><p>FailOverLbType is the type of load balancer that distributes traffic to the first available target</p>
+</td>
+</tr><tr><td><p>&#34;Locality&#34;</p></td>
+<td><p>LocalityLbType is the type of load balancer that distributes traffic to targets in the same locality</p>
+</td>
+</tr></tbody>
+</table>
+<h3 id="flomesh.io/v1alpha1.PathRewrite">PathRewrite
+</h3>
+<p>
+(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.ServiceExportSpec">ServiceExportSpec</a>)
+</p>
+<div>
+<p>PathRewrite defines the rewrite rule for service export</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>from</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>to</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="flomesh.io/v1alpha1.ServiceExportConditionType">ServiceExportConditionType
 (<code>string</code> alias)</h3>
 <div>
@@ -476,7 +948,7 @@ This will be false if the service is found to be unexportable
 (<em>Appears on:</em><a href="#flomesh.io/v1alpha1.ServiceExportSpec">ServiceExportSpec</a>)
 </p>
 <div>
-<p>ServiceExportRule defines service export rule.</p>
+<p>ServiceExportRule defines the rule for service export</p>
 </div>
 <table>
 <thead>
@@ -515,22 +987,12 @@ when using PathType with value &ldquo;Exact&rdquo; or &ldquo;Prefix&rdquo;.</p>
 <td>
 <code>pathType</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#pathtype-v1-networking">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#pathtype-v1-networking">
 Kubernetes networking/v1.PathType
 </a>
 </em>
 </td>
 <td>
-<p>PathType determines the interpretation of the Path matching. PathType can
-be one of the following values:
-* Exact: Matches the URL path exactly.
-* Prefix: Matches based on a URL path prefix split by &lsquo;/&rsquo;. Matching is
-done on a path element by element basis. A path element refers is the
-list of labels in the path split by the &lsquo;/&rsquo; separator. A request is a
-match for path p if every p is an element-wise prefix of p of the
-request path. Note that if the last element of the path is a substring
-of the last element in request path, it is not a match (e.g. /foo/bar
-matches /foo/bar/baz, but does not match /foo/barbaz).</p>
 </td>
 </tr>
 </tbody>
@@ -581,9 +1043,7 @@ bool
 <td>
 <code>loadBalancer</code><br/>
 <em>
-<a href="#flomesh.io/v1alpha1.AlgoBalancer">
-AlgoBalancer
-</a>
+github.com/flomesh-io/fsm/pkg/apis.AlgoBalancer
 </em>
 </td>
 <td>
@@ -652,154 +1112,13 @@ string
 <td>
 <code>conditions</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#condition-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#condition-v1-meta">
 []Kubernetes meta/v1.Condition
 </a>
 </em>
 </td>
 <td>
 <em>(Optional)</em>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="flomesh.io/v1alpha1.ServiceImport">ServiceImport
-</h3>
-<div>
-<p>ServiceImport is the Schema for the ServiceImports API</p>
-</div>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>metadata</code><br/>
-<em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
-Kubernetes meta/v1.ObjectMeta
-</a>
-</em>
-</td>
-<td>
-Refer to the Kubernetes API documentation for the fields of the
-<code>metadata</code> field.
-</td>
-</tr>
-<tr>
-<td>
-<code>spec</code><br/>
-<em>
-<a href="#flomesh.io/v1alpha1.ServiceImportSpec">
-ServiceImportSpec
-</a>
-</em>
-</td>
-<td>
-<br/>
-<br/>
-<table>
-<tr>
-<td>
-<code>ports</code><br/>
-<em>
-<a href="#flomesh.io/v1alpha1.ServicePort">
-[]ServicePort
-</a>
-</em>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<code>ips</code><br/>
-<em>
-[]string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>ip will be used as the VIP for this service when type is ClusterSetIP.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>type</code><br/>
-<em>
-<a href="#flomesh.io/v1alpha1.ServiceImportType">
-ServiceImportType
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>type defines the type of this service.
-Must be ClusterSetIP or Headless.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>sessionAffinity</code><br/>
-<em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#serviceaffinity-v1-core">
-Kubernetes core/v1.ServiceAffinity
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>Supports &ldquo;ClientIP&rdquo; and &ldquo;None&rdquo;. Used to maintain session affinity.
-Enable client IP based session affinity.
-Must be ClientIP or None.
-Defaults to None.
-Ignored when type is Headless
-More info: <a href="https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies">https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<code>sessionAffinityConfig</code><br/>
-<em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#sessionaffinityconfig-v1-core">
-Kubernetes core/v1.SessionAffinityConfig
-</a>
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>sessionAffinityConfig contains session affinity configuration.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>serviceAccountName</code><br/>
-<em>
-string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>The ServiceAccount associated with this service</p>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-<tr>
-<td>
-<code>status</code><br/>
-<em>
-<a href="#flomesh.io/v1alpha1.ServiceImportStatus">
-ServiceImportStatus
-</a>
-</em>
-</td>
-<td>
 </td>
 </tr>
 </tbody>
@@ -863,7 +1182,7 @@ Must be ClusterSetIP or Headless.</p>
 <td>
 <code>sessionAffinity</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#serviceaffinity-v1-core">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#serviceaffinity-v1-core">
 Kubernetes core/v1.ServiceAffinity
 </a>
 </em>
@@ -882,7 +1201,7 @@ More info: <a href="https://kubernetes.io/docs/concepts/services-networking/serv
 <td>
 <code>sessionAffinityConfig</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#sessionaffinityconfig-v1-core">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#sessionaffinityconfig-v1-core">
 Kubernetes core/v1.SessionAffinityConfig
 </a>
 </em>
@@ -926,8 +1245,8 @@ string
 <td>
 <code>clusters</code><br/>
 <em>
-<a href="#flomesh.io/v1alpha1.ClusterStatus">
-[]ClusterStatus
+<a href="#flomesh.io/v1alpha1.SourceStatus">
+[]SourceStatus
 </a>
 </em>
 </td>
@@ -998,7 +1317,7 @@ Optional if only one ServicePort is defined on this service.</p>
 <td>
 <code>protocol</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#protocol-v1-core">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#protocol-v1-core">
 Kubernetes core/v1.Protocol
 </a>
 </em>
@@ -1053,13 +1372,56 @@ int32
 </tr>
 </tbody>
 </table>
+<h3 id="flomesh.io/v1alpha1.SourceStatus">SourceStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#flomesh.io/v1alpha1.ServiceImportStatus">ServiceImportStatus</a>)
+</p>
+<div>
+<p>SourceStatus contains service configuration mapped to a specific source cluster</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>cluster</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>cluster is the name of the exporting cluster. Must be a valid RFC-1123 DNS
+label.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>addresses</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>in-cluster service, it&rsquo;s the cluster IPs
+otherwise, it&rsquo;s the url of accessing that service in remote cluster
+for example, http(s)://[Ingress IP/domain name]:[port]/[path]</p>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="flomesh.io/v1alpha1.Target">Target
 </h3>
 <p>
 (<em>Appears on:</em><a href="#flomesh.io/v1alpha1.Endpoint">Endpoint</a>)
 </p>
 <div>
-<p>Target imported service&rsquo;s endpoint target.</p>
+<p>Target represents a single logical &ldquo;backend&rdquo; implementing a service.</p>
 </div>
 <table>
 <thead>
@@ -1117,7 +1479,7 @@ string
 (<em>Appears on:</em><a href="#flomesh.io/v1alpha1.GlobalTrafficPolicySpec">GlobalTrafficPolicySpec</a>)
 </p>
 <div>
-<p>TrafficTarget defines the load balancer traffic target</p>
+<p>TrafficTarget defines the target of traffic</p>
 </div>
 <table>
 <thead>
@@ -1154,5 +1516,5 @@ int
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>763d323</code>.
+on git commit <code>8abe9ab</code>.
 </em></p>
