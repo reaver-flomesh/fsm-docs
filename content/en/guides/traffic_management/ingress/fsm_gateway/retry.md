@@ -1,6 +1,6 @@
 ---
 title: "Retry"
-description: "This document introduces the speed limiting function, including speed limiting based on ports, domain names, and routes."
+description: "Gateway retry feature enhances service reliability by resending failed requests, mitigating temporary issues, and improving user experience with strategic policies."
 type: docs
 weight: 26
 draft: false
