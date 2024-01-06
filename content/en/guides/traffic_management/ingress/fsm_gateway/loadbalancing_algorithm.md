@@ -18,30 +18,9 @@ Multiple load balancing algorithms support efficient traffic distribution, maxim
 
 - Kubernetes cluster
 - kubectl tool
+- FSM Gateway installed via [guide doc](/guides/traffic_management/ingress/fsm_gateway/installation).
 
-## Environment Setup
-
-### Installing FSM Gateway
-
-Refer to the [Installation Documentation](https://fsm-docs.flomesh.io/guides/traffic_management/ingress/fsm_gateway/installation/#installation) for FSM Gateway. Installation is done using the CLI method.
-
-Download FSM CLI.
-
-```shell
-system=$(uname -s | tr '[:upper:]' '[:lower:]')
-arch=$(uname -m | sed -E 's/x86_/amd/' | sed -E 's/aarch/arm/')
-release=v1.2.0
-curl -L https://github.com/flomesh-io/fsm/releases/download/$release/fsm-$release-$system-$arch.tar.gz | tar -vxzf -
-./$system-$arch/fsm version
-sudo cp ./$system-$arch/fsm /usr/local/bin/fsm
-```
-
-Enable FSM Gateway during the FSM installation, which is not enabled by default.
-
-```shell
-fsm install \
-    --set=fsm.fsmGateway.enabled=true
-```
+## Demonstration
 
 ### Deploying a Sample Application
 
