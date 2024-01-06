@@ -1,6 +1,6 @@
 ---
 title: "TLS Passthrough"
-description: ""
+description: "This document provides a guide for setting up TLS Passthrough in FSM Gateway, allowing encrypted traffic to be routed directly to backend servers. It includes prerequisites, steps for creating a Gateway and TCP Route for the feature, and demonstrates testing the setup."
 type: docs
 weight: 15
 draft: false

@@ -1,6 +1,6 @@
 ---
 title: "HTTP Response Header Manipulate"
-description: ""
+description: "This document covers the HTTP response header manipulation in FSM Gateway, explaining the use of filter for adding, setting, and removing headers, with practical examples and Kubernetes prerequisites."
 type: docs
 weight: 7
 draft: false

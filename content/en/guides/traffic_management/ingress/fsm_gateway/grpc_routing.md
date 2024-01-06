@@ -1,6 +1,6 @@
 ---
 title: "gRPC Routing"
-description: "This doc will show how to route traffic to gRPC backends."
+description: "This document describes setting up gRPC routing in FSM Gateway with GRPCRoute, focusing on directing traffic based on service and method."
 type: docs
 weight: 18
 draft: false

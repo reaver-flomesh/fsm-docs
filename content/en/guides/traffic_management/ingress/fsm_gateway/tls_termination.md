@@ -1,6 +1,6 @@
 ---
 title: "TLS Termination"
-description: ""
+description: "This document outlines setting up TLS termination in FSM Gateway."
 type: docs
 weight: 14
 draft: false

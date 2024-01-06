@@ -1,6 +1,6 @@
 ---
 title: "HTTP Request Header Manipulate"
-description: ""
+description: "This document explains FSM Gateway's feature to modify HTTP request headers with filter, including adding, setting, and removing headers, with examples."
 type: docs
 weight: 7
 draft: false
