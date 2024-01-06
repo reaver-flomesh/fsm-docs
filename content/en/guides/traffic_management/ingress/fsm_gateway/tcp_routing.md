@@ -1,6 +1,6 @@
 ---
 title: "TCP Routing"
-description: "This document guides on setting up TCP load balancing in FSM Gateway."
+description: "This document describes configuring TCP load balancing in FSM Gateway, focusing on traffic distribution based on network information."
 type: docs
 weight: 13
 draft: false

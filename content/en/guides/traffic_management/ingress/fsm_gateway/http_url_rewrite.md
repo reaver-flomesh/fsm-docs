@@ -1,6 +1,6 @@
 ---
 title: "HTTP URL Rewrite"
-description: "Rewrite the HTTP URL path."
+description: "This document describes FSM Gateway's URL rewriting feature, allowing modification of request URLs for backend service flexibility and efficient URL normalization."
 type: docs
 weight: 4
 ---

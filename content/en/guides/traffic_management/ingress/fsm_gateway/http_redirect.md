@@ -1,6 +1,6 @@
 ---
 title: "HTTP Redirect"
-description: "Redirect HTTP Traffic to another location."
+description: "This document discusses FSM Gateway's request redirection, covering host name, prefix path, and full path redirects, with examples of each method."
 type: docs
 weight: 6
 
