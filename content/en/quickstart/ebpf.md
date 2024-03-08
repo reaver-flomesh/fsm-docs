@@ -12,7 +12,7 @@ For more details refer to [Learn how to use eBPF with FSM](/guides/traffic_manag
 ## Prerequisites
 
 - Ubuntu 20.04
-- Kernel 5.15.0-1034
+- Kernel 5.15.0-1034 (5.4 or higher)
 - 2c4g VM * 3：master、node1、node2
 
 ### Install CNI Plugin
