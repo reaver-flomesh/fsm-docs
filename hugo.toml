@@ -138,11 +138,11 @@ prism_syntax_highlighting = true
 # Version params
 # Version params
 fsm_branch = "main"
-fsm_version = "v1.2.0"
+fsm_version = "v1.2.3"
 min_k8s_version = "v1.19.0"
 gateway_api_version="0.7.1"
 min_k8s_version_gateway_api = "v1.21.0"
-pipy_version = "0.99.0-2"
+pipy_version = "0.99.1-1"
 
 [[params.versions]]
   version = "v1.1 (latest)"
