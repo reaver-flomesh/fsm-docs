@@ -64,7 +64,7 @@ spec:
     .branch(
       () => _mirrorCluster, (
         $=>$
-        .fork().to('mirror-cluster')
+        .fork([1]).to('mirror-cluster')
         .chain()
       ), (
         $=>$.chain()
