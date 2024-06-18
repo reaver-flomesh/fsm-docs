@@ -26,9 +26,14 @@ jobs:
 
     - name: Build Hugo Site
       run: hugo --minify
+      
+    - name: Set Sanitized Branch Name
+      id: sanitize
+      run: |
+        echo "SANITIZED_BRANCH_NAME=${GITHUB_REF_NAME//\//-}" >> $GITHUB_ENV
 
     - name: Upload Archive
       uses: actions/upload-artifact@v2
       with:
-        name: public-archive-${{ github.ref_name || 'main' }}
+        name: public-archive-${{ env.SANITIZED_BRANCH_NAME }}
         path: public
