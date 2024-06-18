@@ -42,7 +42,7 @@ Example bellow will replace the `/get` path to `/headers` path.
 
 ```yaml
 kubectl apply -n httpbin -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-foo
@@ -107,7 +107,7 @@ If we hope to change the behavior of `/status` to `/stream`, the rule is require
 
 ```bash
 kubectl apply -n httpbin -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-foo
@@ -155,7 +155,7 @@ Let's follow the example rule below. It will replace host name from `foo.example
 
 ```bash
 kubectl apply -n httpbin -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-foo

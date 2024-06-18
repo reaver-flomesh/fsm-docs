@@ -74,7 +74,7 @@ Next, create a [Gateway](https://gateway-api.sigs.k8s.io/reference/spec/#gateway
 
 ```shell
 kubectl apply -n server -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   namespace: server

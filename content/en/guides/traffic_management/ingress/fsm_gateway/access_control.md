@@ -131,7 +131,7 @@ Before setting up the access control policy, we add a route with the path prefix
 
 ```shell
 kubectl apply -n httpbin -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-foo

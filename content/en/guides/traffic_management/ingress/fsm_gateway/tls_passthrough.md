@@ -29,7 +29,7 @@ Let's create it in namespace `httpbin` which accepts route resources in same nam
 ```shell
 kubectl create ns httpbin
 kubectl apply -n httpbin -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: simple-fsm-gateway

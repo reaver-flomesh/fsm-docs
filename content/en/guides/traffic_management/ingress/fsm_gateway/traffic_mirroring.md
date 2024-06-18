@@ -60,7 +60,7 @@ Next, create a gateway and a route for the Service pipy.
 
 ```shell
 kubectl apply -n server -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: simple-fsm-gateway
@@ -74,7 +74,7 @@ spec:
       namespaces:
         from: Same
 ---
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-sample
@@ -148,7 +148,7 @@ Modify the HTTP route to add a `RequestMirror` type filter and set the `backendR
 
 ```shell
 kubectl apply -n server -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-sample

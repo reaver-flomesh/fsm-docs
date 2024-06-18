@@ -58,7 +58,7 @@ curl bar.example.com/get
 The HTTP status code `3XX` are used to redirect client to another address. We can redirect all requests to `foo.example.com` to `bar.example.com` by responding `301` status and new hostname.
 
 ```bash
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-foo
@@ -116,7 +116,7 @@ curl -L http://foo.example.com:8000/get
 With path redirection, we can implement what we did with [URL Rewriting](/guides/traffic_management/ingress/fsm_gateway/http_url_rewrite/#replace-url-prefix-path): redirect the request to `/status/{n}` to `/stream/{n}`.
 
 ```bash
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-foo
@@ -162,7 +162,7 @@ connection: keep-alive
 We can also change full path during redirecting, such as redirect all `/status/xxx` to `/status/200`.
 
 ```bash
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-foo

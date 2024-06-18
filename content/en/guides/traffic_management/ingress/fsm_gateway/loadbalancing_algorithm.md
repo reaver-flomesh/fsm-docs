@@ -73,7 +73,7 @@ Next, create a gateway and set up routes for the Service pipy.
 
 ```shell
 kubectl apply -n server -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: simple-fsm-gateway
@@ -87,7 +87,7 @@ spec:
       namespaces:
         from: Same
 ---
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: fortio-route

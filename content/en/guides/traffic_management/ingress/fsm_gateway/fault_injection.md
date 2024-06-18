@@ -67,7 +67,7 @@ We add a route under the HTTP route `foo.example.com` with a path prefix `/heade
 
 ```shell
 kubectl apply -n httpbin -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-foo
