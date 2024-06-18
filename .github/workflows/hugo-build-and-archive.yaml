@@ -19,7 +19,7 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
       with:
-        ref: ${{ github.event.inputs.branch }}      
+        ref: ${{ github.event.inputs.branch }}
 
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
@@ -34,13 +34,8 @@ jobs:
     - name: Build Hugo Site
       run: hugo --minify
 
-    - name: Archive Public Folder
-      run: |
-        zip -r public.zip public
-      working-directory: ${{ github.workspace }}
-
     - name: Upload Archive
       uses: actions/upload-artifact@v2
       with:
-        name: public-archive-${{ github.event.inputs.branch }}
+        name: public-archive-${{ github.event.inputs.branch || main }}
         path: public
