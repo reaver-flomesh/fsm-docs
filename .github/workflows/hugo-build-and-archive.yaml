@@ -42,5 +42,5 @@ jobs:
     - name: Upload Archive
       uses: actions/upload-artifact@v2
       with:
-        name: public-archive
+        name: public-archive-${{ github.event.inputs.branch }}
         path: public
