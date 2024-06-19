@@ -80,7 +80,7 @@ metadata:
   namespace: server
   name: simple-fsm-gateway
 spec:
-  gatewayClassName: fsm-gateway-cls
+  gatewayClassName: fsm
   listeners:
     - protocol: UDP
       port: 8000

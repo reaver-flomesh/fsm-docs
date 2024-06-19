@@ -34,7 +34,7 @@ kind: Gateway
 metadata:
   name: simple-fsm-gateway
 spec:
-  gatewayClassName: fsm-gateway-cls
+  gatewayClassName: fsm
   listeners:
   - protocol: TLS
     port: 8000
