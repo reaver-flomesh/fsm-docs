@@ -1,11 +1,10 @@
 ---
 title: "HTTP Routing"
-description: "Route HTTP Traffic."
+description: "This document details configuring HTTP routing in FSM Gateway with the HTTPRoute resource, outlining the setup process, verification steps, and testing with different hostnames."
 type: docs
 weight: 2
 draft: false
 ---
-
 
 In FSM Gateway, the [HTTPRoute resource](https://gateway-api.sigs.k8s.io/api-types/httproute) is used to configure route rules which will match request to backend servers. Currently, the Kubernetes Service is the only one accepted as backend resource.
 
@@ -17,7 +16,7 @@ In FSM Gateway, the [HTTPRoute resource](https://gateway-api.sigs.k8s.io/api-typ
 
 ## Demonstration
 
-### Deploy example
+### Deploy sample
 
 First, let's install the example in namespace `httpbin` with commands below.
 

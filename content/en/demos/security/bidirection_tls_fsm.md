@@ -36,6 +36,7 @@ kubectl wait --namespace fsm-system \
 ```bash
 #Sample server service
 kubectl create namespace egress-server
+
 kubectl apply -n egress-server -f https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/server.yaml
 
 #Sample middle-ware service
@@ -70,7 +71,7 @@ The correct return result is similar to :
 
 ```bash
 HTTP/1.1 404 Not Found
-Server: pipy/0.70.0
+Server: pipy/0.90.0
 content-length: 17
 connection: keep-alive
 
@@ -89,7 +90,8 @@ metadata:
 spec:
   ingressClassName: pipy
   rules:
-  - http:
+  - host: fsm-ingress.fsm-system
+    http:
       paths:
       - path: /
         pathType: Prefix
@@ -139,12 +141,9 @@ The correct return result is similar to :
 
 ```bash
 HTTP/1.1 200 OK
-date: Sun, 04 Dec 2022 12:03:47 GMT
+date: Fri, 17 Nov 2023 09:10:45 GMT
 content-type: text/plain; charset=utf-8
-fsm-stats-namespace: egress-middle
-fsm-stats-kind: Deployment
-fsm-stats-name: middle
-fsm-stats-pod: middle-58d9865569-dwcvf
+fsm-stats: egress-middle,Deployment,middle,middle-7965485977-nlnl2
 content-length: 13
 connection: keep-alive
 
@@ -226,16 +225,13 @@ The correct return result is similar to :
 
 ```bash
 HTTP/1.1 200 OK
-date: Sun, 04 Dec 2022 12:08:14 GMT
+date: Fri, 17 Nov 2023 09:11:53 GMT
 content-type: text/plain; charset=utf-8
-fsm-stats-namespace: egress-middle
-fsm-stats-kind: Deployment
-fsm-stats-name: middle
-fsm-stats-pod: middle-58d9865569-dwcvf
-content-length: 76
+fsm-stats: egress-middle,Deployment,middle,middle-7965485977-nlnl2
+content-length: 74
 connection: keep-alive
 
-The current time: 2022-12-04 12:08:14.034663797 +0000 UTC m=+1093.291560087
+The current time: 2023-11-17 09:11:53.67111584 +0000 UTC m=+110.875627674
 ```
 
 This business scenario is tested and the strategy is cleaned up to avoid affecting subsequent tests
@@ -265,7 +261,7 @@ The correct return result is similar to :
 
 ```bash
 HTTP/1.1 404 Not Found
-Server: pipy/0.70.0
+Server: pipy/0.90.0
 content-length: 17
 connection: keep-alive
 
@@ -312,7 +308,8 @@ metadata:
 spec:
   ingressClassName: pipy
   rules:
-  - http:
+  - host: fsm-ingress.fsm-system
+    http:
       paths:
       - path: /
         pathType: Prefix
@@ -366,12 +363,9 @@ The correct return result is similar to :
 
 ```bash
 HTTP/1.1 200 OK
-date: Fri, 09 Dec 2022 08:00:36 GMT
+date: Fri, 17 Nov 2023 09:12:39 GMT
 content-type: text/plain; charset=utf-8
-fsm-stats-namespace: egress-middle
-fsm-stats-kind: Deployment
-fsm-stats-name: middle
-fsm-stats-pod: middle-7956998bd5-bm5vx
+fsm-stats: egress-middle,Deployment,middle,middle-7965485977-nlnl2
 content-length: 13
 connection: keep-alive
 
@@ -453,16 +447,13 @@ The correct return result is similar to :
 
 ```bash
 HTTP/1.1 200 OK
-date: Fri, 09 Dec 2022 08:03:59 GMT
+date: Fri, 17 Nov 2023 09:13:09 GMT
 content-type: text/plain; charset=utf-8
-fsm-stats-namespace: egress-middle
-fsm-stats-kind: Deployment
-fsm-stats-name: middle
-fsm-stats-pod: middle-7956998bd5-bm5vx
-content-length: 77
+fsm-stats: egress-middle,Deployment,middle,middle-7965485977-nlnl2
+content-length: 72
 connection: keep-alive
 
-The current time: 2022-12-09 08:03:59.990118972 +0000 UTC m=+21257.813505728
+The current time: 2023-11-17 09:13:09.478407 +0000 UTC m=+186.682918839
 ```
 
 This business scenario is tested and the strategy is cleaned up to avoid affecting subsequent tests
@@ -496,7 +487,7 @@ The correct return result is similar to :
 
 ```bash
 HTTP/1.1 404 Not Found
-Server: pipy/0.70.0
+Server: pipy/0.90.0
 content-length: 17
 connection: keep-alive
 
@@ -516,6 +507,7 @@ kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"certi
 curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/pipy-ca.crt -o pipy-ca.crt
 curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/ingress-pipy.crt -o ingress-pipy.crt
 curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/ingress-pipy.key -o ingress-pipy.key
+
 kubectl create secret generic -n egress-middle ingress-pipy-cert-secret \
   --from-file=ca.crt=./pipy-ca.crt \
   --from-file=tls.crt=./ingress-pipy.crt \
@@ -552,7 +544,8 @@ metadata:
 spec:
   ingressClassName: pipy
   rules:
-  - http:
+  - host: fsm-ingress.fsm-system
+    http:
       paths:
       - path: /
         pathType: Prefix
@@ -594,7 +587,7 @@ spec:
 EOF
 ```
 
-#### Replace client TLS
+#### Replace client TLS certificate
 
 ```shell
 curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/client.crt -o client.crt
@@ -644,7 +637,7 @@ Traffic flow:
 Client --**tls**--> Ingress FSM --**mtls** --> sidecar --> Middle
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -ksi https://fsm-ingress.fsm-system/hello --key /client/tls.key --cert /client/tls.crt
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si https://fsm-ingress.fsm-system/hello --cacert /client/ca.crt
 ```
 
 #### Test Results
@@ -653,12 +646,9 @@ The correct return result is similar to :
 
 ```bash
 HTTP/2 200
-date: Thu, 15 Dec 2022 07:02:42 GMT
+date: Fri, 17 Nov 2023 09:17:43 GMT
 content-type: text/plain; charset=utf-8
-fsm-stats-namespace: egress-middle
-fsm-stats-kind: Deployment
-fsm-stats-name: middle
-fsm-stats-pod: middle-5bf7d76c4c-xr24j
+fsm-stats: egress-middle,Deployment,middle,middle-7965485977-nlnl2
 content-length: 13
 
 hello world.
@@ -717,7 +707,7 @@ Traffic flow:
 Client --**tls**-->  Ingress FSM --**mtls**--> sidecar --> Middle --> sidecar --**egress mtls**--> Server
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -ksi https://fsm-ingress.fsm-system/time --key /client/tls.key --cert /client/tls.crt
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si https://fsm-ingress.fsm-system/time --cacert /client/ca.crt
 ```
 
 #### Test Results
@@ -726,15 +716,12 @@ The correct return result is similar to :
 
 ```bash
 HTTP/2 200
-date: Thu, 15 Dec 2022 07:04:26 GMT
+date: Fri, 17 Nov 2023 09:18:02 GMT
 content-type: text/plain; charset=utf-8
-fsm-stats-namespace: egress-middle
-fsm-stats-kind: Deployment
-fsm-stats-name: middle
-fsm-stats-pod: middle-5bf7d76c4c-xr24j
+fsm-stats: egress-middle,Deployment,middle,middle-7965485977-nlnl2
 content-length: 75
 
-The current time: 2022-12-15 07:04:26.62032737 +0000 UTC m=+4972.430170668
+The current time: 2023-11-17 09:18:02.826626944 +0000 UTC m=+480.031138782
 ```
 
 This business scenario is tested and the strategy is cleaned up to avoid affecting subsequent tests
@@ -748,6 +735,7 @@ kubectl delete ingressbackend -n egress-middle egress-middle
 kubectl delete egress -n egress-middle server-8443
 kubectl delete secrets -n fsm-system egress-middle-cert
 kubectl delete secrets -n egress-middle ingress-pipy-cert-secret
+kubectl delete secrets -n egress-client egress-client-secret
 ```
 
 ### Scenario#4：mTLS FSM & mTLS Ingress & mTLS Egress
@@ -768,7 +756,7 @@ The correct return result is similar to :
 
 ```bash
 HTTP/1.1 404 Not Found
-Server: pipy/0.70.0
+Server: pipy/0.90.0
 content-length: 17
 connection: keep-alive
 
@@ -801,7 +789,6 @@ kubectl create secret generic -n egress-middle ingress-controller-ca-secret \
 #### Replace client TLS certificate
 
 ```shell
-
 curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/client.crt -o client.crt
 curl -s https://raw.githubusercontent.com/flomesh-io/fsm-docs/{{< param fsm_branch >}}/manifests/samples/bidir-mtls/certs/client.key -o client.key
 
@@ -858,7 +845,8 @@ metadata:
 spec:
   ingressClassName: pipy
   rules:
-  - http:
+  - host: fsm-ingress.fsm-system
+    http:
       paths:
       - path: /
         pathType: Prefix
@@ -913,7 +901,7 @@ Traffic flow:
 Client --**mtls**--> Ingress FSM --**mtls** --> sidecar --> Middle
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -ksi https://fsm-ingress.fsm-system/hello  --cacert /client/ca.crt --key /client/tls.key --cert /client/tls.crt
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si https://fsm-ingress.fsm-system/hello  --cacert /client/ca.crt --key /client/tls.key --cert /client/tls.crt
 ```
 
 #### Test Results
@@ -922,12 +910,9 @@ The correct return result is similar to :
 
 ```bash
 HTTP/2 200
-date: Thu, 15 Dec 2022 08:55:01 GMT
+date: Fri, 17 Nov 2023 09:19:57 GMT
 content-type: text/plain; charset=utf-8
-fsm-stats-namespace: egress-middle
-fsm-stats-kind: Deployment
-fsm-stats-name: middle
-fsm-stats-pod: middle-5bf7d76c4c-xr24j
+fsm-stats: egress-middle,Deployment,middle,middle-7965485977-nlnl2
 content-length: 13
 
 hello world.
@@ -978,6 +963,8 @@ spec:
       issuer: other
       cert:
         sn: 1
+        subjectAltNames: 
+        - flomesh.io
         expiration: 2030-1-1 00:00:00
         secret:
           name: egress-middle-cert
@@ -997,7 +984,7 @@ Traffic flow:
 Client --**mtls**--> Ingress FSM --**mtls**--> sidecar --> Middle --> sidecar --**egress mtls**--> Server
 
 ```bash
-kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -ksi https://fsm-ingress.fsm-system/time --cacert /client/ca.crt --key /client/tls.key --cert /client/tls.crt
+kubectl exec "$(kubectl get pod -n egress-client -l app=client -o jsonpath='{.items..metadata.name}')" -n egress-client -- curl -si https://fsm-ingress.fsm-system/time --cacert /client/ca.crt --key /client/tls.key --cert /client/tls.crt
 ```
 
 #### Test Results
@@ -1006,13 +993,26 @@ The correct return result is similar to :
 
 ```bash
 HTTP/2 200
-date: Thu, 15 Dec 2022 08:56:12 GMT
+date: Fri, 17 Nov 2023 09:20:24 GMT
 content-type: text/plain; charset=utf-8
-fsm-stats-namespace: egress-middle
-fsm-stats-kind: Deployment
-fsm-stats-name: middle
-fsm-stats-pod: middle-5bf7d76c4c-xr24j
-content-length: 76
+fsm-stats: egress-middle,Deployment,middle,middle-7965485977-nlnl2
+content-length: 75
 
-The current time: 2022-12-15 08:56:12.953677725 +0000 UTC m=+6997.289902113
+The current time: 2023-11-17 09:20:24.101929396 +0000 UTC m=+621.306441226
+```
+
+This business scenario is tested and the strategy is cleaned up to avoid affecting subsequent tests
+
+```bash
+export FSM_NAMESPACE=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"certificate":{"ingressGateway":null}}}' --type=merge
+kubectl patch meshconfig fsm-mesh-config -n "$FSM_NAMESPACE" -p '{"spec":{"ingress":{"tls":{"mTLS": false}}}}' --type=merge
+
+kubectl delete ingress -n egress-middle egress-middle
+kubectl delete ingressbackend -n egress-middle egress-middle
+kubectl delete egress -n egress-middle server-8443
+kubectl delete secrets -n fsm-system egress-middle-cert
+kubectl delete secrets -n egress-middle ingress-pipy-cert-secret
+kubectl delete secrets -n egress-middle ingress-controller-ca-secret
+kubectl delete secrets -n egress-client egress-client-secret
 ```

@@ -1,0 +1,28 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: simple-fsm-gateway
+spec:
+  gatewayClassName: fsm
+  listeners:
+  - protocol: TLS
+    port: 8000
+    name: foo
+    tls:
+      mode: Passthrough
+    allowedRoutes:
+      namespaces:
+        from: Same
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TLSRoute
+metadata:
+  name: tcp-route
+spec:
+  parentRefs:
+  - name: simple-fsm-gateway
+    port: 8000
+  rules:
+  - backendRefs:
+    - name: httpbin.org
+      port: 443

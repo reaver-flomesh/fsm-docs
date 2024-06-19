@@ -55,19 +55,19 @@ To create a FSM gateway, we need to create `Gateway` resource. This manifest wil
 
 ```bash
 kubectl apply -n fsm-system -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: simple-fsm-gateway
 spec:
-  gatewayClassName: fsm-gateway-cls
-listeners:
-  - protocol: HTTP
-    port: 8000
-    name: http
-    allowedRoutes:
-      namespaces:
-        from: Same
+  gatewayClassName: fsm
+  listeners:
+    - protocol: HTTP
+      port: 8000
+      name: http
+      allowedRoutes:
+        namespaces:
+          from: Same
 EOF
 ```
 
@@ -97,7 +97,7 @@ That's why we have not configure any route. Let's create a `HTTRoute` for the `S
 
 ```bash
 kubectl apply -n fsm-system -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: repo

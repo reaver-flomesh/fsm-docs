@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch: 
 
 jobs:
   build:
@@ -25,14 +26,14 @@ jobs:
 
     - name: Build Hugo Site
       run: hugo --minify
-
-    - name: Archive Public Folder
+      
+    - name: Set Sanitized Branch Name
+      id: sanitize
       run: |
-        zip -r public.zip public
-      working-directory: ${{ github.workspace }}
+        echo "SANITIZED_BRANCH_NAME=${GITHUB_REF_NAME//\//-}" >> $GITHUB_ENV
 
     - name: Upload Archive
       uses: actions/upload-artifact@v2
       with:
-        name: public-archive
+        name: public-archive-${{ env.SANITIZED_BRANCH_NAME }}
         path: public

@@ -1,9 +1,9 @@
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: simple-fsm-gateway
 spec:
-  gatewayClassName: fsm-gateway-cls
+  gatewayClassName: fsm
   listeners:
   - protocol: HTTP
     port: 8000
@@ -44,7 +44,7 @@ spec:
       port: 8080
       targetPort: 80
 ---
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-foo
@@ -63,7 +63,7 @@ spec:
     - name: httpbin
       port: 8080
 ---
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-bar

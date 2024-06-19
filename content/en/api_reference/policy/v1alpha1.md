@@ -33,7 +33,7 @@ Resource Types:
 <td>
 <code>metadata</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -75,7 +75,7 @@ AccessCertSpec
 <td>
 <code>secret</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#secretreference-v1-core">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#secretreference-v1-core">
 Kubernetes core/v1.SecretReference
 </a>
 </em>
@@ -134,7 +134,7 @@ AccessCertStatus
 <td>
 <code>secret</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#secretreference-v1-core">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#secretreference-v1-core">
 Kubernetes core/v1.SecretReference
 </a>
 </em>
@@ -206,7 +206,7 @@ ingress traffic from one or more sources.</p>
 <td>
 <code>metadata</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -243,6 +243,7 @@ AccessControlSpec
 </em>
 </td>
 <td>
+<em>(Optional)</em>
 <p>Backends defines the list of backends the AccessControl policy applies to.</p>
 </td>
 </tr>
@@ -263,7 +264,7 @@ AccessControlSpec
 <td>
 <code>matches</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#typedlocalobjectreference-v1-core">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#typedlocalobjectreference-v1-core">
 []Kubernetes core/v1.TypedLocalObjectReference
 </a>
 </em>
@@ -428,6 +429,7 @@ string
 </em>
 </td>
 <td>
+<em>(Optional)</em>
 <p>Backends defines the list of backends the AccessControl policy applies to.</p>
 </td>
 </tr>
@@ -448,7 +450,7 @@ string
 <td>
 <code>matches</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#typedlocalobjectreference-v1-core">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#typedlocalobjectreference-v1-core">
 []Kubernetes core/v1.TypedLocalObjectReference
 </a>
 </em>
@@ -626,7 +628,7 @@ rules in the policy.</p>
 <td>
 <code>metadata</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -718,7 +720,7 @@ The destination port of the traffic is matched against the list of Ports specifi
 <td>
 <code>matches</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#typedlocalobjectreference-v1-core">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#typedlocalobjectreference-v1-core">
 []Kubernetes core/v1.TypedLocalObjectReference
 </a>
 </em>
@@ -788,7 +790,7 @@ string
 <td>
 <code>metadata</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -825,34 +827,8 @@ EgressGatewaySpec
 </em>
 </td>
 <td>
-<p>GlobalEgressGateways defines the list of Global egress gateway.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>rules</code><br/>
-<em>
-<a href="#policy.flomesh.io/v1alpha1.EgressPolicyGatewayRule">
-[]EgressPolicyGatewayRule
-</a>
-</em>
-</td>
-<td>
-<p>EgressPolicyGatewayRules defines the rules of gateway based egress policies.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>matches</code><br/>
-<em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#typedlocalobjectreference-v1-core">
-[]Kubernetes core/v1.TypedLocalObjectReference
-</a>
-</em>
-</td>
-<td>
 <em>(Optional)</em>
-<p>Matches defines the list of object references the EgressGateway policy should match on.</p>
+<p>GlobalEgressGateways defines the list of Global egress gateway.</p>
 </td>
 </tr>
 </table>
@@ -886,43 +862,14 @@ EgressGatewaySpec
 </em>
 </td>
 <td>
-<p>GlobalEgressGateways defines the list of Global egress gateway.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>rules</code><br/>
-<em>
-<a href="#policy.flomesh.io/v1alpha1.EgressPolicyGatewayRule">
-[]EgressPolicyGatewayRule
-</a>
-</em>
-</td>
-<td>
-<p>EgressPolicyGatewayRules defines the rules of gateway based egress policies.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>matches</code><br/>
-<em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#typedlocalobjectreference-v1-core">
-[]Kubernetes core/v1.TypedLocalObjectReference
-</a>
-</em>
-</td>
-<td>
 <em>(Optional)</em>
-<p>Matches defines the list of object references the EgressGateway policy should match on.</p>
+<p>GlobalEgressGateways defines the list of Global egress gateway.</p>
 </td>
 </tr>
 </tbody>
 </table>
 <h3 id="policy.flomesh.io/v1alpha1.EgressPolicyGatewayRule">EgressPolicyGatewayRule
 </h3>
-<p>
-(<em>Appears on:</em><a href="#policy.flomesh.io/v1alpha1.EgressGatewaySpec">EgressGatewaySpec</a>)
-</p>
 <div>
 <p>EgressPolicyGatewayRule is the type used to represent the rule of Egress Gateway specification based egress policies.</p>
 </div>
@@ -1013,7 +960,7 @@ string
 <td>
 <code>secret</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#secretreference-v1-core">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#secretreference-v1-core">
 Kubernetes core/v1.SecretReference
 </a>
 </em>
@@ -1210,7 +1157,7 @@ The destination port of the traffic is matched against the list of Ports specifi
 <td>
 <code>matches</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#typedlocalobjectreference-v1-core">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#typedlocalobjectreference-v1-core">
 []Kubernetes core/v1.TypedLocalObjectReference
 </a>
 </em>
@@ -1717,7 +1664,7 @@ ingress traffic from one or more sources.</p>
 <td>
 <code>metadata</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -1774,7 +1721,7 @@ IngressBackendSpec
 <td>
 <code>matches</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#typedlocalobjectreference-v1-core">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#typedlocalobjectreference-v1-core">
 []Kubernetes core/v1.TypedLocalObjectReference
 </a>
 </em>
@@ -1849,7 +1796,7 @@ IngressBackendStatus
 <td>
 <code>matches</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#typedlocalobjectreference-v1-core">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#typedlocalobjectreference-v1-core">
 []Kubernetes core/v1.TypedLocalObjectReference
 </a>
 </em>
@@ -2107,7 +2054,7 @@ from one service source to one or more destination services.</p>
 <td>
 <code>metadata</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -2521,7 +2468,7 @@ to an upstream host.</p>
 <td>
 <code>metadata</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -2758,5 +2705,5 @@ string
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>763d323</code>.
+on git commit <code>8abe9ab</code>.
 </em></p>

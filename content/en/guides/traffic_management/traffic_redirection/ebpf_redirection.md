@@ -7,6 +7,8 @@ weight: 2
 
 FSM comes with eBPF functionality and provides users an options to use eBPF over default iptables.
 
+> The minimum kernel version is 5.4.
+
 This guide shows how to start using this new functionality and enjoy the benefits eBPF. If you want to directly jump into quick start, refer to [eBPF setup quickstart guide](/quickstart/ebpf)
 
 > For more details of comparison between iptables and eBPF, you can refer to [Traffic Redirection](/guides/traffic_management/traffic_redirection/).

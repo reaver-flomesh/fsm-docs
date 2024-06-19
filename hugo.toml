@@ -138,15 +138,21 @@ prism_syntax_highlighting = true
 # Version params
 # Version params
 fsm_branch = "main"
-fsm_version = "v1.1.4"
+fsm_version = "v1.3.3"
 min_k8s_version = "v1.19.0"
-gateway_api_version="0.7.1"
+gateway_api_version="1.1.0"
 min_k8s_version_gateway_api = "v1.21.0"
-pipy_version = "0.90.3-38"
+pipy_version = "1.1.0-1"
 
 [[params.versions]]
-  version = "v1.1 (latest)"
+  version = "v1.1"
   url = "https://release-v1-1.fsm-docs.flomesh.io/"
+[[params.versions]]
+  version = "v1.2"
+  url = "https://release-v1-2.fsm-docs.flomesh.io/"  
+[[params.versions]]
+  version = "v1.3 (latest)"
+  url = "https://fsm-docs.flomesh.io/"    
 [[params.versions]]
   version = "All Releases"
   url = "/releases/docs"

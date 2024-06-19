@@ -1,6 +1,6 @@
 ---
 title: "HTTP URL Rewrite"
-description: "Rewrite the HTTP URL path."
+description: "This document describes FSM Gateway's URL rewriting feature, allowing modification of request URLs for backend service flexibility and efficient URL normalization."
 type: docs
 weight: 4
 ---
@@ -41,7 +41,8 @@ curl -H 'host:foo.example.com' http://$GATEWAY_IP:8000/get
 Example bellow will replace the `/get` path to `/headers` path.
 
 ```yaml
-apiVersion: gateway.networking.k8s.io/v1beta1
+kubectl apply -n httpbin -f - <<EOF
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-foo
@@ -72,6 +73,7 @@ spec:
     backendRefs:
     - name: httpbin
       port: 8080
+EOF
 ```
 
 After updated the HTTP rule, we will get the same response as `/headers` when requesting `/get`.
@@ -104,7 +106,8 @@ curl -s -H 'host:foo.example.com' http://$GATEWAY_IP:8000/stream/1
 If we hope to change the behavior of `/status` to `/stream`, the rule is required to update again.
 
 ```bash
-apiVersion: gateway.networking.k8s.io/v1beta1
+kubectl apply -n httpbin -f - <<EOF
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-foo
@@ -135,6 +138,7 @@ spec:
     backendRefs:
     - name: httpbin
       port: 8080
+EOF
 ```
 
 If we trigger the request to `/status/204` path again, we will stream the request data `204` times.
@@ -150,7 +154,8 @@ curl -s -H 'host:foo.example.com' http://$GATEWAY_IP:8000/status/204
 Let's follow the example rule below. It will replace host name from `foo.example.com` to `baz.example.com` for all traffic requesting `/get`.
 
 ```bash
-apiVersion: gateway.networking.k8s.io/v1beta1
+kubectl apply -n httpbin -f - <<EOF
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: http-route-foo
@@ -179,6 +184,7 @@ spec:
     backendRefs:
     - name: httpbin
       port: 8080
+EOF
 ```
 
 Update rule and trigger request. We can see the client is requesting url `http://foo.example.com/get`, but the `Host` is replaced.

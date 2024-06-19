@@ -76,12 +76,13 @@ string
 <td>
 <code>podSelector</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#labelselector-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#labelselector-v1-meta">
 Kubernetes meta/v1.LabelSelector
 </a>
 </em>
 </td>
 <td>
+<em>(Optional)</em>
 <p>PodSelector for pods. Existing pods are selected by this will be the ones affected by this plugin chain.</p>
 </td>
 </tr>
@@ -89,12 +90,13 @@ Kubernetes meta/v1.LabelSelector
 <td>
 <code>namespaceSelector</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#labelselector-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#labelselector-v1-meta">
 Kubernetes meta/v1.LabelSelector
 </a>
 </em>
 </td>
 <td>
+<em>(Optional)</em>
 <p>NamespaceSelector for namespaces. Existing pods are selected by this will be the ones affected by this plugin chain.</p>
 </td>
 </tr>
@@ -117,7 +119,7 @@ Kubernetes meta/v1.LabelSelector
 <td>
 <code>metadata</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -202,7 +204,7 @@ PluginStatus
 <td>
 <code>metadata</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -377,7 +379,7 @@ string
 <td>
 <code>metadata</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -419,7 +421,7 @@ string
 <td>
 <code>destinationRefs</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectreference-v1-core">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectreference-v1-core">
 []Kubernetes core/v1.ObjectReference
 </a>
 </em>
@@ -432,7 +434,9 @@ string
 <td>
 <code>config</code><br/>
 <em>
+<a href="https://pkg.go.dev/k8s.io/apimachinery/pkg/runtime#RawExtension">
 k8s.io/apimachinery/pkg/runtime.RawExtension
+</a>
 </em>
 </td>
 <td>
@@ -489,7 +493,7 @@ string
 <td>
 <code>destinationRefs</code><br/>
 <em>
-<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectreference-v1-core">
+<a href="https://v1-26.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectreference-v1-core">
 []Kubernetes core/v1.ObjectReference
 </a>
 </em>
@@ -502,7 +506,9 @@ string
 <td>
 <code>config</code><br/>
 <em>
+<a href="https://pkg.go.dev/k8s.io/apimachinery/pkg/runtime#RawExtension">
 k8s.io/apimachinery/pkg/runtime.RawExtension
+</a>
 </em>
 </td>
 <td>
@@ -638,5 +644,5 @@ string
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>763d323</code>.
+on git commit <code>8abe9ab</code>.
 </em></p>
